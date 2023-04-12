@@ -1,0 +1,3 @@
+
+2	Average Cat Loss [Depth] 0.0	Average Cat Loss [Mask] 1.4023	Average Cat Loss [Total] 1.4023	Average Cat Loss [EmptyVessel_Depth] 0.558	Average Cat Loss [ContentDepth] 0.0	Average Cat Loss [VesselOpening_Depth] 0.41	Average Cat Loss [VesselMask] 0.6327	Average Cat Loss [ContentMaskClean] 0.7696	Average Cat Loss [VesselOpeningMask] 0.6423
+4	Average Cat Loss [Depth] 1.1281	Average Cat Loss [Mask] 1.9442	Average Cat Loss [Total] 3.0722	Average Cat Loss [EmptyVessel_Depth] 0.592	Average Cat Loss [ContentDepth] 0.1449	Average Cat Loss [VesselOpening_Depth] 0.3911	Average Cat Loss [VesselMask] 0.5988	Average Cat Loss [ContentMaskClean] 0.7043	Average Cat Loss [VesselOpeningMask] 0.6411
