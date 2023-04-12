@@ -39,8 +39,8 @@ def showcv2(Im, txt=""):
 
 ########################################################################################
 def show(Im, txt=""):
-    #figManager = plt.get_current_fig_manager()
-    #figManager.window.showMaximized()
+    # figManager = plt.get_current_fig_manager()
+    # figManager.window.showMaximized()
     if np.ndim(Im) == 3:
         plt.imshow(Im[:, :, ::-1].astype(np.uint8))
     else:
@@ -173,16 +173,18 @@ def DisplayPointClouds2(img, xyzMap, Masks):
     pcd.colors = o3d.utility.Vector3dVector(colors)
     o3d.visualization.draw_geometries([pcd])
 
+
 def ShowDepth(Im, title=""):
-    #figManager = plt.get_current_fig_manager()
-    #figManager.window.showMaximized()
+    # figManager = plt.get_current_fig_manager()
+    # figManager.window.showMaximized()
     plt.imshow(Im, cmap="viridis")
     plt.title(title)
     plt.show()
 
+
 def ShowMask(Im, title=""):
-    #figManager = plt.get_current_fig_manager()
-    #figManager.window.showMaximized()
+    # figManager = plt.get_current_fig_manager()
+    # figManager.window.showMaximized()
     plt.imshow(Im, cmap="grey")
     plt.title(title)
     plt.show()

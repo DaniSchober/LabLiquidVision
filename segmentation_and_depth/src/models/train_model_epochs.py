@@ -23,17 +23,17 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
     )  # Where train losses statistics will be written
 
     Weight_Decay = 4e-5  # Weight for the weight decay loss function
-    #MAX_ITERATION = int(num_epochs*batch_size)  # Max number of training iterations
-    #MAX_ITERATION = int(100000000)  # Max number of training iterations
+    # MAX_ITERATION = int(num_epochs*batch_size)  # Max number of training iterations
+    # MAX_ITERATION = int(100000000)  # Max number of training iterations
 
     device = (
         torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     )  # Use GPU if available
 
-    #device = "cpu"
+    # device = "cpu"
     print("Device used: ", device)
 
-    # List of depth maps and segmentation Mask to predict 
+    # List of depth maps and segmentation Mask to predict
     DepthList = [
         "EmptyVessel_Depth",
         "ContentDepth",
@@ -59,7 +59,7 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
     InitStep = 1
     InitEpoch = 1
     if load_pretrained_model:
-        #if os.path.exists(TrainedModelWeightDir + "/Defult.torch"):
+        # if os.path.exists(TrainedModelWeightDir + "/Defult.torch"):
         #    Trained_model_path = TrainedModelWeightDir + "/Defult.torch"
         #    print("Loading pretrained model...")
         #    print("Trained_model_path: ", Trained_model_path)
@@ -71,7 +71,7 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
             Learning_Rate = np.load(TrainedModelWeightDir + "/Learning_Rate.npy")
         if os.path.exists(TrainedModelWeightDir + "/epoch.npy"):
             InitEpoch = int(np.load(TrainedModelWeightDir + "/epoch.npy"))
-        #InitStep = InitEpoch * batch_size
+        # InitStep = InitEpoch * batch_size
 
     if (
         Trained_model_path != ""
@@ -79,16 +79,15 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
         Net.load_state_dict(torch.load(Trained_model_path))
 
     Net = Net.to(device)  # Send net to GPU if available
-    #print net details
+    # print net details
     print("Net: ", Net)
     # print gpu usage
-    print(torch.cuda.memory_summary(device=None, abbreviated=False))    
-
+    print(torch.cuda.memory_summary(device=None, abbreviated=False))
 
     # Create optimizer
     optimizer = torch.optim.Adam(
         params=Net.parameters(), lr=Learning_Rate, weight_decay=Weight_Decay
-    )  
+    )
 
     # Create reader for data sets
     Readers = MakeDataset.create_reader(batch_size)
@@ -96,7 +95,9 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
         LPReaders = MakeDataset.create_reader_LabPics(batch_size)
 
     # get number of samples
-    num_samples = MakeDataset.get_num_samples(Readers) + MakeDataset.get_num_samples_LabPics(LPReaders)
+    num_samples = MakeDataset.get_num_samples(
+        Readers
+    ) + MakeDataset.get_num_samples_LabPics(LPReaders)
     print("Num_samples ", num_samples)
 
     itr_per_epoch = int(num_samples / batch_size)
@@ -121,8 +122,9 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
             # read batch
             Mode = "Virtual"  # Transproteus data
 
-            if use_labpics and np.random.rand()<0.33: Mode="LabPics" # randomly selecting dataset
-            #print("Mode: ", Mode)
+            if use_labpics and np.random.rand() < 0.33:
+                Mode = "LabPics"  # randomly selecting dataset
+            # print("Mode: ", Mode)
 
             if Mode == "Virtual":  # Read transproteus
                 readertype = list(Readers)[
@@ -130,11 +132,11 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                 ]  # Pick reader (folder)
                 GT = Readers[readertype].LoadBatch()
 
-            if Mode == "LabPics": # Read Labpics data
+            if Mode == "LabPics":  # Read Labpics data
                 readertype = list(LPReaders)[
                     np.random.randint(len(list(LPReaders)))
                 ]  # Pick reader (folder)
-                GT = LPReaders[readertype].LoadBatch() 
+                GT = LPReaders[readertype].LoadBatch()
 
             PrdDepth, PrdProb, PrdMask = Net.forward(
                 Images=GT["VesselWithContentRGB"]
@@ -146,10 +148,10 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                 # change to device
                 PrdMask[nm] = PrdMask[nm].to(device)
                 PrdProb[nm] = PrdProb[nm].to(device)
-            
+
             for nm in DepthList:
                 PrdDepth[nm] = PrdDepth[nm].to(device)
-            
+
             # Calculate loss
 
             CatLoss = {}  # will store the Category loss per object
@@ -173,7 +175,10 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                     ROI = nn.functional.interpolate(
                         ROI,
                         tuple(
-                            (PrdDepth[nm].shape[2], PrdDepth["EmptyVessel_Depth"].shape[3])
+                            (
+                                PrdDepth[nm].shape[2],
+                                PrdDepth["EmptyVessel_Depth"].shape[3],
+                            )
                         ),
                         mode="bilinear",
                         align_corners=False,
@@ -195,7 +200,7 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                         mode="bilinear",
                         align_corners=False,
                     )  # convert to prediction size
-                    
+
                     CatLoss[nm] = 5 * LossFunctions.DepthLoss(
                         PrdDepth[nm], TGT[nm], ROI
                     )  # Loss function
@@ -233,25 +238,25 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                     )  # Calculate cross entropy loss
 
             # Calculate Total Loss and average loss by using the sum of all objects losses
-            #print("Itr", itr)
-            #print("epoch_num", epoch_num)
-            #print("InitStep", InitStep)
-            #print("itr_per_epoch", itr_per_epoch)
-            fr = 1 / np.min([itr + (epoch_num-1)*itr_per_epoch - InitStep + 1, 2000])
-            TotalLoss = 0               # will be used for backpropagation
-            AVGCatLoss["Depth"] = 0     # will be used to collect statitics
-            AVGCatLoss["Mask"] = 0      # will be used to collect statitics
-            AVGCatLoss["Total"] = 0     # will be used to collect statitics
-            for nm in CatLoss:          # Go over all object losses and sum them
+            # print("Itr", itr)
+            # print("epoch_num", epoch_num)
+            # print("InitStep", InitStep)
+            # print("itr_per_epoch", itr_per_epoch)
+            fr = 1 / np.min(
+                [itr + (epoch_num - 1) * itr_per_epoch - InitStep + 1, 2000]
+            )
+            TotalLoss = 0  # will be used for backpropagation
+            AVGCatLoss["Depth"] = 0  # will be used to collect statitics
+            AVGCatLoss["Mask"] = 0  # will be used to collect statitics
+            AVGCatLoss["Total"] = 0  # will be used to collect statitics
+            for nm in CatLoss:  # Go over all object losses and sum them
                 if not nm in AVGCatLoss:
                     AVGCatLoss[nm] = 0
                 if CatLoss[nm] > 0:
-                    #AVGCatLoss[nm] = (1 - fr) * AVGCatLoss[nm] + fr * CatLoss[
+                    # AVGCatLoss[nm] = (1 - fr) * AVGCatLoss[nm] + fr * CatLoss[
                     #    nm
-                    #].data.cpu().numpy()
-                    AVGCatLoss[nm] = CatLoss[
-                        nm
-                    ].data.cpu().numpy()
+                    # ].data.cpu().numpy()
+                    AVGCatLoss[nm] = CatLoss[nm].data.cpu().numpy()
                 TotalLoss += CatLoss[nm]
 
                 if "Depth" in nm:
@@ -266,7 +271,7 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
 
             # print results to file every 4 iterations
             if itr % 4 == 0 and Mode == "Virtual":
-                txt = "\n" + str((epoch_num-1)*itr_per_epoch+itr)
+                txt = "\n" + str((epoch_num - 1) * itr_per_epoch + itr)
                 for nm in AVGCatLoss:
                     txt += (
                         "\tAverage Cat Loss ["
@@ -274,7 +279,7 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                         + "] "
                         + str(float("{:.4f}".format(AVGCatLoss[nm])))
                     )
-                #print(txt)
+                # print(txt)
                 # Write train loss to file
                 with open(TrainLossTxtFile, "a") as f:
                     f.write(txt)
@@ -291,17 +296,19 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
             epoch_num % 5 == 0
         ):  # Save model weight once every 5 epochs (to save space and time) and at the end of training
             print(
-                "Saving Model to file in "
-                + "models"
-                + "/"
-                + str(epoch_num)
-                + ".torch"
+                "Saving Model to file in " + "models" + "/" + str(epoch_num) + ".torch"
             )
             torch.save(
-                Net.state_dict(), "models" + "/" + str(epoch_num) + "__" + time.strftime("%d%m%Y-%H%M") + ".torch"
+                Net.state_dict(),
+                "models"
+                + "/"
+                + str(epoch_num)
+                + "__"
+                + time.strftime("%d%m%Y-%H%M")
+                + ".torch",
             )
             print("model saved")
-        
+
         # Update learning rate
         if epoch_num % 5 == 0:
             if "TotalPrevious" not in AVGCatLoss:

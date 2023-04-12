@@ -117,7 +117,6 @@ def predict(model_path, image_path):
                     tmIm[Prd[depth2Mask[nm]][0] == 1] = (
                         tmIm[Prd[depth2Mask[nm]][0] == 1] / max * 255
                     )
-                
 
             # visualize depth map
             plt.subplot(3, 3, count)

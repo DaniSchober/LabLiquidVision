@@ -1,24 +1,22 @@
 import torch
 import argparse
-#from src.data.transforms import get_transforms
 from src.models.model import VesselNet
 import numpy as np
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--depth_image', type=str, help='Path to the depth map file')
+parser.add_argument("--depth_image", type=str, help="Path to the depth map file")
 args = parser.parse_args()
 
 model = VesselNet()
-model.load_state_dict(torch.load('models/vessel_net.pth'))
+model.load_state_dict(torch.load("models/vessel_net.pth"))
 
 
 depth_image = np.load(args.depth_image).astype(np.float32)
-#print(depth_image.shape)
+# print(depth_image.shape)
 depth_image = torch.from_numpy(depth_image)
-#print(depth_image.shape)
+# print(depth_image.shape)
 depth_image = depth_image.unsqueeze(0)
-#print(depth_image.shape)
-
+# print(depth_image.shape)
 
 
 with torch.no_grad():

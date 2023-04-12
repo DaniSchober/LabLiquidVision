@@ -11,6 +11,7 @@ import src.data.make_dataset as MakeDataset
 import src.models.loss_functions as LossFunctions
 import time
 
+
 def train():
     Trained_model_path = ""  # Path of trained model weights if you want to return to trained model, else if there is no pretrained mode this should be =""
     Learning_Rate = 1e-5  # intial learning rate
@@ -23,7 +24,7 @@ def train():
     Weight_Decay = 4e-5  # Weight for the weight decay loss function
     MAX_ITERATION = int(100000010)  # Max number of training iteration
 
-    #device = "cpu"
+    # device = "cpu"
     device = (
         torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     )  # Use GPU if available
@@ -148,10 +149,10 @@ def train():
             # change to device
             PrdMask[nm] = PrdMask[nm].to(device)
             PrdProb[nm] = PrdProb[nm].to(device)
-        
+
         for nm in DepthList:
             PrdDepth[nm] = PrdDepth[nm].to(device)
-        
+
         # ------------------------Calculating loss---------------------------------------------------------------------
 
         CatLoss = {}  # will store the Category loss per object
@@ -201,7 +202,7 @@ def train():
                     mode="bilinear",
                     align_corners=False,
                 )  # convert to prediction size
-                
+
                 CatLoss[nm] = 5 * LossFunctions.DepthLoss(
                     PrdDepth[nm], TGT[nm], ROI
                 )  # Loss function

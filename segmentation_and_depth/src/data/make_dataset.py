@@ -14,19 +14,19 @@ LabPicsFolder = {}
 LabPicsFolder["LabPics"] = r"data/interim/LabPics Chemistry/Train"
 
 
-
 MinSize = 270  # Min image dimension (height or width)
 MaxSize = 1000  # Max image dimension (height or width)
 MaxPixels = (
     800 * 800 * 2
 )  # Max pixels in a batch (not in image), reduce to solve out if memory problems
-#MaxBatchSize = 6  # Max images in batch
+# MaxBatchSize = 6  # Max images in batch
+
 
 def create_reader(MaxBatchSize):
     Readers = {}  # Transproteus readers
     for nm in TransProteusFolder:
         print("Folder used:", nm)
-        #print(TransProteusFolder[nm])
+        # print(TransProteusFolder[nm])
         Readers[nm] = DepthReader.Reader(
             TransProteusFolder[nm],
             MaxBatchSize,
@@ -36,8 +36,9 @@ def create_reader(MaxBatchSize):
             TrainingMode=True,
         )
 
-    #print("Readers:", Readers)
+    # print("Readers:", Readers)
     return Readers
+
 
 def get_num_samples(Readers):
     num_samples = 0
@@ -50,18 +51,19 @@ def create_reader_LabPics(MaxBatchSize):
     Readers = {}  # Transproteus readers
     for nm in LabPicsFolder:
         print("Folder used:", nm)
-        #print(TransProteusFolder[nm])
+        # print(TransProteusFolder[nm])
         Readers[nm] = DepthReader.LabPics_Reader(
             LabPicsFolder[nm],
             MaxBatchSize,
             MinSize,
             MaxSize,
             MaxPixels,
-            #TrainingMode=True,
+            # TrainingMode=True,
         )
 
-    #print("Readers:", Readers)
+    # print("Readers:", Readers)
     return Readers
+
 
 def get_num_samples_LabPics(LabPics_Readers):
     num_samples = 0
@@ -76,7 +78,7 @@ def create_reader_Test(MaxBatchSize, TestFolder):
     TestFolder_1["Liquid1"] = TestFolder
     for nm in TestFolder_1:
         print("Folder used:", nm)
-        #print(TransProteusFolder[nm])
+        # print(TransProteusFolder[nm])
         Readers[nm] = DepthReader.Reader(
             TestFolder_1[nm],
             MaxBatchSize,
@@ -86,5 +88,5 @@ def create_reader_Test(MaxBatchSize, TestFolder):
             TrainingMode=True,
         )
 
-    #print("Readers:", Readers)
+    # print("Readers:", Readers)
     return Readers

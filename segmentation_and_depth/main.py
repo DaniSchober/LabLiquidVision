@@ -62,16 +62,18 @@ def main():
         default=True,
         help="Use lab pictures",
     )
-    
+
     args = parser.parse_args()
 
-    #print args with "args"
+    # print args with "args"
     print("Args: " + str(args))
 
     # if train then train else predict
     if args.mode == "train":
         print("Training model")
-        train_model_epochs.train(args.batch_size, args.epochs, args.load_model, args.use_labpics)
+        train_model_epochs.train(
+            args.batch_size, args.epochs, args.load_model, args.use_labpics
+        )
 
     elif args.mode == "predict":
         # start src.models.predict_model.py
@@ -81,9 +83,9 @@ def main():
     else:
         print("Invalid argument")
         print("Please enter train or predict")
-    
+
     # end main function
-    #return args
+    # return args
 
 
 if __name__ == "__main__":

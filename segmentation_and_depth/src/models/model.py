@@ -5,17 +5,17 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 
+
 class Net(nn.Module):
     def __init__(
         self, MaskList, DepthList
     ):  # MaskList is list of segmentation mask to predict, DepthList is list of Depth map to predict
-
         # Build layers for standard FCN with only image as input
         super(Net, self).__init__()
 
         # Load pretrained  encoder
         self.Encoder = models.resnet101(weights="ResNet101_Weights.DEFAULT")
-        
+
         # Dilated convolution ASPP layers (same as deep lab)
         self.ASPPScales = [1, 2, 4, 12, 16]
         self.ASPPLayers = nn.ModuleList()
@@ -127,7 +127,6 @@ class Net(nn.Module):
         PredictMasks=True,
         FreezeBatchNorm_EvalON=False,
     ):
-
         # Convert image to pytorch and normalize values
         RGBMean = [123.68, 116.779, 103.939]
         RGBStd = [65, 65, 65]
@@ -139,7 +138,7 @@ class Net(nn.Module):
             self.half()
 
         if FreezeBatchNorm_EvalON:
-            self.eval()  # dont update batch 
+            self.eval()  # dont update batch
 
         # Convert input to pytorch
         InpImages = (
@@ -161,9 +160,7 @@ class Net(nn.Module):
 
         # Normalize image values
         for i in range(len(RGBMean)):
-            InpImages[:, i, :, :] = (InpImages[:, i, :, :] - RGBMean[i]) / RGBStd[
-                i
-            ]
+            InpImages[:, i, :, :] = (InpImages[:, i, :, :] - RGBMean[i]) / RGBStd[i]
         x = InpImages
 
         SkipConFeatures = []  # Store features map of layers used for skip connection
@@ -219,7 +216,7 @@ class Net(nn.Module):
                         align_corners=False,
                     )  # Resize to original image size
                 self.OutDepth[nm] = l
-        
+
         # Output segmentation mask
         self.OutProbMask = {}
         self.OutMask = {}

@@ -2,10 +2,6 @@
 import argparse
 import sys
 import os
-
-
-#import src.models.predict_model as predict_model
-#import src.models.train_model as train_model
 import src.data.make_dataset as make_dataset
 
 import tkinter as tk
@@ -82,31 +78,35 @@ def main():
         default="data/processed",
         help="Path to output dataset",
     )
-    
+
     args = parser.parse_args()
 
-    #print args with "args"
+    # print args with "args"
     print("Args: " + str(args))
 
     # if train then train else predict
     if args.mode == "train":
         print("Training model")
-        #train_model_epochs.train(args.batch_size, args.epochs, args.load_model, args.use_labpics)
+        # train_model_epochs.train(args.batch_size, args.epochs, args.load_model, args.use_labpics)
 
     elif args.mode == "predict":
         # start src.models.predict_model.py
         print("Predicting model")
-        #predict_model.predict(model_path=args.model_path, image_path=args.image_path)
+        # predict_model.predict(model_path=args.model_path, image_path=args.image_path)
 
     elif args.mode == "convert":
         # start src.data.make_dataset.py
         print("Converting dataset")
-        make_dataset.create_converted_dataset(path_input=args.path_input, path_output=args.path_output, model_path=args.model_path)
-    
+        make_dataset.create_converted_dataset(
+            path_input=args.path_input,
+            path_output=args.path_output,
+            model_path=args.model_path,
+        )
+
     elif args.mode == "record":
         # start src.data.make_dataset.py
         print("Recording dataset")
-        if __name__ == '__main__':
+        if __name__ == "__main__":
             root = tk.Tk()
             app = App(root)
             root.mainloop()
@@ -114,9 +114,9 @@ def main():
     else:
         print("Invalid argument")
         print("Please enter train or predict")
-    
+
     # end main function
-    #return args
+    # return args
 
 
 if __name__ == "__main__":
