@@ -1,7 +1,5 @@
 # main file, starts training or prediction depeeending on the arguments
 import argparse
-import sys
-import os
 import src.data.make_dataset as make_dataset
 
 import tkinter as tk
