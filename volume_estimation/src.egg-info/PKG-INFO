@@ -2,11 +2,6 @@ Metadata-Version: 2.1
 Name: src
 Version: 0.1.0
 Summary: Estimate the amount of liquid based on an RGB image
-Home-page: UNKNOWN
 Author: Daniel Schober
 License: MIT
-Platform: UNKNOWN
 License-File: LICENSE
-
-UNKNOWN
-

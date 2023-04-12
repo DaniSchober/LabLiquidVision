@@ -5,6 +5,7 @@ import cv2
 from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
+import matplotlib.pyplot as plt
 
 class App:
     def __init__(self, master):
@@ -92,22 +93,24 @@ class App:
             pass
 
         # Save images
-        cv2.imwrite(f"{path}/RGBImage.png", color_image)
-        cv2.imwrite(f"{path}/DepthMap.png", depth_colormap)
+        cv2.imwrite(f"{path}/Input_RGBImage.png", color_image)
+        cv2.imwrite(f"{path}/Input_DepthMap.png", depth_colormap)
 
-        np.save(path + "/ColorImage.npy", color_image)
-        np.save(path + "/DepthImage.npy", depth_image)
+        np.save(path + "/Input_RGBImage.npy", color_image)
+        np.save(path + "/Input_DepthMap.npy", depth_image)
 
-        with open(path + "/vol_liquid.txt", 'w') as f:
+        with open(path + "/Input_vol_liquid.txt", 'w') as f:
             f.write(str(vol_liquid))
-        with open(path + "/vessel.txt", 'w') as f:
+        with open(path + "/Input_vessel.txt", 'w') as f:
             f.write(vessel_name)
-        with open(path + "/vol_vessel.txt", 'w') as f:
+        with open(path + "/Input_vol_vessel.txt", 'w') as f:
             f.write(str(vol_vessel))
 
         self.liquid_vol_entry.delete(0, 'end') # delete volume entry for easier data entry
 
         messagebox.showinfo("Capture Done", "Images have been captured and saved successfully!")
+        # show image in window
+        plt.figure(figsize=(5, 5))
 
     def init_pipeline(self):
         self.pipeline = rs.pipeline()
@@ -123,7 +126,7 @@ class App:
         self.root.quit()
 
 
-if __name__ == '__main__':
-    root = tk.Tk()
-    app = App(root)
-    root.mainloop()
+#if __name__ == '__main__':
+#    root = tk.Tk()
+#   app = App(root)
+#   root.mainloop()
