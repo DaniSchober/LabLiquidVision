@@ -31,7 +31,7 @@ If you want other developers to contribute to your project, include instructions
 
 ## License
 
-This project is licensed under the terms of the MIT license. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the terms of the MIT license. 
 
 ## Credits
 
