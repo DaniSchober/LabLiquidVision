@@ -41,6 +41,5 @@ This project was developed in collaboration with [Novo Nordisk](https://www.novo
 For any inquiries or feedback, feel free to contact us:
 
 - **Email:** danischober98@gmail.com
-- **Twitter:** [@yourcompany](https://twitter.com/yourcompany)
 - **LinkedIn:** [Daniel Schober](https://www.linkedin.com/in/d-schober)
 - **Website:** [Novo Nordisk](https://www.novonordisk.com/)
