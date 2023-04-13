@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![NVIDIA Flex](https://img.shields.io/badge/NVIDIA-Flex-green)](https://developer.nvidia.com/flex)
-[![UR5](https://img.shields.io/badge/UR5-blue.svg?style=flat-square)](https://www.universal-robots.com/products/ur5-robot/)
+[![UR5](https://img.shields.io/badge/UR5-blue.svg?style=for-the-badge&logo=universal-robots&logoColor=white)](https://www.universal-robots.com/products/ur5-robot/)
 
 
 
