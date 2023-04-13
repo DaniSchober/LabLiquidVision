@@ -3,7 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![NVIDIA Flex](https://img.shields.io/badge/NVIDIA-Flex-green)](https://developer.nvidia.com/flex)
-[![Universal Robots](https://img.shields.io/badge/Universal%20Robots-UR5-blue?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURQAAAAAAAP///z8/Pz8/Pv7+/Pz8+Pb29vLy8vL29vb////9rV37jAAAAJdFJOUwAQHzsnvn+zRbQJQAAAjVJREFUKM+9k9tLVUEUhJ/09N7jMyswusnWIImWjkJNH0lIy+GxpBRYX0jK2Qc5zAjaUmJdUkH5x1Y+GgY6NF1QKCNQXJdSJEz+Pn0foa3qAa4kO4/v/e+J/f05efMbN/9/+07+lXNc5zQbi5H6Ukz6gMCf5lElEmULwsJYlNT+nrQdS8Xb4HR4fofuJzI33+3pZInkSZIklT7VfTdfvlq3pVr9+OuXTfqkZGqlNWrf2tVZSQrn08G2H44MMOHz99/f38fDg9tbW1ufPmzjKzsnl1G6U+hSIo7V93tu2gTpk7d+HAKjX9/fv18/Ly8hJISYjEa0adMmgRdu3bRk0dHJ4eLid9zv3qW3lxej0SJEySxZs4bR06dPDZiE4A1bt9bV1dXe3Nz83t2LHVt2bVnZ2dWZT1TfsuLFh9cXGzZs38yZM7hjY2NZWVlSVK1WqiurodOnTBwg0NDXl5eb6+fopfL6cH6+nrUqFGjfv3q3W6lZmdnQfHx9R5eXly5dEnSZJrOzsb8/PwWLFjR7NmzdK4blZcVi8Xq3bu3Mnjxo2S2bdt2t/f388QFRUVJg7d65StWZTpd7s1Okr9XV1d0aNHJSUlYK1btw5x48YNWrV0/f777/Hxx/fz8uXLlygXvz6NQUFB6GhoYKBBgwYoG/v7777Nzc2ysnJZWRn5+fl9XV1b1rVy5UtGRkZG3bt3JxcXG+ffuqZM2e6/fbbR9JSErRr18/XrVu3bp1Wrt2rUqlUlZWVlZaWlp/fXXX2)
+[![UR5](https://img.shields.io/badge/UR5-blue.svg?style=flat-square)](https://www.universal-robots.com/products/ur5-robot/)
+
 
 
 ## Description
