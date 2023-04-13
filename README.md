@@ -35,7 +35,9 @@ This project is licensed under the terms of the MIT license.
 
 ## Credits
 
-List any people, organizations, or resources that you used to create your project.
+## Credits
+
+This project was developed in collaboration with Novo Nordisk, a global healthcare company that is dedicated to improving the lives of people with diabetes and other chronic diseases. Novo Nordisk provided support and resources for this project, including expert guidance, and access to equipment and facilities.
 
 ## Contact
 
