@@ -37,7 +37,7 @@ This project is licensed under the terms of the MIT license.
 
 ## Credits
 
-This project was developed in collaboration with Novo Nordisk, a global healthcare company that is dedicated to improving the lives of people with diabetes and other chronic diseases. Novo Nordisk provided support and resources for this project, including expert guidance, and access to equipment and facilities.
+This project was developed in collaboration with [Novo Nordisk](https://www.novonordisk.com/), a global healthcare company that is dedicated to improving the lives of people with diabetes and other chronic diseases. Novo Nordisk provided support and resources for this project, including expert guidance, and access to equipment and facilities.
 
 ## Contact
 
