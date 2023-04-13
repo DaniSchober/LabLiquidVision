@@ -25,9 +25,6 @@ This section should provide instructions on how to install your project and any 
 
 Here you can provide examples of how to use your project, including any command line arguments, sample inputs and outputs, etc.
 
-## Contributing
-
-If you want other developers to contribute to your project, include instructions on how to do so in this section.
 
 ## License
 
@@ -35,10 +32,15 @@ This project is licensed under the terms of the MIT license.
 
 ## Credits
 
-## Credits
-
 This project was developed in collaboration with [Novo Nordisk](https://www.novonordisk.com/), a global healthcare company that is dedicated to improving the lives of people with diabetes and other chronic diseases. Novo Nordisk provided support and resources for this project, including expert guidance, and access to equipment and facilities.
 
 ## Contact
 
-Provide your contact information in case others have questions or want to get in touch with you.
+## Contact
+
+For any inquiries or feedback, feel free to contact us:
+
+- **Email:** danischober98@gmail.com
+- **Twitter:** [@yourcompany](https://twitter.com/yourcompany)
+- **LinkedIn:** [Daniel Schober](https://www.linkedin.com/in/d-schober)
+- **Website:** [Novo Nordisk](https://www.novonordisk.com/)
