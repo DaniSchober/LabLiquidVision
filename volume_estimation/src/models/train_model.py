@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from src.data.dataloader import VesselCaptureDataset
 from torch.utils.data import DataLoader
 import torch.nn as nn
-from src.models.model import VesselNet
+from src.models.model_new import VesselNet
 
 
 # Define the training loop
@@ -15,12 +15,15 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     progress_bar = tqdm(train_loader, desc=epoch_str)
 
     for i, data in enumerate(progress_bar):
-        inputs = data["depth_image"]
+        vessel_depth = data["vessel_depth"]
+        liquid_depth = data["liquid_depth"]
+        #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
+        #inputs = data["depth_image"]
         targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1)
         targets = targets.float()
 
         optimizer.zero_grad()
-        outputs = model(inputs)
+        outputs = model(vessel_depth, liquid_depth)
 
         loss = criterion(outputs, targets)
         # Calculate RMSE
