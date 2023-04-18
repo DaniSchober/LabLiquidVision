@@ -36,8 +36,6 @@ This project was developed in collaboration with [Novo Nordisk](https://www.novo
 
 ## Contact
 
-## Contact
-
 For any inquiries or feedback, feel free to contact us:
 
 - **Email:** danischober98@gmail.com
