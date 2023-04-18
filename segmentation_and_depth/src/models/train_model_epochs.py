@@ -23,8 +23,6 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
     )  # Where train losses statistics will be written
 
     Weight_Decay = 4e-5  # Weight for the weight decay loss function
-    # MAX_ITERATION = int(num_epochs*batch_size)  # Max number of training iterations
-    # MAX_ITERATION = int(100000000)  # Max number of training iterations
 
     device = (
         torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -59,10 +57,6 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
     InitStep = 1
     InitEpoch = 1
     if load_pretrained_model:
-        # if os.path.exists(TrainedModelWeightDir + "/Defult.torch"):
-        #    Trained_model_path = TrainedModelWeightDir + "/Defult.torch"
-        #    print("Loading pretrained model...")
-        #    print("Trained_model_path: ", Trained_model_path)
         if os.path.exists("models/40__29032023-0231.torch"):
             Trained_model_path = "models/40__29032023-0231.torch"
             print("Loading pretrained model...")
@@ -71,8 +65,6 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
             Learning_Rate = np.load(TrainedModelWeightDir + "/Learning_Rate.npy")
         if os.path.exists(TrainedModelWeightDir + "/epoch.npy"):
             InitEpoch = int(np.load(TrainedModelWeightDir + "/epoch.npy"))
-        # InitStep = InitEpoch * batch_size
-
     if (
         Trained_model_path != ""
     ):  # Optional initiate full net by loading a pretrained net
@@ -124,7 +116,6 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
 
             if use_labpics and np.random.rand() < 0.33:
                 Mode = "LabPics"  # randomly selecting dataset
-            # print("Mode: ", Mode)
 
             if Mode == "Virtual":  # Read transproteus
                 readertype = list(Readers)[
@@ -237,11 +228,6 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                         * ROI[:, 0]
                     )  # Calculate cross entropy loss
 
-            # Calculate Total Loss and average loss by using the sum of all objects losses
-            # print("Itr", itr)
-            # print("epoch_num", epoch_num)
-            # print("InitStep", InitStep)
-            # print("itr_per_epoch", itr_per_epoch)
             fr = 1 / np.min(
                 [itr + (epoch_num - 1) * itr_per_epoch - InitStep + 1, 2000]
             )

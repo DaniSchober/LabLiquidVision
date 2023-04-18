@@ -19,7 +19,7 @@ This section should provide a more detailed explanation of what your project doe
 
 ## Installation
 
-This section should provide instructions on how to install your project and any dependencies it requires.
+Please refer to the specific folders of the project for installation details for the specific use.
 
 ## Usage
 
