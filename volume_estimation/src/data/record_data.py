@@ -7,6 +7,7 @@ import tkinter as tk
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 import threading
+import csv
 
 class App:
     def __init__(self, master):
@@ -23,9 +24,9 @@ class App:
         tk.Label(self.root, text="Vessel Name:").grid(
             row=0, column=0, padx=10, pady=10, sticky="w"
         )
-        tk.Label(self.root, text="Vessel Volume (ml):").grid(
-            row=1, column=0, padx=10, pady=10, sticky="w"
-        )
+        #tk.Label(self.root, text="Vessel Volume (ml):").grid(
+        #    row=1, column=0, padx=10, pady=10, sticky="w"
+        #)
         tk.Label(self.root, text="Liquid Volume (ml):").grid(
             row=2, column=0, padx=10, pady=10, sticky="w"
         )
@@ -34,13 +35,39 @@ class App:
         self.vessel_name = tk.StringVar()
         self.vessel_name.set("Please select")  # set initial value to empty string
 
+        with open(f"data/Vessel_Selection.csv") as csv_file:
+                    # Create a dictionary to store the values
+                    self.vessel_dict = {}
+                    # Read the CSV file into a dictionary
+                    csv_reader = csv.DictReader(csv_file)
+                    # Skip the header row
+                    #next(csv_reader)
+                    # Loop through each row in the CSV file
+                    for row in csv_reader:
+                        # Add the values to the dictionary
+                        # Extract the key and value from the row             
+                        pairs = list(row.items())[0] # get the first key-value pair as a tuple
+                        data_values = pairs[1].split(';')
+                        
+                        # Get the short name
+                        short_name = data_values[0]
+                        vol = data_values[1]
+                        
+                        # Add the key-value pair to the dictionary
+                        self.vessel_dict[short_name] = vol
+
+        # Define a dictionary with vessel names as keys and their values
+        #vessel_dict = {"Vessel1": 1, "Vessel2": 2, "Vessel3": 3}
+
+        vessel_names = list(self.vessel_dict.keys())
+
         # Create a dropdown menu for the vessel name
-        self.vessel_name_dropdown = tk.OptionMenu(self.root, self.vessel_name, "Vessel1", "Vessel2", "Vessel3")
+        self.vessel_name_dropdown = tk.OptionMenu(self.root, self.vessel_name, *vessel_names)
         self.vessel_name_dropdown.grid(row=0, column=1, padx=10, pady=10)
 
 
-        self.vessel_vol_entry = tk.Entry(self.root)
-        self.vessel_vol_entry.grid(row=1, column=1, padx=10, pady=10)
+        #self.vessel_vol_entry = tk.Entry(self.root)
+        #self.vessel_vol_entry.grid(row=1, column=1, padx=10, pady=10)
 
         self.liquid_vol_entry = tk.Entry(self.root)
         self.liquid_vol_entry.grid(row=2, column=1, padx=10, pady=10)
@@ -64,12 +91,14 @@ class App:
         #vessel_name = self.vessel_name_dropdown.get()
         #vessel_name_var = self.vessel_name_var.get()
         vessel_name = self.vessel_name.get()
-        vol_vessel = self.vessel_vol_entry.get()
+        #vol_vessel = self.vessel_vol_entry.get()
+        vol_vessel = int(self.vessel_dict[vessel_name])
         vol_liquid = self.liquid_vol_entry.get()
 
         if not vessel_name or not vol_liquid or not vol_vessel:
             messagebox.showerror("Error", "Please fill in all the fields.")
             return
+        
 
         try:
             vol_liquid = int(vol_liquid)
@@ -77,6 +106,12 @@ class App:
         except ValueError:
             messagebox.showerror(
                 "Error", "Please enter a valid integer value for the volumes."
+            )
+            return
+
+        if vol_liquid > vol_vessel:
+            messagebox.showerror(
+                "Error", "The liquid volume cannot be greater than the vessel volume."
             )
             return
 
@@ -89,10 +124,10 @@ class App:
         if not depth_frame or not color_frame:
             return
         
-        if color_frame:
-            color_image = np.asanyarray(color_frame.get_data())
-            cv2.imshow("RGB Stream", color_image)
-            key = cv2.waitKey(1)
+        #if color_frame:
+        #    color_image = np.asanyarray(color_frame.get_data())
+        #    cv2.imshow("RGB Stream", color_image)
+        #    key = cv2.waitKey(1)
 
 
         # Convert images to numpy arrays
@@ -145,11 +180,12 @@ class App:
         #    0, "end"
         #)  # delete volume entry for easier data entry
 
-        messagebox.showinfo(
-            "Capture Done", "Images have been captured and saved successfully!"
-        )
+        #messagebox.showinfo(
+        #    "Capture Done", "Images have been captured and saved successfully!"
+        #)
+        print("Images have been captured and saved successfully! Path:", path)
         # show image in window
-        plt.figure(figsize=(5, 5))
+        #plt.figure(figsize=(5, 5))
 
 
 
@@ -176,7 +212,10 @@ class App:
                     break
 
     def quit(self):
-        # self.pipeline.stop()
+        cv2.destroyAllWindows()
+        #self.pipeline.stop()
         self.root.quit()
-
+        self.root.destroy()
+        # close all windows
+        
 
