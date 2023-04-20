@@ -1,6 +1,6 @@
 # main file, starts training or prediction depeeending on the arguments
 import argparse
-import src.data.make_dataset as make_dataset
+#import src.data.make_dataset as make_dataset # uncommented for without torch
 
 import tkinter as tk
 from src.data.record_data import App
@@ -80,7 +80,7 @@ def main():
     args = parser.parse_args()
 
     # print args with "args"
-    print("Args: " + str(args))
+    #print("Args: " + str(args))
 
     # if train then train else predict
     if args.mode == "train":
@@ -111,7 +111,7 @@ def main():
 
     else:
         print("Invalid argument")
-        print("Please enter train or predict")
+        print("Please enter train or predict or convert or record")
 
     # end main function
     # return args

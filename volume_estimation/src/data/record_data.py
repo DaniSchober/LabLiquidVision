@@ -6,7 +6,7 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
 import matplotlib.pyplot as plt
-
+import threading
 
 class App:
     def __init__(self, master):
@@ -30,8 +30,14 @@ class App:
             row=2, column=0, padx=10, pady=10, sticky="w"
         )
 
-        self.vessel_name_entry = tk.Entry(self.root)
-        self.vessel_name_entry.grid(row=0, column=1, padx=10, pady=10)
+        # Use a StringVar to store the selected vessel name
+        self.vessel_name = tk.StringVar()
+        self.vessel_name.set("Please select")  # set initial value to empty string
+
+        # Create a dropdown menu for the vessel name
+        self.vessel_name_dropdown = tk.OptionMenu(self.root, self.vessel_name, "Vessel1", "Vessel2", "Vessel3")
+        self.vessel_name_dropdown.grid(row=0, column=1, padx=10, pady=10)
+
 
         self.vessel_vol_entry = tk.Entry(self.root)
         self.vessel_vol_entry.grid(row=1, column=1, padx=10, pady=10)
@@ -45,13 +51,19 @@ class App:
         self.quit_button = tk.Button(self.root, text="Quit", command=self.quit)
         self.quit_button.grid(row=3, column=1, padx=10, pady=10)
 
+        t = threading.Thread(target=self.capture_frames)
+        t.start()
+
         self.root.mainloop()
 
     def capture(self):
         if not self.pipeline:
             self.init_pipeline()
 
-        vessel_name = self.vessel_name_entry.get()
+    
+        #vessel_name = self.vessel_name_dropdown.get()
+        #vessel_name_var = self.vessel_name_var.get()
+        vessel_name = self.vessel_name.get()
         vol_vessel = self.vessel_vol_entry.get()
         vol_liquid = self.liquid_vol_entry.get()
 
@@ -76,10 +88,19 @@ class App:
         color_frame = frames.get_color_frame()
         if not depth_frame or not color_frame:
             return
+        
+        if color_frame:
+            color_image = np.asanyarray(color_frame.get_data())
+            cv2.imshow("RGB Stream", color_image)
+            key = cv2.waitKey(1)
+
 
         # Convert images to numpy arrays
         depth_image = np.asanyarray(depth_frame.get_data())
         color_image = np.asanyarray(color_frame.get_data())
+
+            # Display the color image in the window
+        #cv2.imshow('Color Stream', color_image)
 
         # Apply colormap on depth image (image must be converted to 8-bit per pixel first)
         depth_colormap = cv2.applyColorMap(
@@ -120,15 +141,17 @@ class App:
         with open(path + "/Input_vol_vessel.txt", "w") as f:
             f.write(str(vol_vessel))
 
-        self.liquid_vol_entry.delete(
-            0, "end"
-        )  # delete volume entry for easier data entry
+        #self.liquid_vol_entry.delete(
+        #    0, "end"
+        #)  # delete volume entry for easier data entry
 
         messagebox.showinfo(
             "Capture Done", "Images have been captured and saved successfully!"
         )
         # show image in window
         plt.figure(figsize=(5, 5))
+
+
 
     def init_pipeline(self):
         self.pipeline = rs.pipeline()
@@ -138,13 +161,22 @@ class App:
         pipeline_profile = self.pipeline.start(self.config)
         device = pipeline_profile.get_device()
         self.device_product_line = str(device.get_info(rs.camera_info.product_line))
+    
+    def capture_frames(self):
+        if not self.pipeline:
+            self.init_pipeline()
+        while True:
+            frames = self.pipeline.wait_for_frames()
+            color_frame = frames.get_color_frame()
+            if color_frame:
+                color_image = np.asanyarray(color_frame.get_data())
+                cv2.imshow("RGB Stream - Press q to quit", color_image)
+                key = cv2.waitKey(1)
+                if key == ord('q'):
+                    break
 
     def quit(self):
         # self.pipeline.stop()
         self.root.quit()
 
 
-# if __name__ == '__main__':
-#    root = tk.Tk()
-#   app = App(root)
-#   root.mainloop()
