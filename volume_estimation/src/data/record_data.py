@@ -17,9 +17,18 @@ class App:
         self.pipeline = None
         self.config = None
         self.device_product_line = None
+        self.window_name = "RGB Stream - Press q to quit"
+
+        # Set the window size to half of the screen
+        #width = self.master.winfo_screenwidth() // 2
+        #height = self.master.winfo_screenheight()
+        #self.master.geometry(f"{width}x{height}")
 
         self.root = tk.Frame(self.master)
         self.root.pack()
+
+        #self.root.pack(side='left', fill='both', expand=True)
+
 
         tk.Label(self.root, text="Vessel Name:").grid(
             row=0, column=0, padx=10, pady=10, sticky="w"
@@ -27,13 +36,20 @@ class App:
         #tk.Label(self.root, text="Vessel Volume (ml):").grid(
         #    row=1, column=0, padx=10, pady=10, sticky="w"
         #)
-        tk.Label(self.root, text="Liquid Volume (ml):").grid(
+        tk.Label(self.root, text="Liquid color:").grid(
             row=2, column=0, padx=10, pady=10, sticky="w"
+        )
+
+        tk.Label(self.root, text="Liquid Volume (ml):").grid(
+            row=1, column=0, padx=10, pady=10, sticky="w"
         )
 
         # Use a StringVar to store the selected vessel name
         self.vessel_name = tk.StringVar()
         self.vessel_name.set("Please select")  # set initial value to empty string
+
+        self.liquid_color = tk.StringVar()
+        self.liquid_color.set("Please select")  # set initial value to empty string
 
         with open(f"data/Vessel_Selection.csv") as csv_file:
                     # Create a dictionary to store the values
@@ -69,8 +85,11 @@ class App:
         #self.vessel_vol_entry = tk.Entry(self.root)
         #self.vessel_vol_entry.grid(row=1, column=1, padx=10, pady=10)
 
+        self.liquid_color_dropdown = tk.OptionMenu(self.root, self.liquid_color, "transparent", "blue", "red", "green")
+        self.liquid_color_dropdown.grid(row=2, column=1, padx=10, pady=10)
+
         self.liquid_vol_entry = tk.Entry(self.root)
-        self.liquid_vol_entry.grid(row=2, column=1, padx=10, pady=10)
+        self.liquid_vol_entry.grid(row=1, column=1, padx=10, pady=10)
 
         self.capture_button = tk.Button(self.root, text="Capture", command=self.capture)
         self.capture_button.grid(row=3, column=0, padx=10, pady=10)
@@ -93,6 +112,7 @@ class App:
         vessel_name = self.vessel_name.get()
         #vol_vessel = self.vessel_vol_entry.get()
         vol_vessel = int(self.vessel_dict[vessel_name])
+        color_liquid = self.liquid_color.get()
         vol_liquid = self.liquid_vol_entry.get()
 
         if not vessel_name or not vol_liquid or not vol_vessel:
@@ -175,6 +195,8 @@ class App:
             f.write(vessel_name)
         with open(path + "/Input_vol_vessel.txt", "w") as f:
             f.write(str(vol_vessel))
+        with open(path + "/Input_color_liquid.txt", "w") as f:
+            f.write(str(color_liquid))
 
         #self.liquid_vol_entry.delete(
         #    0, "end"
@@ -199,6 +221,10 @@ class App:
         self.device_product_line = str(device.get_info(rs.camera_info.product_line))
     
     def capture_frames(self):
+
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
         if not self.pipeline:
             self.init_pipeline()
         while True:
