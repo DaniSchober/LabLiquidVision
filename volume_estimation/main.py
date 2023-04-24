@@ -95,6 +95,7 @@ def main():
     elif args.mode == "convert":
         # start src.data.make_dataset.py
         print("Converting dataset")
+        print("This might take a while...")
         make_dataset.create_converted_dataset(
             path_input=args.path_input,
             path_output=args.path_output,
