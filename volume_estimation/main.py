@@ -3,7 +3,7 @@ import argparse
 import src.data.make_dataset as make_dataset # uncommented for without torch
 
 import tkinter as tk
-#from src.data.record_data import App
+from src.data.record_data import App
 
 
 def main():
