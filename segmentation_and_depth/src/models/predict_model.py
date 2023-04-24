@@ -128,3 +128,5 @@ def predict(model_path, image_path):
     # save shown figure with timestamp
     plt.savefig("example/results/" + time.strftime("%d%m%Y-%H%M") + ".png")
     plt.show()
+
+
