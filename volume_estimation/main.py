@@ -4,6 +4,7 @@ import src.data.make_dataset as make_dataset # uncommented for without torch
 
 import tkinter as tk
 from src.data.record_data import App
+import src.models.predict_vol as predict_vol
 
 
 def main():
@@ -77,6 +78,28 @@ def main():
         help="Path to output dataset",
     )
 
+    parser.add_argument(
+        "--liquid_depth",
+        type=str,
+        default="data/processed/Tube_50mL_34ml_2404_5523/Input_ContentDepth_segmented.npy",
+        help="Depth of liquid in vessel (.npy)",
+    )
+
+    parser.add_argument(
+        "--vessel_depth",
+        type=str,
+        default="data/processed/Tube_50mL_34ml_2404_5523/Input_EmptyVessel_Depth_segmented.npy",
+        help="Depth of vessel (.npy)",
+    )
+
+    parser.add_argument(
+        "--folder_path",
+        type=str,
+        #default="data/processed/Tube_50mL_34ml_2404_5523",
+        default="data/processed/Pyrex_100mL_84ml_2404_5319",
+        help="Path to folder containing the .npy files",
+    )
+
     args = parser.parse_args()
 
     # print args with "args"
@@ -85,11 +108,13 @@ def main():
     # if train then train else predict
     if args.mode == "train":
         print("Training model")
+        import src.models.train_model
         # train_model_epochs.train(args.batch_size, args.epochs, args.load_model, args.use_labpics)
 
     elif args.mode == "predict":
         # start src.models.predict_model.py
         print("Predicting model")
+        predict_vol.predict(args.folder_path)
         # predict_model.predict(model_path=args.model_path, image_path=args.image_path)
 
     elif args.mode == "convert":

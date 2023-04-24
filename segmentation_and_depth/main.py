@@ -1,7 +1,7 @@
 # main file, starts training or prediction depeeending on the arguments
 import argparse
 
-import src.models.predict_model as predict_model
+import src.models.predict_full_pipeline as predict_full_pipeline
 import src.models.train_model as train_model
 import src.models.train_model_epochs as train_model_epochs
 
@@ -78,7 +78,7 @@ def main():
     elif args.mode == "predict":
         # start src.models.predict_model.py
         print("Predicting model")
-        predict_model.predict(model_path=args.model_path, image_path=args.image_path)
+        predict_full_pipeline.predict(model_path=args.model_path, image_path=args.image_path)
 
     else:
         print("Invalid argument")

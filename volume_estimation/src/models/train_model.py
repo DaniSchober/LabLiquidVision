@@ -14,6 +14,8 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     # Wrap train_loader with tqdm for a progress bar
     progress_bar = tqdm(train_loader, desc=epoch_str)
 
+    rmse_epoch = 0
+
     for i, data in enumerate(progress_bar):
         vessel_depth = data["vessel_depth"]
         liquid_depth = data["liquid_depth"]
@@ -28,20 +30,26 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         loss = criterion(outputs, targets)
         # Calculate RMSE
         rmse = torch.sqrt(loss).item()
+        rmse_epoch += rmse
+
         loss.backward()
         optimizer.step()
 
         # Update progress bar
         progress_bar.set_postfix({"loss": loss.item(), "RMSE": rmse})
 
-
-data_dir = "data/interim/"
-batch_size = 2
+    # get the average RMSE for the epoch
+    rmse_epoch /= len(train_loader)
+    print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
+    
+data_dir = "data/processed/"
+batch_size = 4
 num_epochs = 10
 learning_rate = 0.001
 
 # Load the dataset
 dataset = VesselCaptureDataset(data_dir)
+print(f"Loaded {len(dataset)} samples")
 
 # Split the dataset into training and test data
 train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
@@ -61,7 +69,6 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 # Train the model
 for epoch in range(num_epochs):
     epoch_str = "Epoch " + str(epoch + 1)
-    # print(f'Epoch {epoch + 1}/{num_epochs}')
     train(model, criterion, optimizer, train_loader, epoch_str)
 
 # Save the trained model

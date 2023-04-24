@@ -66,7 +66,7 @@ def create_converted_dataset(
 
     count = 0
 
-    to_convert = len(os.listdir(path_output))
+    to_convert = len(os.listdir(path_input))
     progress = 0
 
 

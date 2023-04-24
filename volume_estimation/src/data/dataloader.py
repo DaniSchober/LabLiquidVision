@@ -13,8 +13,8 @@ class VesselCaptureDataset(Dataset):
             sample_path = os.path.join(data_dir, sample_dir)
 
             if os.path.isdir(sample_path):
-                vessel_depth_path = os.path.join(sample_path, "EmptyVessel_Depth_segmented.npy")
-                liquid_depth_path = os.path.join(sample_path, "ContentDepth_segmented.npy")
+                vessel_depth_path = os.path.join(sample_path, "Input_EmptyVessel_Depth_segmented.npy")
+                liquid_depth_path = os.path.join(sample_path, "Input_ContentDepth_segmented.npy")
                 vol_liquid_path = os.path.join(sample_path, "Input_vol_liquid.txt")
                 vessel_path = os.path.join(sample_path, "Input_vessel.txt")
                 vol_vessel_path = os.path.join(sample_path, "Input_vol_vessel.txt")
