@@ -1,0 +1,2 @@
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
+release|x64|C:\Users\apo_n\Documents\GitHub\Flex-Fluid-New\demo\compiler\vc14win64\|

@@ -1,0 +1,2 @@
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
+debug|Win32|C:\Users\apo_n\Documents\flex2.0\flex-110\flex\demo\compiler\vc14win32\|

@@ -1,0 +1,18 @@
+﻿  Building ..\..\cuda\flexExt.cu
+  flexExt.cu
+cl : Command line warning D9002: ignoring unknown option '/arch:SSE2'
+  flexExtCloth.cpp
+  flexExtContainer.cpp
+  flexExtMovingFrame.cpp
+  flexExtRigid.cpp
+  flexExtSoft.cpp
+  sdf.cpp
+  voxelize.cpp
+  maths.cpp
+  aabbtree.cpp
+     Creating library ./../../../lib/win64/NvFlexExtReleaseCUDA_x64.lib and object ./../../../lib/win64/NvFlexExtReleaseCUDA_x64.exp
+  Generating code
+  All 1861 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  flexExtCUDA.vcxproj -> D:\documents\flex-110\flex\extensions\compiler\vc14win64\./../../../bin/win64\NvFlexExtReleaseCUDA_x64.dll
+  flexExtCUDA.vcxproj -> ./../../../bin/win64\/NvFlexExtReleaseCUDA_x64.dll.pdb (Full PDB)

@@ -1,0 +1,35 @@
+﻿  imgui.cpp
+  main.cpp
+..\..\main.cpp(389): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(91): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(92): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(96): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(147): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(154): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(211): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(262): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(263): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(267): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(268): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(336): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\flex2.0_working - copy\flex-110\flex\demo\scenes/pouring.h(346): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+..\..\main.cpp(617): warning C4305: '=': truncation from 'double' to 'float'
+..\..\main.cpp(2638): warning C4101: 'e': unreferenced local variable
+  imguiRenderGL.cpp
+  shader.cpp
+  shadersGL.cpp
+  aabbtree.cpp
+  core.cpp
+  extrude.cpp
+  maths.cpp
+  mesh.cpp
+  perlin.cpp
+  pfm.cpp
+  platform.cpp
+  sdf.cpp
+  tga.cpp
+  voxelize.cpp
+  Generating Code...
+     Creating library ./../../../bin/win32\NvFlexDemoDebugCUDA_x86.lib and object ./../../../bin/win32\NvFlexDemoDebugCUDA_x86.exp
+  flexDemoCUDA.vcxproj -> C:\Users\apo_n\Documents\flex2.0_working - Copy\flex-110\flex\demo\compiler\vc14win32\./../../../bin/win32\NvFlexDemoDebugCUDA_x86.exe
+  flexDemoCUDA.vcxproj -> ./../../../bin/win32\/NvFlexDemoDebugCUDA_x86.exe.pdb (Full PDB)
