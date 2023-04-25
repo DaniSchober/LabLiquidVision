@@ -32,6 +32,8 @@ public:
 	int num_particles = -1;
 	float prev_theta = 0;
 	float rotationSpeed;
+	float x_trans = -4.5;
+	//float y_trans = 0.0;
 
 	float stop_angle;
 	float next_stop_threshold = 0;
@@ -47,7 +49,7 @@ public:
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
 		output_path(out_path),    				// path to the output folder
-		glass_top_elevation(3.5), 				// how much the pouring container top is above the receiving container
+		glass_top_elevation(11), 				// how much the pouring container top is above the receiving container
 		vis(viscosity), coh(cohesion)			//, rotationSpeed(speed)
 		{}
 
@@ -92,13 +94,13 @@ public:
 		std::uniform_real_distribution<float> distribution(sqrt(0.005), sqrt(0.1));
 		rotationSpeed = distribution(generator);
 		rotationSpeed *= rotationSpeed;
-		rotationSpeed = 0.1;
+		rotationSpeed = 0.05;
 
 		// create generator for random stop angle betweem 45 and 135 degrees
 		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
 		std::uniform_real_distribution<float> distribution2(45.0, 135.0);
 		stop_angle = distribution2(generator2);
-		stop_angle = 88;
+		stop_angle = 30;
 		//stop_angle = 180;
 
 		ofstream param_file;
@@ -109,8 +111,8 @@ public:
 		printf("Stop angle %f rot speed %f", stop_angle, rotationSpeed);
 
 		// set drawing options
-		g_drawPoints = false;
-		g_drawEllipsoids = true; // Draw as fluid
+		g_drawPoints = true;
+		g_drawEllipsoids = false; // Draw as fluid
 		g_wireframe = false;
 		g_drawDensity = false;
 		g_drawSprings = false;
@@ -168,16 +170,30 @@ public:
 		// Import mesh of pouring container 
 		Mesh* glass = ImportMesh(GetFilePathByPlatform((pouring_container_path+".obj").c_str()).c_str());
 
-		// move the pouring container downwards (negative y-direction) by its height, so it can be set to the right height afterwards
-		glass->Transform(TranslationMatrix(Point3( 0.0, -glass_height, 0.0)));
-		glass->CalculateNormals();
+		// move the pouring container downwards, so it can rotate around another axis: basically moving the reference coordinate system of the object (idea: half the height of the object downwards, I think it's in inches)
+		glass->Transform(TranslationMatrix(Point3( 0.0, -3.93, 0.0)));
+		//glass->CalculateNormals();
+		// Define the angle of rotation in radians
+		float angle = -1.5708f; // for example, rotate 1 radian
+
+		// Define the axis of rotation
+		Vec3 axis = Vec3(0.0f, 0.0f, 1.0f);
+
+		// Define the rotation quaternion
+		Quat rot = QuatFromAxisAngle(axis, angle);
+
+		// Rotate the mesh
+		glass->Transform(RotationMatrix(rot));
+
 
 		pouring_mesh = CreateTriangleMesh(glass);
 
 		// set pouring container position and orientation (glass_top_elevation is the height of the top of the container compared to the ground plane)
-		Vec3 pos = Vec3(0.0f, glass_top_elevation, 0.0f);
+		Vec3 pos = Vec3(x_trans, glass_top_elevation, 0.0f);
+		//Vec3 pos = Vec3(50.0f, 30.0f, 50.0f);
 		//Vec3 pos = Vec3(0.0f, glass_height, 0.0f);
-		Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 1.0f - cosf(0));
+		//Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 1.0f - cosf(0));
+		//Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 2.0f);
 		AddTriangleMesh(pouring_mesh, pos, rot, 1.0f);
 		
 
@@ -186,7 +202,7 @@ public:
 		delete glass;
 
 		//////////////////////////////////////////////////// Set fluid parameters and create emitter ///////////////////////////////////////////////////////////////////
-		float radius = 0.01f;
+		float radius = 0.1f;
 		float restDistance = radius*0.6f;
 		Vec3 lower = (0.0f, 10.0f, 0.0f);
 		int x_count = (int)(1.0f / restDistance);
@@ -244,13 +260,14 @@ public:
 		*/
 		/// end TUM people
 
-		float emitterSize = 0.3f; //min_radius* 2 + 0.01; // 0.5f;
+		float emitterSize = 1.5f; //min_radius* 2 + 0.01; // 0.5f;
 		printf("Emitter size  %f %f %f\n", emitterSize, min_radius, radius);
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////////////// Change location of water emitter //////////////////////////////////////////////
 
-		Vec3 center = Vec3(0.0, glass_top_elevation - glass_height/2.0, 0.0); // Emits particles in the center of the object
+		//Vec3 center = Vec3(0.0, glass_top_elevation - glass_height/2.0, 0.0); // Emits particles in the center of the object
+		Vec3 center = Vec3(x_trans-0.7, glass_top_elevation + 1.0f, -2.35f);
 
 		Emitter e;
 		e.mEnabled = true;
@@ -264,14 +281,15 @@ public:
 
 		g_emitters.push_back(e);
 
-		g_numExtraParticles = 153000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
+		g_numExtraParticles = 20000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		// 153000 particles = 322,94896 mm3ffff
 		//g_numExtraParticles = (int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		printf("Num particles %d \n", g_numExtraParticles);
 		// The particles are spawned once every eight of a second.  It creates a number of
 		// particles proportional to the area of the emitter.  Five seconds is then added to
 		// let the water settle
-		startTime = 1.0f * g_numExtraParticles / e.mWidth / e.mWidth / 8 + 20;// +5;
+		//startTime = 1.0f * g_numExtraParticles / e.mWidth / e.mWidth / 8 + 20;// +5;
+		startTime = 45.0f;
 		g_emit = false;
 
 		theta_vs_volume_file.open(output_path +".text");
@@ -490,12 +508,12 @@ public:
 		param_file << "poured_particles " << g_numExtraParticles - inside_count << std::endl;
 		param_file.close();
 
-		Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time)), glass_top_elevation, 0.0f);
-		Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime)), glass_top_elevation, 0.0f);
+		Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time))+x_trans, glass_top_elevation, 0.0f);
+		Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime))+x_trans, glass_top_elevation, 0.0f);
 		//Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time)), glass_height, 0.0f);
 		//Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime)), glass_height, 0.0f);
-		Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), theta); //1.0f - cosf(theta)
-		Quat prevRot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), real_prev_theta); //1.0f - cosf(theta)
+		Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -theta); //1.0f - cosf(theta)
+		Quat prevRot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -real_prev_theta); //1.0f - cosf(theta)
 
 		//AddTriangleMesh(mesh, recieve_pos, recieve_rot, 1.0f);
 		AddTriangleMesh(pouring_mesh, pos, rot, 1.0f);
