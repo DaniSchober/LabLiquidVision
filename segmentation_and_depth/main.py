@@ -1,7 +1,10 @@
 # main file, starts training or prediction depeeending on the arguments
 import argparse
+import os
 
-import src.models.predict_full_pipeline as predict_full_pipeline
+os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "1"
+
+import src.models.predict_model as predict
 import src.models.train_model as train_model
 import src.models.train_model_epochs as train_model_epochs
 
@@ -25,13 +28,13 @@ def main():
     parser.add_argument(
         "--model_path",
         type=str,
-        default="",
+        default="models/55__03042023-2211.torch",
         help="Path to model",
     )
     parser.add_argument(
         "--image_path",
         type=str,
-        default="",
+        default="example/RGBImage10.png",
         help="Path to image",
     )
 
@@ -78,7 +81,7 @@ def main():
     elif args.mode == "predict":
         # start src.models.predict_model.py
         print("Predicting model")
-        predict_full_pipeline.predict(model_path=args.model_path, image_path=args.image_path)
+        predict.predict(model_path=args.model_path, image_path=args.image_path)
 
     else:
         print("Invalid argument")

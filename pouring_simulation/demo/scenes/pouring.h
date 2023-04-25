@@ -23,9 +23,9 @@ public:
 
 	ofstream theta_vs_slosh_time_file;
 
-	NvFlexTriangleMeshId mesh, pouring_mesh;
-	Vec3 recieve_pos;
-	Quat recieve_rot;
+	NvFlexTriangleMeshId mesh_receiver, pouring_mesh;
+	Vec3 receive_pos;
+	Quat receive_rot;
 	float mTime;
 	float startTime;
 	int frame_count = 0;
@@ -119,23 +119,31 @@ public:
 		
 
 		//////////////////////////////////////////////////////// Add receiving container /////////////////////////////////////////////////////////////////////////////
+		
 		// Import mesh of the recieving container
-		Mesh* bowl = ImportMesh(GetFilePathByPlatform("../../data/bowl.obj").c_str());
+		//Mesh* bowl = ImportMesh(GetFilePathByPlatform("../../data/bowl.obj").c_str());
 
 		// change bowl size
-		float bowl_width = 2.5;
+		//float bowl_width = 2.5;
 
-		bowl->Normalize(bowl_width);
-		bowl->CalculateNormals();
-		bowl->Transform(TranslationMatrix(Point3(-bowl_width / 2, 0.0f, -bowl_width/2)));
+		//bowl->Normalize(bowl_width);
+		//bowl->CalculateNormals();
+		//bowl->Transform(TranslationMatrix(Point3(-bowl_width / 2, 0.0f, -bowl_width/2)));
 
 		// create triangle mesh of receiving container
-		mesh = CreateTriangleMesh(bowl);
+		//mesh = CreateTriangleMesh(bowl);
 
 		// set position and rotation of receiving container and add it to scene
-		recieve_pos = Vec3(0.0f, 0.0f, 0.0f);
-		recieve_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 0.0f);
-		AddTriangleMesh(mesh, recieve_pos, recieve_rot, 1.0f);
+		//recieve_pos = Vec3(0.0f, 0.0f, 0.0f);
+		//recieve_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 0.0f);
+		//AddTriangleMesh(mesh, recieve_pos, recieve_rot, 1.0f);
+		
+		Mesh* receiver = ImportMesh(GetFilePathByPlatform("../../data/CellFlask.obj").c_str());
+		mesh_receiver = CreateTriangleMesh(receiver);
+
+		receive_pos = Vec3(0.0f, 0.1f, 0.0f); // x, y, z (y is up)! Changing position of the receiving container
+		receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -0.244f); // turn around z-axis around 14 degrees (in radians 0.244f)
+		AddTriangleMesh(mesh_receiver, receive_pos, receive_rot, 1.0f); // change scale of the receiving container
 
 		//////////////////////////////////////////////////////// Add pouring container ////////////////////////////////////////////////////////////////////////////////
 		// get data from config_file of pouring container if it exists
@@ -147,7 +155,7 @@ public:
 		//config_file >> area;
 		min_radius = 0.145;	// minimum radius of pouring container
 		max_radius = 0.178;	// maximum radius pf pouring container
-		height = 0.5; 		// height of the pouring container
+		height = 0.1; 		// height of the pouring container
 		area = 0.066; 		// area of the pouring container
 		printf("\nMin_radius %f, Max_radius %f, Height %f\n", min_radius, max_radius, height);
 		
@@ -174,7 +182,7 @@ public:
 		
 
 		// delete bowl and glass object 
-		delete bowl;
+		delete receiver;
 		delete glass;
 
 		//////////////////////////////////////////////////// Set fluid parameters and create emitter ///////////////////////////////////////////////////////////////////

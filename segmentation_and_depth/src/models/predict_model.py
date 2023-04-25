@@ -56,7 +56,7 @@ def predict(model_path, image_path):
     for nm in PrdDepth:
         # convert to numpy and transpose to (H,W,C)
         Prd[nm] = (PrdDepth[nm].transpose(1, 2).transpose(2, 3)).data.cpu().numpy()
-        print("Predicted Depth Map: ", Prd[nm].shape)
+        #print("Predicted Depth Map: ", Prd[nm].shape)
     for nm in PrdMask:
         # convert to numpy
         Prd[nm] = (PrdMask[nm]).data.cpu().numpy()
@@ -91,7 +91,7 @@ def predict(model_path, image_path):
                     tmIm = tmIm / tmIm.max() * 255
                 if np.ndim(tmIm) == 2:
                     tmIm = cv2.cvtColor(tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR)
-            print(tmIm.shape)
+            #print(tmIm.shape)
             plt.subplot(3, 3, count)
             plt.imshow(tmIm)
             plt.axis("off")

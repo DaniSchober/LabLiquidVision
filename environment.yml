@@ -1,0 +1,26 @@
+name: thesis
+channels:
+  - pytorch
+  - nvidia
+  - anaconda
+  - defaults
+dependencies:
+  - python=3.9.16
+  - ipykernel
+  - pytorch=2.0.0=py3.9_cuda11.8_cudnn8_0
+  - pytorch-cuda=11.8=h24eeafa_3
+  - pip
+  - pip:
+    - black
+    - torchvision==0.15.0
+    - torchaudio==2.0.0
+    - matplotlib==3.7.1
+    - ipykernel==6.19.2
+    - numpy==1.23.5
+    - flake8
+    - sklearn
+    - tqdm
+    - matplotlib-inline
+    - pyrealsense2==2.53.1.4623
+    - opencv-python
+    - scikit-learn
