@@ -32,7 +32,10 @@ public:
 	int num_particles = -1;
 	float prev_theta = 0;
 	float rotationSpeed;
-	float x_trans = -4.5;
+	float x_trans = -5.1;
+	float x_translation = 0.0;
+	float y_translation = 0.0;
+
 	//float y_trans = 0.0;
 
 	float stop_angle;
@@ -49,7 +52,7 @@ public:
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
 		output_path(out_path),    				// path to the output folder
-		glass_top_elevation(11), 				// how much the pouring container top is above the receiving container
+		glass_top_elevation(8.7), 				// how much the pouring container top is above the receiving container
 		vis(viscosity), coh(cohesion)			//, rotationSpeed(speed)
 		{}
 
@@ -100,7 +103,7 @@ public:
 		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
 		std::uniform_real_distribution<float> distribution2(45.0, 135.0);
 		stop_angle = distribution2(generator2);
-		stop_angle = 30;
+		stop_angle = 40;
 		//stop_angle = 180;
 
 		ofstream param_file;
@@ -111,8 +114,8 @@ public:
 		printf("Stop angle %f rot speed %f", stop_angle, rotationSpeed);
 
 		// set drawing options
-		g_drawPoints = true;
-		g_drawEllipsoids = false; // Draw as fluid
+		g_drawPoints = false;
+		g_drawEllipsoids = true; // Draw as fluid
 		g_wireframe = false;
 		g_drawDensity = false;
 		g_drawSprings = false;
@@ -192,9 +195,9 @@ public:
 		Vec3 pos = Vec3(x_trans, glass_top_elevation, 0.0f);
 		//Vec3 pos = Vec3(50.0f, 30.0f, 50.0f);
 		//Vec3 pos = Vec3(0.0f, glass_height, 0.0f);
-		//Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 1.0f - cosf(0));
+		Quat rot1 = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 1.0f - cosf(0));
 		//Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 2.0f);
-		AddTriangleMesh(pouring_mesh, pos, rot, 1.0f);
+		AddTriangleMesh(pouring_mesh, pos, rot1, 1.0f);
 		
 
 		// delete bowl and glass object 
@@ -227,40 +230,15 @@ public:
 		g_params.collisionDistance = g_params.radius*.25f; //g_params.radius*0.5f;
 		g_params.shapeCollisionMargin = g_params.collisionDistance*0.05f;
 	
+		// parameters from paper PourNet
 		g_params.viscosity = 0.01f; // changed
 		g_params.cohesion = 0.001f; // changed
 		g_params.vorticityConfinement = 80.0f; // new
 		g_params.surfaceTension = 0.005f; // new
 		g_params.adhesion = 0.0001f; // new
-		// parameters from paper PourNet
+		// parameters from paper PourNet end
 
-		/// from TUM people
-		//g_numSubsteps = 10; //2;
-		/*
-		g_params.radius = 0.01f;
-		g_params.dynamicFriction = 0.1f; //0.1f;
-		g_params.dissipation = 0.0f;
-		g_params.numPlanes = 1;
-		g_params.restitution = 0.001f; // new added
-		g_params.fluidRestDistance = 0.1f;
-		g_params.viscosity = vis;// 0.10f; // 0.0f
-		g_params.cohesion = coh;// 0.0f;// 0.02f;
-		g_params.numIterations = 3;
-		g_params.anisotropyScale = 2.0f;
-		g_params.fluid = true;
-		g_params.relaxationFactor = 1.0f;
-		g_params.smoothing = 0.5f;
-		g_params.collisionDistance = 0.15; //g_params.radius*0.5f;
-		g_params.shapeCollisionMargin = g_params.collisionDistance*0.05f;
-		g_params.viscosity = 0.3f; // changed
-		g_params.cohesion = 0.03f; // changed
-		g_params.vorticityConfinement = 0.0f; // new
-		g_params.surfaceTension = 0.0f; // new
-		g_params.buoyancy = 2.0f; // new
-		*/
-		/// end TUM people
-
-		float emitterSize = 1.5f; //min_radius* 2 + 0.01; // 0.5f;
+		float emitterSize = 3.5f; //min_radius* 2 + 0.01; // 0.5f;
 		printf("Emitter size  %f %f %f\n", emitterSize, min_radius, radius);
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -289,7 +267,7 @@ public:
 		// particles proportional to the area of the emitter.  Five seconds is then added to
 		// let the water settle
 		//startTime = 1.0f * g_numExtraParticles / e.mWidth / e.mWidth / 8 + 20;// +5;
-		startTime = 45.0f;
+		startTime = 15.0f;
 		g_emit = false;
 
 		theta_vs_volume_file.open(output_path +".text");
@@ -378,7 +356,7 @@ public:
 		float lastTime = Max(0.0f, time - g_dt);
 
 
-		const float translationSpeed = 0.0f;// 1.0f;
+		const float translationSpeed = 0.1f;// 1.0f;
 
 		float endTime = 3.14 / rotationSpeed;
 
@@ -508,10 +486,22 @@ public:
 		param_file << "poured_particles " << g_numExtraParticles - inside_count << std::endl;
 		param_file.close();
 
-		Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time))+x_trans, glass_top_elevation, 0.0f);
-		Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime))+x_trans, glass_top_elevation, 0.0f);
+		//Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time))+x_trans, glass_top_elevation, 0.0f);
+		//Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime))+x_trans, glass_top_elevation, 0.0f);
+
+		Vec3 prevPos = Vec3(x_translation + x_trans, glass_top_elevation + y_translation, 0.0f);
+
+		if (theta < (stop_angle*3.14/180) & time > 0) {
+			x_translation = x_translation + (time-lastTime)*translationSpeed;
+			y_translation = y_translation + (time-lastTime)*2*translationSpeed;
+		}
+
+		Vec3 pos = Vec3(x_translation + x_trans, glass_top_elevation + y_translation, 0.0f);
+		
+
 		//Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time)), glass_height, 0.0f);
 		//Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime)), glass_height, 0.0f);
+		
 		Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -theta); //1.0f - cosf(theta)
 		Quat prevRot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -real_prev_theta); //1.0f - cosf(theta)
 

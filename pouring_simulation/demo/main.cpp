@@ -392,11 +392,11 @@ void DestroyBuffers(SimBuffers* buffers)
 
 //Vec3 g_camPos(-0.02, 3.85, 3.77); //(6.0f, 8.0f, 18.0f);
 // change camera position //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Vec3 g_camPos(-10.0f, 5.0f, 10.0f); //(6.0f, 8.0f, 18.0f);
+Vec3 g_camPos(8.0f, 19.0f, 13.0f); //(6.0f, 8.0f, 18.0f);
 //Vec3 g_camPos(-250.0f, 200.0f, 500.0f); //(6.0f, 8.0f, 18.0f);
 
 
-Vec3 g_camAngle(-0.6, -0.3, 0); //(0.0f, -DegToRad(20.0f), 0.0f);
+Vec3 g_camAngle(DegToRad(30.0f), -DegToRad(35.0f), -DegToRad(90.0f)); //(0.0f, -DegToRad(20.0f), 0.0f);
 
 Vec3 g_camVel(0.0f);
 Vec3 g_camSmoothVel(0.0f);
@@ -2780,7 +2780,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	g_scenes.push_back(new PotPourri("Pot Pourri"));
+	//g_scenes.push_back(new PotPourri("Pot Pourri"));
 
 	//HANDLE hFind;
 	//WIN32_FIND_DATA data;
@@ -2919,6 +2919,8 @@ int main(int argc, char* argv[])
 	plasticBunnies->mStack[1] = 10;	
 	plasticBunnies->mPlinth = true;
 
+
+	/*
 	g_scenes.push_back(softOctopus);
 	g_scenes.push_back(softTeapot);
 	g_scenes.push_back(softRope);
@@ -3004,7 +3006,7 @@ int main(int argc, char* argv[])
 	g_scenes.push_back(new FluidClothCoupling("Fluid Cloth Coupling Goo", true));
 	g_scenes.push_back(new BunnyBath("Bunny Bath Dam", true));
 
-	
+	*/
 
 	// init gl
 #ifndef ANDROID
