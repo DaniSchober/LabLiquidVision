@@ -1,21 +1,15 @@
 ﻿  main.cpp
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(35): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(57): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(96): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(100): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(103): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(168): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(171): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(177): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(248): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(67): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(126): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(127): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(133): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(243): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(290): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(291): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(295): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(296): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(300): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(301): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(361): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(371): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(494): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(346): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring.h(353): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 ..\..\main.cpp(627): warning C4305: '=': truncation from 'double' to 'float'
   flexDemoD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\compiler\vc14win64\./../../../bin/win64\NvFlexDemoDebugD3D_x64.exe
   flexDemoD3D.vcxproj -> ./../../../bin/win64\/NvFlexDemoDebugD3D_x64.exe.pdb (Full PDB)

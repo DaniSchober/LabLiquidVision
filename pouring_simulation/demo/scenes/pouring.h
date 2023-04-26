@@ -32,17 +32,27 @@ public:
 	int num_particles = -1;
 	float prev_theta = 0;
 	float rotationSpeed;
-	float x_trans = -5.1;
-	float x_translation = 0.0;
-	float y_translation = 0.0;
+	float radius_CoR;
+	float TCP_x;
+	float TCP_y;
+	float pos_x;
+	float pos_y;
+	float prev_pos_x;
+	float prev_pos_y;
+
+	float pause_time = 2.0;
+	bool pause_complete = false;
+
 
 	//float y_trans = 0.0;
 
 	float stop_angle;
 	float next_stop_threshold = 0;
 	bool stopped = false;
+	bool return_activated = false;
 	int prev_particle_count = -1;
 	float pause_start_time = 0;
+	float pause_start = 0;
 	int pause_no_change_count = 0;
 
 	float vis = -1;
@@ -52,7 +62,7 @@ public:
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
 		output_path(out_path),    				// path to the output folder
-		glass_top_elevation(8.7), 				// how much the pouring container top is above the receiving container
+		glass_top_elevation(9.3), 				// how much the pouring container top is above the receiving container
 		vis(viscosity), coh(cohesion)			//, rotationSpeed(speed)
 		{}
 
@@ -92,18 +102,38 @@ public:
 	{
 		printf("Init\n");
 
+		// get data from config_file of pouring container if it exists --> maybe save there the TCP and center of rotation positions
+		ifstream config_file(pouring_container_path + ".cfg");
+		if (config_file.is_open()) {
+			printf("Config file found\n");
+			// read in the data from the config file
+
+		}
+		printf("Path %s", pouring_container_path.c_str());
+		//float TCP_x, TCP_y, radius;
+		config_file >> TCP_x;
+		config_file >> TCP_y;
+		config_file >> radius_CoR;
+
+		pos_x = TCP_x;
+		pos_y = TCP_y;
+		prev_pos_x = TCP_x;
+		prev_pos_y = TCP_y;
+
+		printf("TCP %f %f radius: %f\n", TCP_x, TCP_y, radius_CoR);
+
 		// create generator for random rotation speed between sqrt(0.005) and sqrt(0.1)
 		std::default_random_engine generator(chrono::steady_clock::now().time_since_epoch().count());
 		std::uniform_real_distribution<float> distribution(sqrt(0.005), sqrt(0.1));
 		rotationSpeed = distribution(generator);
 		rotationSpeed *= rotationSpeed;
-		rotationSpeed = 0.05;
+		//rotationSpeed = 0.05;
 
 		// create generator for random stop angle betweem 45 and 135 degrees
 		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
-		std::uniform_real_distribution<float> distribution2(45.0, 135.0);
+		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
 		stop_angle = distribution2(generator2);
-		stop_angle = 40;
+		//stop_angle = 50;
 		//stop_angle = 180;
 
 		ofstream param_file;
@@ -125,56 +155,22 @@ public:
 
 		//////////////////////////////////////////////////////// Add receiving container /////////////////////////////////////////////////////////////////////////////
 		
-		// Import mesh of the recieving container
-		//Mesh* bowl = ImportMesh(GetFilePathByPlatform("../../data/bowl.obj").c_str());
-
-		// change bowl size
-		//float bowl_width = 2.5;
-
-		//bowl->Normalize(bowl_width);
-		//bowl->CalculateNormals();
-		//bowl->Transform(TranslationMatrix(Point3(-bowl_width / 2, 0.0f, -bowl_width/2)));
-
-		// create triangle mesh of receiving container
-		//mesh = CreateTriangleMesh(bowl);
-
-		// set position and rotation of receiving container and add it to scene
-		//recieve_pos = Vec3(0.0f, 0.0f, 0.0f);
-		//recieve_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 0.0f);
-		//AddTriangleMesh(mesh, recieve_pos, recieve_rot, 1.0f);
-		
-		Mesh* receiver = ImportMesh(GetFilePathByPlatform("../../data/CellFlask.obj").c_str());
+		Mesh* receiver = ImportMesh(GetFilePathByPlatform("../../data/Assembly3.obj").c_str());
 		mesh_receiver = CreateTriangleMesh(receiver);
 
 		receive_pos = Vec3(0.0f, 0.1f, 0.0f); // x, y, z (y is up)! Changing position of the receiving container
-		receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -0.244f); // turn around z-axis around 14 degrees (in radians 0.244f)
+		//receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -0.244f); // turn around z-axis around 14 degrees (in radians 0.244f)
+		receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 0.0f); // turn around z-axis around 14 degrees (in radians 0.244f)
 		AddTriangleMesh(mesh_receiver, receive_pos, receive_rot, 1.0f); // change scale of the receiving container
 
 		//////////////////////////////////////////////////////// Add pouring container ////////////////////////////////////////////////////////////////////////////////
-		// get data from config_file of pouring container if it exists
-		ifstream config_file(pouring_container_path + ".cfg");
-		double min_radius, max_radius, height, area;
-		//config_file >> min_radius;
-		//config_file >> max_radius;
-		//config_file >> height;
-		//config_file >> area;
-		min_radius = 0.145;	// minimum radius of pouring container
-		max_radius = 0.178;	// maximum radius pf pouring container
-		height = 0.1; 		// height of the pouring container
-		area = 0.066; 		// area of the pouring container
-		printf("\nMin_radius %f, Max_radius %f, Height %f\n", min_radius, max_radius, height);
 		
-		// set glass width to max_radius of the object
-		glass_width = max_radius;
-
-		// set glass height to height of the object
-		glass_height = height;
 
 		// Import mesh of pouring container 
 		Mesh* glass = ImportMesh(GetFilePathByPlatform((pouring_container_path+".obj").c_str()).c_str());
 
 		// move the pouring container downwards, so it can rotate around another axis: basically moving the reference coordinate system of the object (idea: half the height of the object downwards, I think it's in inches)
-		glass->Transform(TranslationMatrix(Point3( 0.0, -3.93, 0.0)));
+		//glass->Transform(TranslationMatrix(Point3( 0.0, -3.93, 0.0)));
 		//glass->CalculateNormals();
 		// Define the angle of rotation in radians
 		float angle = -1.5708f; // for example, rotate 1 radian
@@ -192,7 +188,7 @@ public:
 		pouring_mesh = CreateTriangleMesh(glass);
 
 		// set pouring container position and orientation (glass_top_elevation is the height of the top of the container compared to the ground plane)
-		Vec3 pos = Vec3(x_trans, glass_top_elevation, 0.0f);
+		Vec3 pos = Vec3(TCP_x, glass_top_elevation, 0.0f);
 		//Vec3 pos = Vec3(50.0f, 30.0f, 50.0f);
 		//Vec3 pos = Vec3(0.0f, glass_height, 0.0f);
 		Quat rot1 = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 1.0f - cosf(0));
@@ -239,13 +235,12 @@ public:
 		// parameters from paper PourNet end
 
 		float emitterSize = 3.5f; //min_radius* 2 + 0.01; // 0.5f;
-		printf("Emitter size  %f %f %f\n", emitterSize, min_radius, radius);
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////////////// Change location of water emitter //////////////////////////////////////////////
 
 		//Vec3 center = Vec3(0.0, glass_top_elevation - glass_height/2.0, 0.0); // Emits particles in the center of the object
-		Vec3 center = Vec3(x_trans-0.7, glass_top_elevation + 1.0f, -2.35f);
+		Vec3 center = Vec3(TCP_x-0.7, glass_top_elevation, 0.0f);
 
 		Emitter e;
 		e.mEnabled = true;
@@ -267,7 +262,7 @@ public:
 		// particles proportional to the area of the emitter.  Five seconds is then added to
 		// let the water settle
 		//startTime = 1.0f * g_numExtraParticles / e.mWidth / e.mWidth / 8 + 20;// +5;
-		startTime = 15.0f;
+		startTime = 11.0f;
 		g_emit = false;
 
 		theta_vs_volume_file.open(output_path +".text");
@@ -313,7 +308,7 @@ public:
 		// Defaults to 60Hz
 		mTime += g_dt;
 		// print g_dt
-		printf("mTime %f \n", mTime);
+		//printf("mTime %f \n", mTime);
 		// the scene settle before moving
 		if (mTime > 0.5) {
 			g_emit = true;
@@ -336,7 +331,6 @@ public:
 			num_particles = inside_count;
 		}
 
-		//ClearShapes();
 
 		g_buffers->shapeGeometry.resize(1);
 		g_buffers->shapePositions.resize(1);
@@ -345,44 +339,42 @@ public:
 		g_buffers->shapePrevRotations.resize(1);
 		g_buffers->shapeFlags.resize(1);
 
-		//int num_particles = g_buffers->positions.count;
-		//printf("num_particles: %d\n", num_particles);
-		//printf("Particle0 %f %f %f\n", g_buffers->positions[0].x, g_buffers->positions[0].y, g_buffers->positions[0].z);
-		
-		//startTime = 50.0f;
-
 
 		float time = Max(0.0f, mTime - startTime);
 		float lastTime = Max(0.0f, time - g_dt);
 
-
-		const float translationSpeed = 0.1f;// 1.0f;
-
 		float endTime = 3.14 / rotationSpeed;
 
-		
-
-		
 		float theta = 0;
+
 		// If true, the cup will stop every stop_angle degrees and wait for the water level to stop changing
 		bool continous = false;
 
-		
 		float stop_distance = stop_angle*3.14/180;
-		float max_theta_speed = rotationSpeed;// 0.0005; //0.0003
-		float fraction_at_max_speed = 0.0;// 0.95;
 		float real_prev_theta = prev_theta;
+
+		///////////////////////////////////////////////////////////////////// Movements ///////////////////////////////////////////////////////////////////////////
+
 		if (continous) {
 			theta = 3.14f * (1.0f - cosf(rotationSpeed*time)); // rotationSpeed*time;
 			time = Min(time, endTime);
 			lastTime = Min(lastTime, endTime);
 		}
-		else if (time > 0) {
+		else if (time > 0 && !return_activated) {
 			theta = prev_theta;
+			prev_pos_x = pos_x;
+			prev_pos_y = pos_y;
+
 			if (!stopped) {
+
 				theta = prev_theta + rotationSpeed * g_dt;
+				pos_x = TCP_x + radius_CoR * (1 - cos(theta));
+				pos_y = TCP_y + radius_CoR * sin(theta);
+				
+				printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
 				if (theta > next_stop_threshold) {
+					printf("Stopped activated: theta: %f\n", theta);
 					pause_start_time = time;
 					next_stop_threshold += stop_distance;
 					stopped = true;
@@ -392,13 +384,59 @@ public:
 			
 			prev_theta = theta;
 		}
+		else if (return_activated && prev_theta > 0) {
+			if (!pause_complete) {
+				printf("Pausing at max angle: %f for %.2f time\n", prev_theta, pause_time);
+				if (time - pause_start > pause_time) {
+					printf("Pause complete\n");
+					pause_complete = true;
+					theta = prev_theta;
+					prev_pos_x = pos_x;
+					prev_pos_y = pos_y;
+				}
+				else {
+					theta = prev_theta;
+					pos_x = prev_pos_x;
+					pos_y = prev_pos_y;
+					printf("Passed time: %f\n", time - pause_start);
+					printf("Pause_start: %f\n", pause_start);
+				}
+			}
+			else {
+				theta = prev_theta;
+				prev_pos_x = pos_x;
+				prev_pos_y = pos_y;
 
-		if (theta > 3.) {
+				if (!stopped) {
+
+					theta = prev_theta - rotationSpeed * g_dt;
+					pos_x = TCP_x + radius_CoR * (1 - cos(theta));
+					pos_y = TCP_y + radius_CoR * sin(theta);
+
+					printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+
+					if (theta < next_stop_threshold) {
+						printf("Stopped activated: theta: %f\n", theta);
+						pause_start_time = time;
+						next_stop_threshold -= stop_distance;
+						stopped = true;
+						prev_particle_count = -1;
+					}
+				}
+
+				prev_theta = theta;
+			}			
+		}
+
+		else if (return_activated && prev_theta <= 0) {
+			printf("Return finished\n");
 			g_scene_finished = true;
 			theta_vs_volume_file.close();
 			theta_vs_slosh_time_file.close();
 			return;
-		}
+		}	
+
+		/////////////////////////////////////////////////////////////////////////////////// End Movements /////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		ofstream frame_particle_locations, frame_container_orientation;
 		bool output_render_data = false;
@@ -410,26 +448,14 @@ public:
 			frame_container_orientation << "v 0 " << glass_top_elevation << " 0" << std::endl;
 		}
 		
-		//const MeshObject* bounding_mesh = UpdateBoundingMesh(theta);
-		//UpdateBoundingMesh(theta);
 		int inside_count = 0;
 		for (int i = 0; i < g_buffers->positions.count; i++) {
 			if (particle_never_left[i] && InBoundingBox(g_buffers->positions[i], theta)) {
 				inside_count++;
-				//printf("g %f %f %f\n", g_buffers->positions[i].x, g_buffers->positions[i].y, g_buffers->positions[i].z);
 			}
 			else if (time > 0.0) {  // Only flag particles once everything has been inited
 				particle_never_left[i] = false;
 			}
-			//if (InBoundingMesh(g_buffers->positions[i], bounding_mesh)) {
-			//	inside_count_2++;
-			//}
-			//else {
-			//	if (InBoundingBox(g_buffers->positions[i], theta)) {
-			//		//printf("%f %f %f\n", g_buffers->positions[i].x, g_buffers->positions[i].y, g_buffers->positions[i].z);
-			//	}
-			//	g_buffers->positions[i].x = 1000;
-			//}
 
 			if (frame_count % 3 == 0 && output_render_data) {
 				frame_particle_locations << "v " << g_buffers->positions[i].x << " "
@@ -441,16 +467,19 @@ public:
 			frame_particle_locations.close();
 			frame_container_orientation.close();
 		}
-		//printf("%f %f %f\n", theta, tanf(theta), glass_width / 2 / cosf(theta));
 
 		if (mTime > startTime) {
 			theta_vs_volume_file << inside_count << "\t\t" << num_particles << "\t\t" << theta << "\t" << time << "\n";
 		}
 		frame_count++;
-		//printf("%f %d / %d / %d particles in container at %f %d\n", mTime,inside_count, num_particles, g_buffers->positions.count, theta, frame_count);
 		
+		if (theta > (stop_angle-0.05) * 3.14 / 180 && !return_activated) {
+					printf("Activated return");
+					pause_start = time;
+					return_activated = true;
+				}
+		stopped = false;
 		if (!continous && stopped) {
-			//printf("Paused\n");
 			if (prev_particle_count == inside_count) {
 				pause_no_change_count++;
 			}
@@ -464,19 +493,12 @@ public:
 				pause_no_change_count = 0;
 				stopped = false;
 				theta_vs_slosh_time_file << (time - 100 * g_dt - pause_start_time) << " " << theta << "\n";
-
-				if (theta > (stop_angle - 2) * 3.14 / 180) {
-					//double milliseconds = 100;
-					//Sleep(milliseconds);
-					g_scene_finished = true;
-					theta_vs_volume_file.close();
-					theta_vs_slosh_time_file.close();
-					return;
-				}
 				
 			}
 			prev_particle_count = inside_count;
 		}
+
+		
 		
 		ofstream param_file;
 		param_file.open(output_path + "_params.txt");
@@ -484,28 +506,15 @@ public:
 		param_file << "stop_angle " << stop_angle << std::endl;
 		param_file << "num_particles " << g_numExtraParticles << std::endl;
 		param_file << "poured_particles " << g_numExtraParticles - inside_count << std::endl;
+		param_file << "pause_time " << pause_time << std::endl;
 		param_file.close();
 
-		//Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time))+x_trans, glass_top_elevation, 0.0f);
-		//Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime))+x_trans, glass_top_elevation, 0.0f);
 
-		Vec3 prevPos = Vec3(x_translation + x_trans, glass_top_elevation + y_translation, 0.0f);
+		Vec3 prevPos = Vec3(prev_pos_x, prev_pos_y, 0.0f);
+		Vec3 pos = Vec3(pos_x, pos_y, 0.0f);
 
-		if (theta < (stop_angle*3.14/180) & time > 0) {
-			x_translation = x_translation + (time-lastTime)*translationSpeed;
-			y_translation = y_translation + (time-lastTime)*2*translationSpeed;
-		}
-
-		Vec3 pos = Vec3(x_translation + x_trans, glass_top_elevation + y_translation, 0.0f);
-		
-
-		//Vec3 pos = Vec3(translationSpeed*(1.0f - cosf(time)), glass_height, 0.0f);
-		//Vec3 prevPos = Vec3(translationSpeed*(1.0f - cosf(lastTime)), glass_height, 0.0f);
-		
-		Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -theta); //1.0f - cosf(theta)
-		Quat prevRot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -real_prev_theta); //1.0f - cosf(theta)
-
-		//AddTriangleMesh(mesh, recieve_pos, recieve_rot, 1.0f);
+		Quat rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -theta); 
+		Quat prevRot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -real_prev_theta);
 		AddTriangleMesh(pouring_mesh, pos, rot, 1.0f);
 
 		g_buffers->shapePrevPositions[1] = Vec4(prevPos, 0.0f);
