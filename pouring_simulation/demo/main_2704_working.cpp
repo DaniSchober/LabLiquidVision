@@ -2842,10 +2842,10 @@ int main(int argc, char* argv[])
 	//g_scenes.push_back(new Pouring("Pouring Scene 4", "../../data/Part1", "../../output/FlaskHolder", 0.0, 0.0));
 	//_scenes.push_back(new Pouring("Pouring Scene 5", "../../data/CellFlask", "../../output/CellFlask", 0.0, 0.0));
 	//g_scenes.push_back(new Pouring("Pouring Scene 6", "../../data/MediumBottle", "../../output/MediumBottle", 0.0, 0.0));
-	g_scenes.push_back(new Pouring("Pouring Scene 1", "../../data/Assembly1", "../../output/Assembly1"));
-	g_scenes.push_back(new Pouring("Pouring Scene 2", "../../data/Assembly1", "../../output/Assembly2"));
-	g_scenes.push_back(new Pouring("Pouring Scene 3", "../../data/Assembly1", "../../output/Assembly3"));
-	g_scenes.push_back(new Pouring("Pouring Scene 4", "../../data/Assembly1", "../../output/Assembly4"));
+	g_scenes.push_back(new Pouring("Pouring Scene 1", "../../data/Assembly1", "../../output/Assembly1", 0.0, 0.0));
+	g_scenes.push_back(new Pouring("Pouring Scene 2", "../../data/Assembly1", "../../output/Assembly2", 0.0, 0.0));
+	g_scenes.push_back(new Pouring("Pouring Scene 3", "../../data/Assembly1", "../../output/Assembly3", 0.0, 0.0));
+	g_scenes.push_back(new Pouring("Pouring Scene 4", "../../data/Assembly1", "../../output/Assembly4", 0.0, 0.0));
 	
 
 
