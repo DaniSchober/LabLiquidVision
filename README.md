@@ -27,6 +27,9 @@ Please refer to the specific folders of the project for installation details for
 
 Here you can provide examples of how to use your project, including any command line arguments, sample inputs and outputs, etc.
 
+## Subprojects
+
+- [Pouring Simulation](https://github.com/DaniSchober/thesis/tree/main/pouring_simulation)
 
 ## Background
 https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-a438-4b9f3dc0c1c3.mp4
