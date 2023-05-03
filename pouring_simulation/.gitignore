@@ -15,5 +15,5 @@ NvFlex*.a
 *.apk
 
 # output files
-output/*
+
 bin/*

@@ -3,6 +3,8 @@
 #include <chrono>
 #include "../mesh_query/mesh_query.h"
 #include <windows.h>
+#include <stdio.h>
+
 
 class Pouring : public Scene
 {
@@ -14,6 +16,7 @@ public:
 	string output_path;
 	ofstream theta_vs_volume_file;
 	ofstream theta_vs_slosh_time_file;
+	ofstream TCP_file;
 
 	NvFlexTriangleMeshId mesh_receiver, pouring_mesh;
 	Vec3 receive_pos;
@@ -32,6 +35,7 @@ public:
 	float prev_pos_x;
 	float prev_pos_y;
 	float emitterSize;
+	int row = 1;
 
 	float pause_time = 2.0;
 	bool pause_complete = false;
@@ -46,7 +50,7 @@ public:
 	Pouring(const char* name, string object_path, string out_path) : 
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
-		output_path(out_path),    				// path to the output folder and file name
+		output_path(out_path)    				// path to the output folder and file name
 		{}
 
 	virtual void Initialize()
@@ -72,7 +76,7 @@ public:
 		prev_pos_x = TCP_x;
 		prev_pos_y = TCP_y;
 
-		printf("TCP %f %f, radius: %f, emitter_size: %f\n", TCP_x, TCP_y, radius_CoR, emitter_size);
+		printf("TCP %f %f, radius: %f, emitter_size: %f\n", TCP_x, TCP_y, radius_CoR, emitterSize);
 
 		// create generator for random rotation speed between sqrt(0.005) and sqrt(0.1)
 		std::default_random_engine generator(chrono::steady_clock::now().time_since_epoch().count());
@@ -94,6 +98,10 @@ public:
 		param_file << "stop_angle " << stop_angle << std::endl;
 		param_file.close();
 		printf("Stop angle %f rot speed %f", stop_angle, rotationSpeed);
+
+
+		TCP_file.open(output_path + "_TCP.txt");
+		TCP_file << "pos_x, " << "pos_y, " << "theta (rad)" << std::endl;
 
 		// set drawing options
 		g_drawPoints = false;
@@ -187,7 +195,7 @@ public:
 		g_sceneUpper.z = 5.0f;
 		g_emitters.push_back(e);
 
-		g_numExtraParticles = 20000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
+		g_numExtraParticles = 2000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		printf("Num particles %d \n", g_numExtraParticles);
 		// The particles are spawned once every eight of a second.  It creates a number of
 		// particles proportional to the area of the emitter.  Five seconds is then added to
@@ -205,6 +213,10 @@ public:
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
 		}
+
+
+
+
 		printf("Initialized \n");
 	}
 
@@ -218,6 +230,7 @@ public:
 		
 		// I think this whole thing does nothing, but ask chatgpt 
 
+		/*
 		float x1 = -glass_width / 2 * cosf(theta); // Upper left
 		float y1 = TCP_y - glass_width/2 *sinf(theta);
 		float x2 = x1 + glass_height * cosf(1.57 - theta);// Lower left
@@ -234,10 +247,12 @@ public:
 			(x4 - x3)*(position.y - y3) < (y4 - y3)*(position.x - x3) && // right bound
 			(x3 - x1)*(position.y - y1) < (y3 - y1)*(position.x - x1) && // top bound
 			(x4 - x2)*(position.y - y2) > (y4 - y2)*(position.x - x2); // bottom bound
+
+		*/
 	}
 
 	bool InReceivingFlask(Vec4 position){
-		return position.y > 1 && position.y < 5
+		return position.y > 0.22188 && position.y < 7;
 	}
 
 	void Update()
@@ -402,6 +417,7 @@ public:
 		// write results for each step in file
 		if (mTime > startTime) {
 			theta_vs_volume_file << not_poured_count << "\t\t" << num_particles << "\t\t" << theta << "\t" << time << "\n";
+			TCP_file << pos_x-TCP_x << ", " << pos_y-TCP_y << ", " << theta << "\n";
 		}
 		frame_count++;
 		
@@ -412,6 +428,17 @@ public:
 					return_activated = true;
 				}
 		stopped = false;
+
+		// Open the output file for writing:
+    	FILE *file = fopen("../../output/output.csv", "w");
+		if (row == 0){
+			fprintf(file, "pos_x,pos_y,theta\n");
+		}
+		else{
+			fprintf(file, "%f,%f,%f\n", pos_x-TCP_x, pos_y-TCP_y, theta);
+		}
+		fclose(file);
+
 		
 		// write pouring results in _params file
 		ofstream param_file;
@@ -423,6 +450,7 @@ public:
 		param_file << "poured_particles " << g_numExtraParticles - not_poured_count << std::endl;
 		param_file << "received_particles " << received_count << std::endl;
 		param_file << "spilled_particles " << g_numExtraParticles - not_poured_count - received_count << std::endl;
+		param_file << "not_poured_particles " << not_poured_count << std::endl;
 		param_file.close();
 
 		// update positions of pouring container
