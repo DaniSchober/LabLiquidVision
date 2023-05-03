@@ -30,7 +30,7 @@ Here you can provide examples of how to use your project, including any command 
 ## Subprojects
 
 - [Pouring Simulation](https://github.com/DaniSchober/thesis/tree/main/pouring_simulation)
-- [Liquid Volume Estimation including Vessel and Liquid Segmentation and Depth Estimation] (https://github.com/DaniSchober/thesis/tree/main/segmentation_and_depth)
+- [Liquid Volume Estimation including Vessel and Liquid Segmentation and Depth Estimation](https://github.com/DaniSchober/thesis/tree/main/segmentation_and_depth)
 
 ## Background
 https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-a438-4b9f3dc0c1c3.mp4
