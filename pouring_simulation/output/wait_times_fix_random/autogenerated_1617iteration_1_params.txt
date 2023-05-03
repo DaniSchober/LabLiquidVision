@@ -1,2 +1,0 @@
-rotation_speed 0.194413
-stop_angle 110.965
