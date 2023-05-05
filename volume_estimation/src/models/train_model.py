@@ -41,7 +41,7 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         optimizer.step()
 
         # Update progress bar
-        progress_bar.set_postfix({"loss": loss.item(), "RMSE": rmse})
+        progress_bar.set_postfix({"loss": loss.item()/batch_size, "RMSE": (loss.item()/batch_size)**0.5})
 
     # get the average RMSE for the epoch
     rmse_epoch /= len(train_loader)
@@ -54,7 +54,7 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     
 data_dir = "data/processed"
 batch_size = 4
-num_epochs = 10
+num_epochs = 3
 learning_rate = 0.001
 
 # Load the dataset
