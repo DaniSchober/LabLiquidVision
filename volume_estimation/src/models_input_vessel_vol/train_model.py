@@ -29,7 +29,7 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         vessel_depth = data["vessel_depth"].to(device)
         liquid_depth = data["liquid_depth"].to(device)
         vessel_vol = data["vol_vessel"]
-        vessel_vol = vessel_vol.view(4, 1, 1).repeat(1, 480, 640)
+        vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 480, 640)
         vessel_vol = vessel_vol.to(device)
 
         #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
@@ -40,7 +40,7 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         optimizer.zero_grad()
         outputs = model(vessel_depth, liquid_depth, vessel_vol)
 
-        loss = criterion(outputs, targets)
+        loss = criterion(outputs, targets.unsqueeze(1))
         # add loss to list
         losses.append(loss.item())
 
@@ -64,8 +64,8 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     plt.show()
     
 data_dir = "data/processed"
-batch_size = 4
-num_epochs = 3
+batch_size = 8
+num_epochs = 10
 learning_rate = 0.001
 
 # Load the dataset

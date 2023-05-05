@@ -36,6 +36,7 @@ with torch.no_grad():
         vessel_depth = data["vessel_depth"]
         liquid_depth = data["liquid_depth"]
         vessel_vol = data["vol_vessel"]
+        vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 480, 640)
         #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
         #inputs = data["depth_image"]
         targets = data["vol_liquid"]
@@ -48,8 +49,8 @@ with torch.no_grad():
         print("Sample ", i, ":", outputs, targets)
 
         # first element of output is volume of liquid, second is volume of vessel
-        predicted_vol_liquid = outputs[0].item()
-        actual_vol_liquid = targets[0].item()
+        predicted_vol_liquid = outputs.item()
+        actual_vol_liquid = targets.item()
         #predicted_vol_vessel = outputs[1].item()
         #actual_vol_vessel = targets[1].item()
 
