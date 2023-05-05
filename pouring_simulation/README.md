@@ -10,14 +10,14 @@ Please write description here.
 
 ## Table of Contents
 
-- [Supported Platforms](#supportedplatforms)
+- [Supported Platforms](#platforms)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
 - [Contact](#contact)
 
-## Supported Platforms
+## <a id="platforms"></a> Supported Platforms
 
 * Windows 32/64 bit (CUDA, DX11, DX12)
 * Linux 64 bit (CUDA, tested with Ubuntu 16.04 LTS and Mint 17.2 Rafaela)
