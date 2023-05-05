@@ -5,6 +5,8 @@ from src.data.dataloader import VesselCaptureDataset
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from src.models_input_vessel_vol.model_new import VolumeNet
+import time
+import statistics
 
 device = (
         torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -14,7 +16,7 @@ print("Device used: ", device)
 
 
 # Define the training loop
-def train(model, criterion, optimizer, train_loader, epoch_str):
+def train(model, criterion, optimizer, train_loader, epoch_str, len_dataset):
     model.train()
 
 
@@ -55,10 +57,10 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         progress_bar.set_postfix({"loss": loss.item()/batch_size, "RMSE": (loss.item()/batch_size)**0.5})
 
     # get the average RMSE for the epoch
-    rmse_epoch /= len(train_loader)
+    rmse_epoch /= len_dataset
     print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
 
-    return losses
+    return statistics.mean(losses)
     
 data_dir = "data/processed"
 batch_size = 16
@@ -89,15 +91,23 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 losses_total = []
 for epoch in range(num_epochs):
     epoch_str = "Epoch " + str(epoch + 1)
-    losses = train(model, criterion, optimizer, train_loader, epoch_str)
+    losses = train(model, criterion, optimizer, train_loader, epoch_str, train_size)
     losses_total.append(losses)
 
 #plot the loss
 import matplotlib.pyplot as plt
 
+print(len(train_loader))
+
+print("Creating figure")
 plt.figure(figsize=(10, 5))
-plt.plot(losses_total)
+print(losses_total)
+plt.plot((losses_total))
+plt.yscale('log')
+# y scale in log
+
 plt.show()
+plt.savefig(time.strftime("%d%m%Y-%H%M") + ".png")
 
 # Save the trained model
 torch.save(model.state_dict(), "models/volume_model.pth")
