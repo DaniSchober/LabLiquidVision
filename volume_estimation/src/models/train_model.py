@@ -16,6 +16,8 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
 
     rmse_epoch = 0
 
+    losses = []
+
     for i, data in enumerate(progress_bar):
         vessel_depth = data["vessel_depth"]
         liquid_depth = data["liquid_depth"]
@@ -28,6 +30,9 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         outputs = model(vessel_depth, liquid_depth)
 
         loss = criterion(outputs, targets)
+        # add loss to list
+        losses.append(loss.item())
+
         # Calculate RMSE
         rmse = torch.sqrt(loss).item()
         rmse_epoch += rmse
@@ -41,6 +46,11 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     # get the average RMSE for the epoch
     rmse_epoch /= len(train_loader)
     print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
+
+    # plot the loss
+    import matplotlib.pyplot as plt
+    plt.plot(losses)
+    plt.show()
     
 data_dir = "data/processed"
 batch_size = 4
@@ -74,35 +84,6 @@ for epoch in range(num_epochs):
 # Save the trained model
 torch.save(model.state_dict(), "models/volume_model.pth")
 
-# Evaluate the model on the test data
-model.eval()
-with torch.no_grad():
-    for i, data in enumerate(test_loader):
-        vessel_depth = data["vessel_depth"]
-        liquid_depth = data["liquid_depth"]
-        #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
-        #inputs = data["depth_image"]
-        targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1)
-        targets = targets.float()
-
-        outputs = model(vessel_depth, liquid_depth)
-
-        # first element of output is volume of liquid, second is volume of vessel
-        predicted_vol_liquid = outputs[0].item()
-        actual_vol_liquid = targets[0].item()
-        predicted_vol_vessel = outputs[1].item()
-        actual_vol_vessel = targets[1].item()
-
-        # calculate the RMSE for the batch
 
 
-
-
-
-
-        loss = criterion(outputs, targets)
-        # Calculate RMSE
-        rmse = torch.sqrt(loss).item()
-
-        print(f"RMSE for test batch {i + 1}: {rmse:.2f}")
 
