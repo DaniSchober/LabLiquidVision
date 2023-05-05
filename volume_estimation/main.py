@@ -1,9 +1,7 @@
 # main file, starts training or prediction depeeending on the arguments
 import argparse
 import src.data.make_dataset as make_dataset # uncommented for without torch
-
 import tkinter as tk
-from src.data.record_data import App
 import src.models.predict_vol as predict_vol
 
 
@@ -15,7 +13,7 @@ def main():
         "--mode",
         type=str,
         default="train",
-        help="train or predict or convert or record",
+        help="train or predict or test or convert or record",
     )
     parser.add_argument(
         "--cuda",
@@ -117,6 +115,10 @@ def main():
         predict_vol.predict(args.folder_path)
         # predict_model.predict(model_path=args.model_path, image_path=args.image_path)
 
+    elif args.mode == "test":
+        print("Testing model")
+        import src.models.test_model
+
     elif args.mode == "convert":
         # start src.data.make_dataset.py
         print("Converting dataset")
@@ -129,6 +131,7 @@ def main():
 
     elif args.mode == "record":
         # start src.data.make_dataset.py
+        from src.data.record_data import App
         print("Recording dataset")
         if __name__ == "__main__":
             root = tk.Tk()

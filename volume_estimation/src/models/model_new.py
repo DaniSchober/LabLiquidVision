@@ -5,9 +5,9 @@ import torch.nn.functional as F
 
 
 # Define the neural network architecture
-class VesselNet(nn.Module):
+class VolumeNet(nn.Module):
     def __init__(self):
-        super(VesselNet, self).__init__()
+        super(VolumeNet, self).__init__()
 
         self.conv1 = nn.Conv2d(in_channels=2, out_channels=32, kernel_size=5, padding=2)
         self.conv2 = nn.Conv2d(
