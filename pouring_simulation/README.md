@@ -10,7 +10,7 @@ Please write description here.
 
 ## Table of Contents
 
-- [Supported Platforms](#supported)
+- [Supported Platforms](#supportedplatforms)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
 - [License](#license)
