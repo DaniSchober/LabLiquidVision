@@ -41,6 +41,10 @@ with torch.no_grad():
         targets = targets.float()
 
         outputs = model(vessel_depth, liquid_depth)
+        
+        outputs = outputs.squeeze(0)
+        targets = targets.squeeze(0)
+        print("Sample ", i, ":", outputs, targets)
 
         # first element of output is volume of liquid, second is volume of vessel
         predicted_vol_liquid = outputs[0].item()
