@@ -58,14 +58,11 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     rmse_epoch /= len(train_loader)
     print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
 
-    # plot the loss
-    import matplotlib.pyplot as plt
-    plt.plot(losses)
-    plt.show()
+    return losses
     
 data_dir = "data/processed"
-batch_size = 8
-num_epochs = 10
+batch_size = 16
+num_epochs = 20
 learning_rate = 0.001
 
 # Load the dataset
@@ -89,9 +86,16 @@ criterion = nn.MSELoss().to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 # Train the model
+losses_total = []
 for epoch in range(num_epochs):
     epoch_str = "Epoch " + str(epoch + 1)
-    train(model, criterion, optimizer, train_loader, epoch_str)
+    losses = train(model, criterion, optimizer, train_loader, epoch_str)
+    losses_total.append(losses)
+
+#plot the loss
+import matplotlib.pyplot as plt
+plt.plot(losses_total)
+plt.show()
 
 # Save the trained model
 torch.save(model.state_dict(), "models/volume_model.pth")
