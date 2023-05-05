@@ -11,7 +11,7 @@ Please write description here.
 ## Table of Contents
 
 - [Supported Platforms](#supported)
-- [Usage](#usage)
+- [Requirements](#requirements)
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
