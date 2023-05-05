@@ -117,7 +117,7 @@ def main():
 
     elif args.mode == "test":
         print("Testing model")
-        import src.models.test_model
+        import src.models_input_vessel_vol.test_model
 
     elif args.mode == "convert":
         # start src.data.make_dataset.py
