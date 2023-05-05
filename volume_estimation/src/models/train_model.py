@@ -6,10 +6,17 @@ from torch.utils.data import DataLoader
 import torch.nn as nn
 from src.models.model_new import VolumeNet
 
+device = (
+        torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    )  # Use GPU if available
+
+print("Device used: ", device)
+
 
 # Define the training loop
 def train(model, criterion, optimizer, train_loader, epoch_str):
     model.train()
+
 
     # Wrap train_loader with tqdm for a progress bar
     progress_bar = tqdm(train_loader, desc=epoch_str)
@@ -19,11 +26,11 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     losses = []
 
     for i, data in enumerate(progress_bar):
-        vessel_depth = data["vessel_depth"]
-        liquid_depth = data["liquid_depth"]
+        vessel_depth = data["vessel_depth"].to(device)
+        liquid_depth = data["liquid_depth"].to(device)
         #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
         #inputs = data["depth_image"]
-        targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1)
+        targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1).to(device)
         targets = targets.float()
 
         optimizer.zero_grad()
@@ -73,7 +80,8 @@ test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
 test_size = len(test_data)
 
 model = VolumeNet()
-criterion = nn.MSELoss()
+model = model.to(device)  # Send net to GPU if available
+criterion = nn.MSELoss().to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 # Train the model

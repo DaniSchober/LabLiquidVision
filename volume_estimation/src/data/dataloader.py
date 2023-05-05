@@ -49,6 +49,9 @@ class VesselCaptureDataset(Dataset):
         ) = self.samples[index]
 
         vessel_depth = np.load(vessel_depth_path).astype(np.float32)
+        # decrease the size of the vessel depth image
+        #vessel_depth = vessel_depth[::2, ::2]
+
         liquid_depth = np.load(liquid_depth_path).astype(np.float32)
         vol_liquid = int(open(vol_liquid_path, "r").read().strip())
         vessel_name = open(vessel_path, "r").read().strip()

@@ -1,5 +1,5 @@
 import torch
-from src.models.model_new import VesselNet
+from src.models.model_new import VolumeNet
 import numpy as np
 import sys
 import os
@@ -10,7 +10,7 @@ import random
 
 def predict(folder_path):
 
-    model = VesselNet()
+    model = VolumeNet()
     model.load_state_dict(torch.load("models/vessel_net.pth"))
     model.eval()
 
