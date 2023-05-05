@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from src.data.dataloader import VesselCaptureDataset
 from torch.utils.data import DataLoader
 import torch.nn as nn
-from src.models.model_new import VolumeNet
+from src.models_input_vessel_vol.model_new import VolumeNet
 
 device = (
         torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
