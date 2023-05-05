@@ -12,7 +12,8 @@ Please write description here.
 
 - [Supported Platforms](#platforms)
 - [Requirements](#requirements)
-- [Contributing](#contributing)
+- [Further Information](#information)
+- [Usage](#usage)
 - [License](#license)
 - [Credits](#credits)
 - [Contact](#contact)
@@ -41,6 +42,6 @@ And either:
 * CUDA 9.2.148 toolkit
 * DirectX 11/12 SDK
 
-## Further Information
+## <a id="information"></a> Further Information
 
 For further information please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
