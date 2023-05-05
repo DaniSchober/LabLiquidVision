@@ -94,6 +94,8 @@ for epoch in range(num_epochs):
 
 #plot the loss
 import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 5))
 plt.plot(losses_total)
 plt.show()
 
