@@ -28,7 +28,10 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     for i, data in enumerate(progress_bar):
         vessel_depth = data["vessel_depth"].to(device)
         liquid_depth = data["liquid_depth"].to(device)
-        vessel_vol = data["vol_vessel"].to(device)
+        vessel_vol = data["vol_vessel"]
+        vessel_vol = vessel_vol.view(4, 1, 1).repeat(1, 480, 640)
+        vessel_vol = vessel_vol.to(device)
+
         #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
         #inputs = data["depth_image"]
         targets = data["vol_liquid"].to(device)
