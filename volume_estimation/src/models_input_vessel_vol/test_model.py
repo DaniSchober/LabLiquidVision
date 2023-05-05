@@ -63,7 +63,7 @@ with torch.no_grad():
         # add squared error to total
         squared_error_liquid_total += squared_error_liquid
 
-        squared_error_liquid_array = np.append(squared_error_liquid_array, predicted_vol_liquid - actual_vol_liquid)
+        squared_error_liquid_array = np.append(squared_error_liquid_array, squared_error_liquid**0.5)
         #squared_error_vessel_total += squared_error_vessel
     
     # calculate RMSE for test set
@@ -74,6 +74,11 @@ with torch.no_grad():
     import matplotlib.pyplot as plt
     plt.hist(squared_error_liquid_array, bins=100)
     plt.show()
+    # xlabel
+    plt.xlabel("RSE")
+    # ylabel
+    plt.ylabel("Frequency")
+
     # save histogram of squared errors
     plt.savefig("squared_error_liquid.png")
 
