@@ -35,12 +35,13 @@ with torch.no_grad():
     for i, data in enumerate(test_loader):
         vessel_depth = data["vessel_depth"]
         liquid_depth = data["liquid_depth"]
+        vessel_vol = data["vol_vessel"]
         #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
         #inputs = data["depth_image"]
-        targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1)
+        targets = data["vol_liquid"]
         targets = targets.float()
 
-        outputs = model(vessel_depth, liquid_depth)
+        outputs = model(vessel_depth, liquid_depth, vessel_vol)
         
         outputs = outputs.squeeze(0)
         targets = targets.squeeze(0)
@@ -49,23 +50,23 @@ with torch.no_grad():
         # first element of output is volume of liquid, second is volume of vessel
         predicted_vol_liquid = outputs[0].item()
         actual_vol_liquid = targets[0].item()
-        predicted_vol_vessel = outputs[1].item()
-        actual_vol_vessel = targets[1].item()
+        #predicted_vol_vessel = outputs[1].item()
+        #actual_vol_vessel = targets[1].item()
 
         # calculate squared error for item
         squared_error_liquid = (predicted_vol_liquid - actual_vol_liquid) ** 2
-        squared_error_vessel = (predicted_vol_vessel - actual_vol_vessel) ** 2
+        #squared_error_vessel = (predicted_vol_vessel - actual_vol_vessel) ** 2
 
         # add squared error to total
         squared_error_liquid_total += squared_error_liquid
-        squared_error_vessel_total += squared_error_vessel
+        #squared_error_vessel_total += squared_error_vessel
     
     # calculate RMSE for test set
     rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
-    rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
+    #rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
 
     print("RMSE liquid: ", rmse_liquid)
-    print("RMSE vessel: ", rmse_vessel)
+    #print("RMSE vessel: ", rmse_vessel)
 
 
 
