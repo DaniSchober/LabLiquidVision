@@ -30,6 +30,7 @@ model.eval()
 
 squared_error_liquid_total = 0
 squared_error_vessel_total = 0
+squared_error_liquid_array = []
 
 with torch.no_grad():
     for i, data in enumerate(test_loader):
@@ -60,11 +61,21 @@ with torch.no_grad():
 
         # add squared error to total
         squared_error_liquid_total += squared_error_liquid
+
+        squared_error_liquid_array = squared_error_liquid_array.append(squared_error_liquid)
         #squared_error_vessel_total += squared_error_vessel
     
     # calculate RMSE for test set
     rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
     #rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
+
+    # plot histogram of squared errors
+    import matplotlib.pyplot as plt
+    plt.hist(squared_error_liquid_array)
+    plt.show()
+    # save histogram of squared errors
+    plt.savefig("squared_error_liquid.png")
+    
 
     print("RMSE liquid: ", rmse_liquid)
     #print("RMSE vessel: ", rmse_vessel)
