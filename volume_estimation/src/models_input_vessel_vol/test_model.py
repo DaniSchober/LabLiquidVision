@@ -5,6 +5,7 @@ from src.data.dataloader import VesselCaptureDataset
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from src.models_input_vessel_vol.model_new import VolumeNet
+import numpy as np
 
 data_dir = "data/processed"
 
@@ -62,7 +63,7 @@ with torch.no_grad():
         # add squared error to total
         squared_error_liquid_total += squared_error_liquid
 
-        squared_error_liquid_array = squared_error_liquid_array.append(squared_error_liquid)
+        squared_error_liquid_array = np.append(squared_error_liquid_array, squared_error_liquid)
         #squared_error_vessel_total += squared_error_vessel
     
     # calculate RMSE for test set
@@ -75,7 +76,7 @@ with torch.no_grad():
     plt.show()
     # save histogram of squared errors
     plt.savefig("squared_error_liquid.png")
-    
+
 
     print("RMSE liquid: ", rmse_liquid)
     #print("RMSE vessel: ", rmse_vessel)
