@@ -26,7 +26,7 @@ class VolumeNet(nn.Module):
         # print(depth_image.shape)
         #x = depth_image.unsqueeze(1)  # add channel dimension
         # print(depth_image.shape)
-        vessel_vol = vessel_vol*np.ones_like(vessel_depth)
+        tensor_3d = vessel_vol.view(4, 1, 1).repeat(1, 480, 640)
         x = torch.stack([vessel_depth, liquid_depth, vessel_vol], dim=1) # stack the two input tensors along the channel dimension
         #print(x.shape)
 
