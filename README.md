@@ -39,6 +39,8 @@ https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-
 ## <a id="Solution"></a> Overview of the Solution
 ![Solution_overview](https://user-images.githubusercontent.com/75242605/236624972-99bd9f4b-c346-44b6-8f89-11d8068a09f8.png)
 
+<img src="[https://your-image-url.type](https://user-images.githubusercontent.com/75242605/236624972-99bd9f4b-c346-44b6-8f89-11d8068a09f8.png)" width="100" height="100">
+
 ## License
 
 This project is licensed under the terms of the MIT license. 
