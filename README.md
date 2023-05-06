@@ -37,7 +37,7 @@ Here you can provide examples of how to use your project, including any command 
 https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-a438-4b9f3dc0c1c3.mp4
 
 ## <a id="Solution"></a> Overview of the Solution
-![Solution_overview](<img src="https://user-images.githubusercontent.com/75242605/236624704-4c94d6ec-3a00-48dd-8583-51e048045da7.png" width="400" height="300">)
+![Solution_overview](https://user-images.githubusercontent.com/75242605/236624972-99bd9f4b-c346-44b6-8f89-11d8068a09f8.png)
 
 ## License
 
