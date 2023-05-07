@@ -8,8 +8,7 @@
 
 ## Description
 
-Please write description here.
-
+This work explores how computer vision-based liquid detection and handling can be integrated with robotic systems to develop a comprehensive and versatile automation system for cell culture applications for low throughput. The main idea of the project is visualized in [Solution](#solution)
 ## Table of Contents
 
 - [Installation](#installation)
@@ -34,6 +33,9 @@ Here you can provide examples of how to use your project, including any command 
 - [Liquid Volume Estimation](https://github.com/DaniSchober/thesis/tree/main/volume_estimation)
 
 ## Background
+
+Cell culture is one of the fundamental tools in life science research and biotechnology. Applications range from testing of drugs or toxins, development of gene and cell therapies, and investigation of the function of biomolecules, to the production of biologics or vaccine particles.
+
 https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-a438-4b9f3dc0c1c3.mp4
 
 ## <a id="Solution"></a> Overview of the Solution
