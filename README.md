@@ -8,7 +8,7 @@
 
 ## Description
 
-This work explores how computer vision-based liquid detection and handling can be integrated with robotic systems to develop a comprehensive and versatile automation system for cell culture applications for low throughput. The main idea of the project is visualized in [Solution](#solution). It consists of three main subprojects, that can be found in [subprojects](#subprojects).
+This work explores how computer vision-based liquid detection and handling can be integrated with robotic systems to develop a comprehensive and versatile automation system for cell culture applications for low throughput. The main idea of the project is visualized in [solution](#solution). It consists of three main subprojects, that can be found in [subprojects](#subprojects).
 ## Table of Contents
 
 - [Installation](#installation)
@@ -20,7 +20,6 @@ This work explores how computer vision-based liquid detection and handling can b
 - [License](#license)
 - [Credits](#credits)
 - [Contact](#contact)
-- [Info](#information)
 
 ## Installation
 
