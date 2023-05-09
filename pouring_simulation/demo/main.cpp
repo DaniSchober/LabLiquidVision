@@ -750,6 +750,8 @@ void Init(int scene, bool centerCamera = true)
 
 
 
+
+
 	g_scenes[scene]->Initialize();
 
 	uint32_t numParticles = g_buffers->positions.size();
@@ -2846,6 +2848,9 @@ int main(int argc, char* argv[])
 	g_scenes.push_back(new Pouring("Pouring Scene 2", "../../data/Assembly1", "../../output/Assembly2"));
 	g_scenes.push_back(new Pouring("Pouring Scene 3", "../../data/Assembly1", "../../output/Assembly3"));
 	g_scenes.push_back(new Pouring("Pouring Scene 4", "../../data/Assembly1", "../../output/Assembly4"));
+	g_scenes.push_back(new Pouring("Pouring Scene 5", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/Assembly5"));
+	g_scenes.push_back(new Pouring("Pouring Scene 6", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/Assembly6"));
+	g_scenes.push_back(new Pouring_Bottle("Pouring Scene 7", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/Assembly7"));
 	
 
 
@@ -2854,7 +2859,7 @@ int main(int argc, char* argv[])
 	g_scenes.push_back(new Pouring("Pouring Scene 4", "../../data/Poco_Grande.obj", "../../output/Poco_Grande.text", 0.5f));*/
 	// opening scene
 		
-
+	/*
 
 	// soft body scenes
 	SoftBody* softOctopus = new SoftBody("Soft Octopus", "../../data/softs/octopus.obj");
