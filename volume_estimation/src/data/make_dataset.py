@@ -71,6 +71,9 @@ def create_converted_dataset(
 
 
     for folder in os.listdir(path_input):
+        # ignore .gitignore
+        if folder == ".gitignore":
+            continue
         progress += 1
         if progress % 30 == 0:
             print(f"Progress: {progress}/{to_convert}")
