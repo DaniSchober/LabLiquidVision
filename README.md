@@ -25,6 +25,13 @@ This work explores how computer vision-based liquid detection and handling can b
 
 Please refer to the specific folders of the project for installation details for the specific use.
 
+For a general setup using conda, do:
+
+
+```python
+conda env create -f environment.yml
+```
+
 ## Usage
 
 Here you can provide examples of how to use your project, including any command line arguments, sample inputs and outputs, etc.
