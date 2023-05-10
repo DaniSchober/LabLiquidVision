@@ -27,9 +27,14 @@ Please refer to the specific folders of the project for installation details for
 
 For a general setup using conda, do:
 
-
+```python
+git clone https://github.com/DaniSchober/thesis
+```
 ```python
 conda env create -f environment.yml
+```
+```python
+conda activate thesis
 ```
 
 ## Usage
