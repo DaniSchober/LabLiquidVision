@@ -3,6 +3,18 @@ Volume Estimation
 
 Estimate the amount of liquid based on an RGB image
 
+## Data version control
+
+To upload new data:
+* dvc add data
+* git add data.dvc .gitignore
+* git commit -m "Description"
+* git tag -a "v1.0" -m "data v1.0"
+
+To get the data:
+* git pull
+* dvc pull
+
 Project Organization
 ------------
 

@@ -46,14 +46,3 @@ And either:
 
 For further information please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
 
-## Data version control
-
-To upload new data:
-* dvc add data
-* git add data.dvc .gitignore
-* git commit -m "Description"
-* git tag -a "v1.0" -m "data v1.0"
-
-To get the data:
-* git pull
-* dvc pull
