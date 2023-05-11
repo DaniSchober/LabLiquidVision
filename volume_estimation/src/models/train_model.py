@@ -17,7 +17,6 @@ print("Device used: ", device)
 def train(model, criterion, optimizer, train_loader, epoch_str):
     model.train()
 
-
     # Wrap train_loader with tqdm for a progress bar
     progress_bar = tqdm(train_loader, desc=epoch_str)
 
@@ -51,6 +50,8 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         progress_bar.set_postfix({"loss": loss.item()/batch_size, "RMSE": (loss.item()/batch_size)**0.5})
 
     # get the average RMSE for the epoch
+    model.eval()
+    
     rmse_epoch /= len(train_loader)
     print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
 
