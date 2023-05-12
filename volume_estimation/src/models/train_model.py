@@ -40,7 +40,8 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         losses.append(loss.item())
 
         # Calculate RMSE
-        rmse = torch.sqrt(loss).item()
+        rmse = torch.sqrt(loss.item()/batch_size)
+        #rmse = torch.sqrt(loss).item()
         rmse_epoch += rmse
 
         loss.backward()
@@ -51,8 +52,8 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
 
     # get the average RMSE for the epoch
     model.eval()
-    
-    rmse_epoch /= len(train_loader)
+
+    rmse_epoch /= len(train_loader/batch_size)
     print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
 
     # plot the loss
