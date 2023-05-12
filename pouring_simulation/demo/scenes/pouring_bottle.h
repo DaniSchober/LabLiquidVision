@@ -160,7 +160,8 @@ public:
 		//int water_phase = NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid);
 		
 		g_numSubsteps = 10;
-		g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f);
+		//g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f); // blue
+		g_fluidColor = Vec4(0.9f, 0.5f, 0.5f, 0.5f); // red
 		g_params.radius = radius;
 		g_params.dynamicFriction = 0.0f;
 		g_params.dissipation = 0.0f;

@@ -1,17 +1,2 @@
-﻿  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\extensions\dx\shaders\flexExt.UpdateForceFields.h
-  sdf.cpp
-  voxelize.cpp
-  maths.cpp
-  aabbtree.cpp
-  flexExt.cpp
-  flexExtCloth.cpp
-  flexExtRigid.cpp
-  flexExtSoft.cpp
-  flexExtMovingFrame.cpp
-  flexExtContainer.cpp
-  Generating Code...
-     Creating library ./../../../lib/win64/NvFlexExtDebugD3D_x64.lib and object ./../../../lib/win64/NvFlexExtDebugD3D_x64.exp
-LINK : warning LNK4199: /DELAYLOAD:d3d11.dll ignored; no imports found from d3d11.dll
-LINK : warning LNK4199: /DELAYLOAD:d3d12.dll ignored; no imports found from d3d12.dll
-  flexExtD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\extensions\compiler\vc14win64\./../../../bin/win64\NvFlexExtDebugD3D_x64.dll
+﻿  flexExtD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\extensions\compiler\vc14win64\./../../../bin/win64\NvFlexExtDebugD3D_x64.dll
   flexExtD3D.vcxproj -> ./../../../bin/win64\/NvFlexExtDebugD3D_x64.dll.pdb (Full PDB)

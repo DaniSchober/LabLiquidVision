@@ -37,7 +37,7 @@ public:
 	float emitterSize;
 	int row = 1;
 
-	float pause_time = 2.0;
+	float pause_time = 1.0;
 	bool pause_complete = false;
 	float stop_angle;
 	float next_stop_threshold = 0;
@@ -159,7 +159,8 @@ public:
 		//int water_phase = NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid);
 		
 		g_numSubsteps = 10;
-		g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f);
+		g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f); // blue
+		//g_fluidColor = Vec4(0.9f, 0.5f, 0.5f, 0.5f); // red
 		g_params.radius = radius;
 		g_params.dynamicFriction = 0.0f;
 		g_params.dissipation = 0.0f;

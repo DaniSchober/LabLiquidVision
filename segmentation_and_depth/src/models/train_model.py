@@ -277,7 +277,7 @@ def train():
 
         # --------------Save trained model------------------------------------------------------------------------------------------------------------------------------------------
         if (
-            itr % 300 == 0
+            itr % 3000 == 0
         ):  # and itr>0: #Save model weight once every 300 steps, temp file
             print("Saving Model to file in " + TrainedModelWeightDir + "/Defult.torch")
             torch.save(Net.state_dict(), TrainedModelWeightDir + "/Defult.torch")
@@ -286,7 +286,7 @@ def train():
             np.save(TrainedModelWeightDir + "/Learning_Rate.npy", Learning_Rate)
             np.save(TrainedModelWeightDir + "/itr.npy", itr)
         if (
-            itr % 10000 == 0 and itr > 0
+            itr % 60000 == 0 and itr > 0
         ):  # Save model weight once every 60k steps permenant file
             print(
                 "Saving Model to file in "
