@@ -116,11 +116,6 @@ public:
 		// Import mesh of pouring container 
 		Mesh* container = ImportMesh(GetFilePathByPlatform((container_path+".obj").c_str()).c_str());
 
-		// Change the color of the mesh to red
-		for (int i = 0; i < container->numVertices; i++) {
-			container->vertices[i].color = Vec3(1.0f, 0.0f, 0.0f);
-		}
-
 		// rotate the coordinate system of the pouring container around 90 degrees (so it's horizontal)
 		float angle = 0.0f; 
 		// Define the axis of rotation
@@ -179,7 +174,7 @@ public:
 
 
 		////////////////////// Change location of water emitter //////////////////////////////////////////////
-		Vec3 center = Vec3(TCP_x, TCP_y+3.5, 0.0f); // puts emitter in the middle of the pouring container
+		Vec3 center = Vec3(TCP_x, TCP_y+4.0157, 0.0f); // puts emitter in the middle of the pouring container
 		Emitter e; // create emitter object
 		e.mEnabled = true;
 		e.mWidth = int(emitterSize / restDistance);

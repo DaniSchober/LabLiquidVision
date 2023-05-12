@@ -1,8 +1,8 @@
-rotation_speed 0.0221182
-stop_angle 50.3069
+rotation_speed 0.00668992
+stop_angle 11.5544
 pause_time 1
 num_particles 2000
-poured_particles 73
-received_particles 3
-spilled_particles 70
-not_poured_particles 1927
+poured_particles 647
+received_particles 420
+spilled_particles 227
+not_poured_particles 1353
