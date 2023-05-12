@@ -10,6 +10,7 @@ To upload new data:
 * git add data.dvc .gitignore
 * git commit -m "Description"
 * git tag -a "v1.0" -m "data v1.0"
+* dvc push
 
 To get the data:
 * git pull
