@@ -239,9 +239,9 @@ def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
                 if not nm in AVGCatLoss:
                     AVGCatLoss[nm] = 0
                 if CatLoss[nm] > 0:
-                    # AVGCatLoss[nm] = (1 - fr) * AVGCatLoss[nm] + fr * CatLoss[
-                    #    nm
-                    # ].data.cpu().numpy()
+                    AVGCatLoss[nm] = (1 - fr) * AVGCatLoss[nm] + fr * CatLoss[
+                        nm
+                    ].data.cpu().numpy()
                     AVGCatLoss[nm] = CatLoss[nm].data.cpu().numpy()
                 TotalLoss += CatLoss[nm]
 

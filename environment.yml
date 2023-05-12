@@ -23,3 +23,7 @@ dependencies:
     - pyrealsense2==2.53.1.4623
     - opencv-python
     - chardet
+    - dvc
+
+
+
