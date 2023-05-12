@@ -61,3 +61,4 @@ public:
 
 #include "scenes/pouring.h"
 #include "scenes/pouring_bottle.h"
+#include "scenes/calibration.h"

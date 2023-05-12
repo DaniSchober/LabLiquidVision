@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "xlocinfo": "cpp",
+        "xstring": "cpp",
+        "iterator": "cpp",
+        "ostream": "cpp"
+    }
+}

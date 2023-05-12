@@ -2850,6 +2850,7 @@ int main(int argc, char* argv[])
 	g_scenes.push_back(new Pouring("Pouring Scene 4", "../../data/Assembly1", "../../output/Assembly4"));
 	g_scenes.push_back(new Pouring("Pouring Scene 5", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/Assembly5"));
 	g_scenes.push_back(new Pouring("Pouring Scene 6", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/Assembly6"));
+	g_scenes.push_back(new Calibration("Calibration Scene", "../../data/Cylinder_500ml_new"));
 	g_scenes.push_back(new Pouring_Bottle("Pouring Scene 7", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/Assembly7"));
 	
 
