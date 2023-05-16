@@ -129,11 +129,6 @@ public:
 		// rotate the coordinate system of the pouring container around 90 degrees (so it's horizontal)
 		//float angle = -1.5708f;
 		float angle = -0.253f; 
-		float alpha_start = 0.804761+angle;
-
-		float CoR_x = TCP_x + radius_CoR*(alpha_start);
-		float CoR_y = TCP_y + radius_CoR*(alpha_start);
-
 		// Define the axis of rotation
 		Vec3 axis = Vec3(0.0f, 0.0f, 1.0f);
 		// Define the rotation quaternion
@@ -322,18 +317,8 @@ public:
 			if (!stopped) {
 
 				theta = prev_theta + rotationSpeed * g_dt;
-
-				if (theta <= alpha_start){
-					pos_x = CoR_x - radius_CoR * cos(alpha_start - theta);
-					pos_y = CoR_y - radius_CoR * sin(alpha_start - theta);
-					}
-				else {
-					pos_x = CoR_x - radius_CoR * cos(theta - alpha_start);
-					pos_y = TCP_y + radius_CoR * sin(theta - alpha_start);
-				}
-
-				//pos_x = TCP_x + radius_CoR * (1 - cos(theta));
-				//pos_y = TCP_y + radius_CoR * sin(theta);
+				pos_x = TCP_x + radius_CoR * (1 - cos(theta));
+				pos_y = TCP_y + radius_CoR * sin(theta);
 				
 				printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
@@ -374,18 +359,8 @@ public:
 				if (!stopped) {
 
 					theta = prev_theta - rotationSpeed * g_dt;
-
-					if (theta <= alpha_start) {
-						pos_x = CoR_x - radius_CoR * cos(alpha_start - theta);
-						pos_y = CoR_y - radius_CoR * sin(alpha_start - theta);
-					}
-					else {
-						pos_x = CoR_x - radius_CoR * cos(theta - alpha_start);
-						pos_y = TCP_y + radius_CoR * sin(theta - alpha_start);
-					}
-
-					//pos_x = TCP_x + radius_CoR * (1 - cos(theta));
-					//pos_y = TCP_y + radius_CoR * sin(theta);
+					pos_x = TCP_x + radius_CoR * (1 - cos(theta));
+					pos_y = TCP_y + radius_CoR * sin(theta);
 
 					printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
@@ -441,7 +416,7 @@ public:
 			
 		}
 
-		// write results for each step in text file
+		// write results for each step in file
 		if (mTime > startTime) {
 			theta_vs_volume_file << not_poured_count << "\t\t" << num_particles << "\t\t" << theta << "\t" << time << "\n";
 			TCP_file << pos_x-TCP_x << ", " << pos_y-TCP_y << ", " << theta << "\n";
@@ -455,6 +430,16 @@ public:
 					return_activated = true;
 				}
 		stopped = false;
+
+		// Open the output file for writing:
+    	FILE *file = fopen("../../output/output.csv", "w");
+		if (row == 0){
+			fprintf(file, "pos_x,pos_y,theta\n");
+		}
+		else{
+			fprintf(file, "%f,%f,%f\n", pos_x-TCP_x, pos_y-TCP_y, theta);
+		}
+		fclose(file);
 
 		
 		// write pouring results in _params file
