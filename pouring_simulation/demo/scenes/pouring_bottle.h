@@ -35,6 +35,10 @@ public:
 	float prev_pos_x;
 	float prev_pos_y;
 	float emitterSize;
+	float alpha_start;
+	float CoR_x;
+	float CoR_y;
+
 	int row = 1;
 
 	float pause_time = 2.0;
@@ -90,7 +94,7 @@ public:
 		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
 		stop_angle = distribution2(generator2);
 		//stop_angle = 50;
-		stop_angle = 180;
+		stop_angle = 50;
 
 		ofstream param_file;
 		param_file.open(output_path + "_params.txt");
@@ -129,10 +133,12 @@ public:
 		// rotate the coordinate system of the pouring container around 90 degrees (so it's horizontal)
 		//float angle = -1.5708f;
 		float angle = -0.253f; 
-		float alpha_start = 0.804761+angle;
+		alpha_start = 0.804761f + angle;
 
-		float CoR_x = TCP_x + radius_CoR*(alpha_start);
-		float CoR_y = TCP_y + radius_CoR*(alpha_start);
+		CoR_x = TCP_x + radius_CoR*cos(alpha_start);
+		CoR_y = TCP_y + radius_CoR*sin(alpha_start);
+
+		printf("CoR_x: %f CoR_y: %f\n", CoR_x, CoR_y);
 
 		// Define the axis of rotation
 		Vec3 axis = Vec3(0.0f, 0.0f, 1.0f);
@@ -322,14 +328,18 @@ public:
 			if (!stopped) {
 
 				theta = prev_theta + rotationSpeed * g_dt;
-
+				printf("theta: %f\n", theta);
+				printf("alpha_start: %f\n", alpha_start);
 				if (theta <= alpha_start){
 					pos_x = CoR_x - radius_CoR * cos(alpha_start - theta);
+					printf("pos_x_cal: %f pos_y_cal: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 					pos_y = CoR_y - radius_CoR * sin(alpha_start - theta);
 					}
 				else {
 					pos_x = CoR_x - radius_CoR * cos(theta - alpha_start);
-					pos_y = TCP_y + radius_CoR * sin(theta - alpha_start);
+					pos_y = CoR_y + radius_CoR * sin(theta - alpha_start);
+					printf("pos_x_cal: %f pos_y_cal: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+
 				}
 
 				//pos_x = TCP_x + radius_CoR * (1 - cos(theta));
@@ -381,7 +391,7 @@ public:
 					}
 					else {
 						pos_x = CoR_x - radius_CoR * cos(theta - alpha_start);
-						pos_y = TCP_y + radius_CoR * sin(theta - alpha_start);
+						pos_y = CoR_y + radius_CoR * sin(theta - alpha_start);
 					}
 
 					//pos_x = TCP_x + radius_CoR * (1 - cos(theta));
@@ -389,6 +399,7 @@ public:
 
 					printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
+					/*
 					if (theta < next_stop_threshold) {
 						printf("Stopped activated: theta: %f\n", theta);
 						pause_start_time = time;
@@ -396,6 +407,7 @@ public:
 						stopped = true;
 						prev_particle_count = -1;
 					}
+					*/
 				}
 
 				prev_theta = theta;
