@@ -1,0 +1,10 @@
+3 Festo linear/swivel clamp (8072624)
+1 Universal Robots UR5e
+1 VWR INCU-Line ILCO 180 Premium, CO₂ Incubator
+1 Disp-X Bottle Dispenser 1-10mL (30373528)
+1 RGI 100 Rotary Electric Gripper Jaw
+1 CytoSMART Lux3 BR
+1 Festo ISO cylinder DSNU-25-500-PPV-A
+1 Festo Compressed air filter regulator LFR (8003637)
+1 Vention table (121 x 198 cm)
+1 Robotiq Hand-E Adaptive Gripper 

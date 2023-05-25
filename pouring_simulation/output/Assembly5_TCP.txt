@@ -1,1 +1,0 @@
-pos_x, pos_y, theta (rad)

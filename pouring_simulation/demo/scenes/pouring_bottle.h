@@ -88,14 +88,14 @@ public:
 		std::uniform_real_distribution<float> distribution(sqrt(0.005), sqrt(0.1));
 		rotationSpeed = distribution(generator);
 		rotationSpeed *= rotationSpeed;
-		rotationSpeed = 0.1;
+		rotationSpeed = 0.03;
 
 		// create generator for random stop angle betweem 45 and 135 degrees
 		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
 		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
 		stop_angle = distribution2(generator2);
 		//stop_angle = 50;
-		stop_angle = 80;
+		stop_angle = 5;
 
 		ofstream param_file;
 		param_file.open(output_path + "_params.txt");
@@ -209,7 +209,7 @@ public:
 		g_sceneUpper.z = 5.0f;
 		g_emitters.push_back(e);
 
-		start_volume = 100; // volume of liquid in ml
+		start_volume = 2; // volume of liquid in ml
 		g_numExtraParticles = start_volume*400; // number of particles in the emitter
 		//g_numExtraParticles = 20000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		printf("Num particles %d \n", g_numExtraParticles);
@@ -231,6 +231,7 @@ public:
 			particle_never_left.push_back(true);
 		}
 
+		g_dt = 1.0f / 60.0f;
 
 
 
@@ -276,6 +277,8 @@ public:
 	{
 		// Defaults to 60Hz
 		mTime += g_dt;
+
+
 
 		// the scene settle before moving
 		if (mTime > 0.5) {
@@ -458,6 +461,8 @@ public:
 		}
 
 		// write results for each step in text file
+
+		
 		if (mTime > startTime) {
 			theta_vs_volume_file << not_poured_count << "\t\t" << num_particles << "\t\t" << theta << "\t" << time << "\n";
 			TCP_file << pos_x-TCP_x << ", " << pos_y-TCP_y << ", " << theta << "\n";
@@ -486,11 +491,11 @@ public:
 		param_file << "spilled_particles " << num_particles - not_poured_count - received_count << std::endl;
 		param_file << "not_poured_particles " << not_poured_count << std::endl;
 		param_file << "\n" << std::endl;
-		param_file << "start_volume " << num_particles/400 << " mL" << std::endl;
-		param_file << "poured_volume " << (num_particles - not_poured_count)/400 << " mL" << std::endl;
-		param_file << "received_volume " << received_count/400 << " mL" << std::endl;
-		param_file << "spilled_volume " << (num_particles - not_poured_count - received_count)/400 << " mL" << std::endl;
-		param_file << "not_poured_volume " << not_poured_count/400 << " mL" << std::endl;
+		param_file << "start_volume " << (num_particles/400.0) << " mL" << std::endl;
+		param_file << "poured_volume " << (num_particles - not_poured_count)/400.0 << " mL" << std::endl;
+		param_file << "received_volume " << received_count/400.0 << " mL" << std::endl;
+		param_file << "spilled_volume " << (num_particles - not_poured_count - received_count)/400.0 << " mL" << std::endl;
+		param_file << "not_poured_volume " << not_poured_count/400.0 << " mL" << std::endl;
 		param_file.close();
 
 		// update positions of pouring container

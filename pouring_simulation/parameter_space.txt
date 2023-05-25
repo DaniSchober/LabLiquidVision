@@ -1,0 +1,15 @@
+Bottle: 
+    angles: 20 - 90 (2 degree steps) --> 35
+    stop_times: 0.2s - 1s (0.2 sec steps) --> 5
+    speed: constant (0.1)?
+    input_volumes: 50-500 mL (10 mL steps) --> 45
+
+    total: 35*5*45 = 7875 minutes = 5.5 days 
+
+Flask:
+    angles: 2 - 50 (2 degree steps) --> 24
+    stop_times: 0.2s - 1s (0.2 sec steps) --> 5
+    speed: constant (0.1)?
+    input_volumes: 15-150 mL (5 mL steps) --> 27
+
+    total: 24*5*27 = 3240 = 2.25 days
