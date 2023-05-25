@@ -50,6 +50,7 @@ public:
 	int prev_particle_count = -1;
 	float pause_start_time = 0;
 	float pause_start = 0;
+	float start_volume = 0;
 
 	Pouring_Bottle(const char* name, string object_path, string out_path) : 
 		Scene(name), 
@@ -208,7 +209,9 @@ public:
 		g_sceneUpper.z = 5.0f;
 		g_emitters.push_back(e);
 
-		g_numExtraParticles = 20000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
+		start_volume = 100; // volume of liquid in ml
+		g_numExtraParticles = start_volume*400; // number of particles in the emitter
+		//g_numExtraParticles = 20000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		printf("Num particles %d \n", g_numExtraParticles);
 		// The particles are spawned once every eight of a second.  It creates a number of
 		// particles proportional to the area of the emitter.  Five seconds is then added to
@@ -237,7 +240,7 @@ public:
 
 
 	bool InPouringContainer(Vec4 position, float theta) {
-		return position.y > TCP_y - 2.55905512; // only checks if the particle is above a certain height
+		return position.y > TCP_y - 3; // only checks if the particle is above a certain height
 		// maybe do the same for the receiver, with a specified range for minimum and maximum y
 		// problem: particles get stuck in flask holder??? that would be included in the height
 		// solution: holes in flask holder? Basically remove part of the "floor" of the flask holder where the flask sits on
@@ -477,10 +480,17 @@ public:
 		param_file << "stop_angle " << stop_angle << std::endl;
 		param_file << "pause_time " << pause_time << std::endl;
 		param_file << "num_particles " << g_numExtraParticles << std::endl;
-		param_file << "poured_particles " << g_numExtraParticles - not_poured_count << std::endl;
+		param_file << "start_particles " << num_particles << std::endl;
+		param_file << "poured_particles " << num_particles - not_poured_count << std::endl;
 		param_file << "received_particles " << received_count << std::endl;
-		param_file << "spilled_particles " << g_numExtraParticles - not_poured_count - received_count << std::endl;
+		param_file << "spilled_particles " << num_particles - not_poured_count - received_count << std::endl;
 		param_file << "not_poured_particles " << not_poured_count << std::endl;
+		param_file << "\n" << std::endl;
+		param_file << "start_volume " << num_particles/400 << " mL" << std::endl;
+		param_file << "poured_volume " << (num_particles - not_poured_count)/400 << " mL" << std::endl;
+		param_file << "received_volume " << received_count/400 << " mL" << std::endl;
+		param_file << "spilled_volume " << (num_particles - not_poured_count - received_count)/400 << " mL" << std::endl;
+		param_file << "not_poured_volume " << not_poured_count/400 << " mL" << std::endl;
 		param_file.close();
 
 		// update positions of pouring container

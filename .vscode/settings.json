@@ -3,6 +3,8 @@
         "xlocinfo": "cpp",
         "xstring": "cpp",
         "iterator": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "random": "cpp"
     }
 }
