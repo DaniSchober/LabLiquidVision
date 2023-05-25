@@ -94,7 +94,7 @@ public:
 		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
 		stop_angle = distribution2(generator2);
 		//stop_angle = 50;
-		stop_angle = 50;
+		stop_angle = 80;
 
 		ofstream param_file;
 		param_file.open(output_path + "_params.txt");
@@ -171,8 +171,8 @@ public:
 		//int water_phase = NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid);
 		
 		g_numSubsteps = 10;
-		//g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f); // blue
-		g_fluidColor = Vec4(0.9f, 0.5f, 0.5f, 0.5f); // red
+		g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f); // blue
+		//g_fluidColor = Vec4(0.9f, 0.5f, 0.5f, 0.5f); // red
 		g_params.radius = radius;
 		g_params.dynamicFriction = 0.0f;
 		g_params.dissipation = 0.0f;
@@ -197,7 +197,7 @@ public:
 
 
 		////////////////////// Change location of water emitter //////////////////////////////////////////////
-		Vec3 center = Vec3(TCP_x-0.7, TCP_y, 0.0f); // puts emitter in the middle of the pouring container
+		Vec3 center = Vec3(TCP_x, TCP_y + 1, 0.0f); // puts emitter in the middle of the pouring container
 		Emitter e; // create emitter object
 		e.mEnabled = true;
 		e.mWidth = int(emitterSize / restDistance);
@@ -214,7 +214,8 @@ public:
 		// particles proportional to the area of the emitter.  Five seconds is then added to
 		// let the water settle
 		//startTime = 1.0f * g_numExtraParticles / e.mWidth / e.mWidth / 8 + 20;// +5;
-		startTime = g_numExtraParticles / e.mWidth / e.mWidth / 8 + 5;
+		startTime = g_numExtraParticles / 700 + 10; // time to emit particles and let the liquid settle
+		//startTime = 35; 
 		g_emit = false;
 
 		theta_vs_volume_file.open(output_path +".text");
@@ -236,7 +237,7 @@ public:
 
 
 	bool InPouringContainer(Vec4 position, float theta) {
-		return position.y > TCP_y - 1.5; // only checks if the particle is above a certain height
+		return position.y > TCP_y - 2.55905512; // only checks if the particle is above a certain height
 		// maybe do the same for the receiver, with a specified range for minimum and maximum y
 		// problem: particles get stuck in flask holder??? that would be included in the height
 		// solution: holes in flask holder? Basically remove part of the "floor" of the flask holder where the flask sits on
@@ -265,7 +266,7 @@ public:
 	}
 
 	bool InReceivingFlask(Vec4 position){
-		return position.y > 0.22188 && position.y < 7;
+		return position.y > 0.22188 && position.y < 4;
 	}
 
 	void Update()

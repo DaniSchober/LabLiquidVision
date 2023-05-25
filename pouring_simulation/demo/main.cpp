@@ -2841,8 +2841,8 @@ int main(int argc, char* argv[])
 	//g_scenes.push_back(new Pouring("Pouring Scene 4", "../../data/Part1", "../../output/FlaskHolder", 0.0, 0.0));
 	//_scenes.push_back(new Pouring("Pouring Scene 5", "../../data/CellFlask", "../../output/CellFlask", 0.0, 0.0));
 	//g_scenes.push_back(new Pouring("Pouring Scene 6", "../../data/MediumBottle", "../../output/MediumBottle", 0.0, 0.0));
-	g_scenes.push_back(new Pouring("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/Assembly5"));
-	g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/Assembly7"));
+	g_scenes.push_back(new Pouring("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask"));
+	g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../MediumBottle"));
 	g_scenes.push_back(new Calibration("Calibration Scene", "../../data/Cylinder_500ml"));
 	
 

@@ -1,2 +1,25 @@
-﻿  flexDemoD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\compiler\vc14win64\./../../../bin/win64\NvFlexDemoDebugD3D_x64.exe
+﻿  main.cpp
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(83): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(90): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(189): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(201): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(207): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(299): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(305): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(86): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(87): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(90): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(93): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(217): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(308): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(314): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(81): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(88): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(177): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(194): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+..\..\main.cpp(627): warning C4305: '=': truncation from 'double' to 'float'
+     Creating library ./../../../bin/win64\NvFlexDemoDebugD3D_x64.lib and object ./../../../bin/win64\NvFlexDemoDebugD3D_x64.exp
+  flexDemoD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\compiler\vc14win64\./../../../bin/win64\NvFlexDemoDebugD3D_x64.exe
   flexDemoD3D.vcxproj -> ./../../../bin/win64\/NvFlexDemoDebugD3D_x64.exe.pdb (Full PDB)
