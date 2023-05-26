@@ -1,2 +1,4 @@
-rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume
-
+scene_number,path,rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume
+1,../../output/CellFlask/Flask_15_200_2,0.030000,2.000000,0.200000,14.692500,0.002500,0.002500,0.000000
+2,../../output/CellFlask/Flask_15_200_4,0.030000,4.000000,0.200000,14.692500,0.027500,0.005000,0.022500
+3,../../output/CellFlask/Flask_15_200_6,0.030000,6.000000,0.200000,14.692500,0.045000,0.012500,0.032500

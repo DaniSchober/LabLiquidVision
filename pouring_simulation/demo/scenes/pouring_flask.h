@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
+#include <direct.h>
+
 
 
 class Pouring_Flask : public Scene
@@ -17,6 +19,7 @@ public:
 
 	string pouring_container_path;
 	string output_path;
+	string path;
 	ofstream theta_vs_volume_file;
 	ofstream theta_vs_slosh_time_file;
 	ofstream TCP_file;
@@ -72,7 +75,9 @@ public:
 
 	virtual void Initialize()
 	{
-		//printf("Init\n");
+		// create output folder if it does not exist
+		path = output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*1000.0)) + "_" + to_string(int(stop_angle));
+		_mkdir(path.c_str());
 
 		// get data from config_file of pouring container if it exists --> maybe save there the TCP and center of rotation positions
 		ifstream config_file(pouring_container_path + ".cfg");
@@ -95,7 +100,7 @@ public:
 
 		rotationSpeed = 0.03;
 
-		TCP_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_TCP.txt");
+		TCP_file.open(path + "/TCP.txt");
 		TCP_file << "pos_x, " << "pos_y, " << "theta (rad)" << std::endl;
 
 		// set drawing options
@@ -199,8 +204,8 @@ public:
 		startTime = g_numExtraParticles / 1500 + 10; // time to emit particles and let the liquid settle
 		g_emit = false;
 
-		theta_vs_volume_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_theta_vs_volume.txt");
-		theta_vs_volume_file << "inside_count" << "\t" << "num_particles" << "\t" << "theta (rad)" << "\t" << "time (s)" << "\n";
+		theta_vs_volume_file.open(path + "/theta_vs_volume.txt");
+		theta_vs_volume_file << "inside_count" << "\t" << "theta (degrees)" << "\t" << "time (s)" << "\n";
 
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
@@ -354,19 +359,18 @@ public:
 		else if (return_activated && prev_theta <= 0) {
 			//printf("Return finished\n");
 
-			// Write the data to file
-			// open output.csv file
-
-
-			std::string filename = "../../output/summary_flask.csv";
+			// Write the data to summary file
+			string filename = "../../output/summary_flask.csv";
     
 			if (isCSVFileEmpty(filename)) {
 				cout << "The CSV file is empty." << endl;
-				string header = "rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume";
+				string header = "scene_number,path,rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume";
 				appendToCSVFile(filename, header);
 			}
 
 			string dataString;
+			dataString += to_string(scene_number) + ",";
+			dataString += path + ",";
 			dataString += to_string(rotationSpeed) + ",";
 			dataString += to_string(stop_angle) + ",";
 			dataString += to_string(pause_time) + ",";
@@ -376,14 +380,8 @@ public:
 			dataString += to_string(spilled_volume);
 
     		appendToCSVFile(filename, dataString);
-			// add new line
-			// write the data at the appropriate columns
-			// if the file is empty, add the column names
-			//ifstream summary_file(filename);
-			//summary_file.open("../../output/summary_flask.csv");
-			// rotation speed, stop angle, pause time, volume start, volume poured, volume received, spilled volume 
-			//summary_file << rotationSpeed << "," << stop_angle << "," << pause_time << "," << (num_particles/400.0) << "," << (num_particles - not_poured_count)/400.0 << "," << received_count/400.0 << "," << (num_particles - not_poured_count - received_count)/400.0 << "\n";
-			//printf("Wrote to file\n");
+			
+			//printf("Writing to file\n");
 			printf("Scene %i finished\n", scene_number);
 			// close the output.csv file
 			g_scene_finished = true;
@@ -414,7 +412,7 @@ public:
 
 		// write results for each step in file
 		if (mTime > startTime) {
-			theta_vs_volume_file << not_poured_count << "\t\t" << num_particles << "\t\t" << theta << "\t" << time << "\n";
+			theta_vs_volume_file << not_poured_count << "\t" << theta*57.2957f << "\t" << time << "\n";
 			TCP_file << pos_x-TCP_x << ", " << pos_y-TCP_y << ", " << theta << "\n";
 		}
 		frame_count++;
@@ -429,7 +427,7 @@ public:
 
 		// write pouring results in _params file
 		ofstream param_file;
-		param_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_params.txt");
+		param_file.open(path + "/params.txt");
 		param_file << "rotation_speed " << rotationSpeed << std::endl;
 		param_file << "stop_angle " << stop_angle << std::endl;
 		param_file << "pause_time " << pause_time << std::endl;
