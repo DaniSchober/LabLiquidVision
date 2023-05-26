@@ -28,6 +28,10 @@ These classes contain member variables and functions for simulating the pouring 
 
 In the main file, the general simulation specifications are defined. Additionally, the code generates multiple pouring scenes with different parameters for flasks and bottles, as well as a calibration scene, and stores them in the g_scenes vector. The counts of flask and bottle scenes are printed at the end. The varied parameters are the starting volume in the pouring container, the maximum angle of the pouring, and the duration of the waiting time at the maximum angle. The rotation speed stays constant. The simulation uses the object files stored in the 'data' folder (receiving and pouring containers), and stores the results of the each scene in the 'output' folder. The starting positions of the containers as well as the size of the liquid emitter can be modified in the configuration files of the 'data' folder.
 
+
+## Usage
+Make sure that the requirements are met. To
+
 ## <a id="platforms"></a> Supported Platforms
 
 * Windows 32/64 bit (CUDA, DX11, DX12)
@@ -56,7 +60,6 @@ And either:
 
 For further information about the installation please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
 
-## Usage
 
 
 
