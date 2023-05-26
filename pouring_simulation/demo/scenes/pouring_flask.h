@@ -40,7 +40,13 @@ public:
 	float emitterSize;
 	float numStartParticles;
 	float start_volume = 0;
+	float poured_volume;
+	float received_volume;
+	float spilled_volume;
 	int row = 1;
+	int not_poured_count;
+	int received_count;
+
 
 	float pause_time = 0.0;
 	bool pause_complete = false;
@@ -233,6 +239,21 @@ public:
 		return position.y > 0.22188 && position.y < 7;
 	}
 
+	bool isCSVFileEmpty(const string& filename) {
+		ifstream file(filename);
+		return file.peek() == ifstream::traits_type::eof();
+	}
+
+	void appendToCSVFile(const std::string& filename, const std::string& data) {
+		std::ofstream file(filename, std::ios_base::app);
+		if (file.is_open()) {
+			file << data << "\n";
+			file.close();
+		} else {
+			std::cout << "Unable to open the CSV file." << std::endl;
+		}
+	}
+
 	void Update()
 	{
 		// Defaults to 60Hz
@@ -355,11 +376,33 @@ public:
 
 			// Write the data to file
 			// open output.csv file
-			ofstream summary_file;
-			summary_file.open("../../output/summary.csv");
+
+
+			std::string filename = "../../output/summary_flask.csv";
+    
+			if (isCSVFileEmpty(filename)) {
+				cout << "The CSV file is empty." << endl;
+				string header = "rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume";
+				appendToCSVFile(filename, header);
+			}
+
+			string dataString;
+			dataString += to_string(rotationSpeed) + ",";
+			dataString += to_string(stop_angle) + ",";
+			dataString += to_string(pause_time) + ",";
+			dataString += to_string(num_particles / 400.0) + ",";
+			dataString += to_string(poured_volume) + ",";
+			dataString += to_string(received_volume) + ",";
+			dataString += to_string(spilled_volume);
+
+    		appendToCSVFile(filename, dataString);
 			// add new line
-			summary_file << "This is the first cell in the first column.\n";
-			summary_file << "a,b,c,\n";
+			// write the data at the appropriate columns
+			// if the file is empty, add the column names
+			//ifstream summary_file(filename);
+			//summary_file.open("../../output/summary_flask.csv");
+			// rotation speed, stop angle, pause time, volume start, volume poured, volume received, spilled volume 
+			//summary_file << rotationSpeed << "," << stop_angle << "," << pause_time << "," << (num_particles/400.0) << "," << (num_particles - not_poured_count)/400.0 << "," << received_count/400.0 << "," << (num_particles - not_poured_count - received_count)/400.0 << "\n";
 			printf("Writing to file\n");
 			// close the output.csv file
 			summary_file.close();
@@ -434,6 +477,10 @@ public:
 		param_file << "spilled_volume " << (num_particles - not_poured_count - received_count)/400.0 << " mL" << std::endl;
 		param_file << "not_poured_volume " << not_poured_count/400.0 << " mL" << std::endl;
 		param_file.close();
+
+		poured_volume = (num_particles - not_poured_count)/400.0;
+		received_volume = received_count/400.0;
+		spilled_volume = (num_particles - not_poured_count - received_count)/400.0;
 
 		// update positions of pouring container
 		Vec3 prevPos = Vec3(prev_pos_x, prev_pos_y, 0.0f);
