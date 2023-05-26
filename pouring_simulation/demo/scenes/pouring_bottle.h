@@ -38,6 +38,10 @@ public:
 	float alpha_start;
 	float CoR_x;
 	float CoR_y;
+	float poured_volume;
+	float received_volume;
+	float spilled_volume;
+	int scene_number;
 
 	int row = 1;
 
@@ -52,27 +56,27 @@ public:
 	float pause_start = 0;
 	float start_volume = 0;
 
-	Pouring_Bottle(const char* name, string object_path, string out_path, int start_vol, float stop_duration, float stop_angle) : 
+	Pouring_Bottle(const char* name, string object_path, string out_path, int start_vol, float stop_duration, float stop_angle, int scene_number) : 
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
 		output_path(out_path),    				// path to the output folder and file name
 		start_volume(start_vol), 				// volume of liquid in mL at the beginning of the simulation
 		pause_time(stop_duration), 				// time in seconds to pause the simulation after the liquid has reached the stop angle
-		stop_angle(stop_angle)					// stop angle in degrees
+		stop_angle(stop_angle),					// stop angle in degrees
+		scene_number(scene_number)				// number of the scene
 		{}
 
 	virtual void Initialize()
 	{
-		printf("Init\n");
+		//printf("Init\n");
 
 		// get data from config_file of pouring container if it exists --> maybe save there the TCP and center of rotation positions
 		ifstream config_file(pouring_container_path + ".cfg");
 		if (config_file.is_open()) {
-			printf("Config file found\n");
+			//printf("Config file found\n");
 			// read in the data from the config file
 		}
 
-		printf("Path %s", pouring_container_path.c_str());
 		config_file >> TCP_x;
 		config_file >> TCP_y;
 		config_file >> radius_CoR;
@@ -83,31 +87,11 @@ public:
 		prev_pos_x = TCP_x;
 		prev_pos_y = TCP_y;
 
-		printf("TCP %f %f, radius: %f, emitter_size: %f\n", TCP_x, TCP_y, radius_CoR, emitterSize);
+		//printf("TCP %f %f, radius: %f, emitter_size: %f\n", TCP_x, TCP_y, radius_CoR, emitterSize);
 
-		// create generator for random rotation speed between sqrt(0.005) and sqrt(0.1)
-		std::default_random_engine generator(chrono::steady_clock::now().time_since_epoch().count());
-		std::uniform_real_distribution<float> distribution(sqrt(0.005), sqrt(0.1));
-		rotationSpeed = distribution(generator);
-		rotationSpeed *= rotationSpeed;
 		rotationSpeed = 0.03;
 
-		// create generator for random stop angle betweem 45 and 135 degrees
-		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
-		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
-		//stop_angle = distribution2(generator2);
-		//stop_angle = 50;
-		//stop_angle = 5;
-
-		ofstream param_file;
-		param_file.open(output_path + "_params.txt");
-		param_file << "rotation_speed " << rotationSpeed << std::endl;
-		param_file << "stop_angle " << stop_angle << std::endl;
-		param_file.close();
-		printf("Stop angle %f rot speed %f", stop_angle, rotationSpeed);
-
-
-		TCP_file.open(output_path + "_TCP.txt");
+		TCP_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_TCP.txt");
 		TCP_file << "pos_x, " << "pos_y, " << "theta (rad)" << std::endl;
 
 		// set drawing options
@@ -138,8 +122,6 @@ public:
 
 		CoR_x = TCP_x + radius_CoR*cos(alpha_start);
 		CoR_y = TCP_y + radius_CoR*sin(alpha_start);
-
-		printf("CoR_x: %f CoR_y: %f\n", CoR_x, CoR_y);
 
 		// Define the axis of rotation
 		Vec3 axis = Vec3(0.0f, 0.0f, 1.0f);
@@ -208,56 +190,46 @@ public:
 		//start_volume = 2; // volume of liquid in ml
 		g_numExtraParticles = start_volume*400; // number of particles in the emitter
 		//g_numExtraParticles = 20000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
-		printf("Num particles %d \n", g_numExtraParticles);
+		//printf("Num particles %d \n", g_numExtraParticles);
 		// The particles are spawned once every eight of a second.  It creates a number of
 		// particles proportional to the area of the emitter.  Five seconds is then added to
 		// let the water settle
 		startTime = g_numExtraParticles / 700 + 10; // time to emit particles and let the liquid settle
 		g_emit = false;
 
-		theta_vs_volume_file.open(output_path +".text");
+		theta_vs_volume_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_theta_vs_volume.txt");
 		theta_vs_volume_file << "inside_count" << "\t" << "num_particles" << "\t" << "theta (rad)" << "\t" << "time (s)" << "\n";
 
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
 		}
 
-		printf("Initialized \n");
+		//printf("Initialized \n");
 	}
 
 
 
 	bool InPouringContainer(Vec4 position, float theta) {
 		return position.y > TCP_y - 3; // only checks if the particle is above a certain height
-		// maybe do the same for the receiver, with a specified range for minimum and maximum y
-		// problem: particles get stuck in flask holder??? that would be included in the height
-		// solution: holes in flask holder? Basically remove part of the "floor" of the flask holder where the flask sits on
-		
-		// I think this whole thing does nothing, but ask chatgpt 
-
-		/*
-		float x1 = -glass_width / 2 * cosf(theta); // Upper left
-		float y1 = TCP_y - glass_width/2 *sinf(theta);
-		float x2 = x1 + glass_height * cosf(1.57 - theta);// Lower left
-		float y2 = y1 - glass_height * sinf(1.57 - theta);
-
-        float x3 = glass_width / 2 * cosf(theta); // Upper right
-        float y3 = TCP_y + glass_width/2 *sinf(theta);
-        float x4 = x3 + glass_height * cosf(1.57 - theta); // lower right
-        float y4 = y3 - glass_height * sinf(1.57 - theta);
-
-		//printf("%f %f %f %f\n", x1, y1, x2, y2);
-		//return position.x * (y2 - y1) - position.y *(x2 - x1) < x1*y2 - x2*y1;
-		return (x2 - x1)*(position.y - y1) > (y2 - y1)*(position.x - x1) && // left bound
-			(x4 - x3)*(position.y - y3) < (y4 - y3)*(position.x - x3) && // right bound
-			(x3 - x1)*(position.y - y1) < (y3 - y1)*(position.x - x1) && // top bound
-			(x4 - x2)*(position.y - y2) > (y4 - y2)*(position.x - x2); // bottom bound
-
-		*/
 	}
 
 	bool InReceivingFlask(Vec4 position){
 		return position.y > 0.22188 && position.y < 4;
+	}
+
+	bool isCSVFileEmpty(const string& filename) {
+		ifstream file(filename);
+		return file.peek() == ifstream::traits_type::eof();
+	}
+
+	void appendToCSVFile(const std::string& filename, const std::string& data) {
+		std::ofstream file(filename, std::ios_base::app);
+		if (file.is_open()) {
+			file << data << "\n";
+			file.close();
+		} else {
+			std::cout << "Unable to open the CSV file." << std::endl;
+		}
 	}
 
 	void Update()
@@ -322,27 +294,24 @@ public:
 			if (!stopped) {
 
 				theta = prev_theta + rotationSpeed * g_dt;
-				printf("theta: %f\n", theta);
-				printf("alpha_start: %f\n", alpha_start);
+				//printf("theta: %f\n", theta);
+				//printf("alpha_start: %f\n", alpha_start);
 				if (theta <= alpha_start){
 					pos_x = CoR_x - radius_CoR * cos(alpha_start - theta);
-					printf("pos_x_cal: %f pos_y_cal: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+					//printf("pos_x_cal: %f pos_y_cal: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 					pos_y = CoR_y - radius_CoR * sin(alpha_start - theta);
 					}
 				else {
 					pos_x = CoR_x - radius_CoR * cos(theta - alpha_start);
 					pos_y = CoR_y + radius_CoR * sin(theta - alpha_start);
-					printf("pos_x_cal: %f pos_y_cal: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+					//printf("pos_x_cal: %f pos_y_cal: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
 				}
-
-				//pos_x = TCP_x + radius_CoR * (1 - cos(theta));
-				//pos_y = TCP_y + radius_CoR * sin(theta);
 				
-				printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+				//printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
 				if (theta > next_stop_threshold) {
-					printf("Stopped activated: theta: %f\n", theta);
+					//printf("Stopped activated: theta: %f\n", theta);
 					pause_start_time = time;
 					next_stop_threshold += stop_distance;
 					stopped = true;
@@ -354,9 +323,9 @@ public:
 		}
 		else if (return_activated && prev_theta > 0) {
 			if (!pause_complete) {
-				printf("Pausing at max angle: %f for %.2f time\n", prev_theta, pause_time);
+				//printf("Pausing at max angle: %f for %.2f time\n", prev_theta, pause_time);
 				if (time - pause_start > pause_time) {
-					printf("Pause complete\n");
+					//printf("Pause complete\n");
 					pause_complete = true;
 					theta = prev_theta;
 					prev_pos_x = pos_x;
@@ -366,8 +335,8 @@ public:
 					theta = prev_theta;
 					pos_x = prev_pos_x;
 					pos_y = prev_pos_y;
-					printf("Passed time: %f\n", time - pause_start);
-					printf("Pause_start: %f\n", pause_start);
+					//printf("Passed time: %f\n", time - pause_start);
+					//printf("Pause_start: %f\n", pause_start);
 				}
 			}
 			else {
@@ -391,7 +360,7 @@ public:
 					//pos_x = TCP_x + radius_CoR * (1 - cos(theta));
 					//pos_y = TCP_y + radius_CoR * sin(theta);
 
-					printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+					//printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
 					/*
 					if (theta < next_stop_threshold) {
@@ -409,7 +378,31 @@ public:
 		}
 
 		else if (return_activated && prev_theta <= 0) {
-			printf("Return finished\n");
+			//printf("Return finished\n");
+
+			// Write the data to summary file
+			string filename = "../../output/summary_medium.csv";
+    
+			if (isCSVFileEmpty(filename)) {
+				cout << "The CSV file is empty." << endl;
+				string header = "rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume";
+				appendToCSVFile(filename, header);
+			}
+
+			string dataString;
+			dataString += to_string(rotationSpeed) + ",";
+			dataString += to_string(stop_angle) + ",";
+			dataString += to_string(pause_time) + ",";
+			dataString += to_string(num_particles / 400.0) + ",";
+			dataString += to_string(poured_volume) + ",";
+			dataString += to_string(received_volume) + ",";
+			dataString += to_string(spilled_volume);
+
+    		appendToCSVFile(filename, dataString);
+			
+			//printf("Writing to file\n");
+			printf("Scene %i finished\n", scene_number);
+
 			g_scene_finished = true;
 			theta_vs_volume_file.close();
 			theta_vs_slosh_time_file.close();
@@ -418,19 +411,7 @@ public:
 
 		/////////////////////////////////////////////////////////////////////////////////// End Movements /////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		/*
-		ofstream frame_particle_locations, frame_container_orientation;
-		bool output_render_data = false;
-		if (frame_count % 3 == 0 && output_render_data) {
-			frame_particle_locations.open(output_path + "_particles_" + std::to_string(frame_count) + ".obj");
-			frame_container_orientation.open(output_path + "_container_" + std::to_string(frame_count) + ".obj");
-			double theta_degree = theta / M_PI * 180;
-			frame_container_orientation << "v 0 0 " << theta_degree << std::endl;
-			frame_container_orientation << "v 0 " << TCP_y << " 0" << std::endl;
-		}
-		*/
-		
-		// that calculates the amount of particles still in the container
+		// calculate the amount of particles still in the container
 		int not_poured_count = 0;
 		int received_count = 0;
 
@@ -448,8 +429,6 @@ public:
 		}
 
 		// write results for each step in text file
-
-		
 		if (mTime > startTime) {
 			theta_vs_volume_file << not_poured_count << "\t\t" << num_particles << "\t\t" << theta << "\t" << time << "\n";
 			TCP_file << pos_x-TCP_x << ", " << pos_y-TCP_y << ", " << theta << "\n";
@@ -458,7 +437,7 @@ public:
 		
 		// if stop angle is reached, start pause time and activate the return
 		if (theta > (stop_angle-0.05) * 3.14 / 180 && !return_activated) {
-					printf("Activated return");
+					//printf("Activated return");
 					pause_start = time;
 					return_activated = true;
 				}
@@ -467,7 +446,7 @@ public:
 		
 		// write pouring results in _params file
 		ofstream param_file;
-		param_file.open(output_path + "_params.txt");
+		param_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_params.txt");
 		param_file << "rotation_speed " << rotationSpeed << std::endl;
 		param_file << "stop_angle " << stop_angle << std::endl;
 		param_file << "pause_time " << pause_time << std::endl;
@@ -484,6 +463,11 @@ public:
 		param_file << "spilled_volume " << (num_particles - not_poured_count - received_count)/400.0 << " mL" << std::endl;
 		param_file << "not_poured_volume " << not_poured_count/400.0 << " mL" << std::endl;
 		param_file.close();
+
+		poured_volume = (num_particles - not_poured_count)/400.0;
+		received_volume = received_count/400.0;
+		spilled_volume = (num_particles - not_poured_count - received_count)/400.0;
+
 
 		// update positions of pouring container
 		Vec3 prevPos = Vec3(prev_pos_x, prev_pos_y, 0.0f);

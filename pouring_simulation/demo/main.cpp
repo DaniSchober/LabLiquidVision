@@ -2819,10 +2819,31 @@ int main(int argc, char* argv[])
 		}
 	}
 	*/
-	
-	g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask", 15, 3.2, 15)); 			// Scene name, input path, output path, start volume, stopping duration, stopping angle
-	g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle", 15, 1.2, 15)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
-	g_scenes.push_back(new Calibration("Calibration Scene", "../../data/Cylinder_500ml")); 																// Scene name, input path
+	int count_scenes_flaks = 0;
+	int count_scenes_bottle = 0;
+
+	for (int start_vol = 15; start_vol <= 150; start_vol += 5) {
+		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) {
+			for (int stop_angle = 2; stop_angle <= 50; stop_angle += 2) {
+				count_scenes_flaks++;
+				g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask/Flask", start_vol, pause_time, stop_angle, count_scenes_flaks)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
+			}
+		}
+	}
+
+	for (int start_vol = 50; start_vol <= 500; start_vol += 10) {
+		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) {
+			for (int stop_angle = 20; stop_angle <= 90; stop_angle += 2) {
+				count_scenes_bottle++;
+				g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle/Medium", start_vol, pause_time, stop_angle, count_scenes_bottle)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
+			}
+		}
+	}
+
+	printf("Number of scenes flask: %d\n", count_scenes_flaks);
+	printf("Number of scenes bottle: %d\n", count_scenes_bottle);
+
+	g_scenes.push_back(new Calibration("Calibration Scene", "../../data/Cylinder_500ml")); // Scene name, input path
 
 #ifndef ANDROID
 

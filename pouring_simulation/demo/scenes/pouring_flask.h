@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <math.h>
 
 
 class Pouring_Flask : public Scene
@@ -46,6 +47,7 @@ public:
 	int row = 1;
 	int not_poured_count;
 	int received_count;
+	int scene_number;
 
 
 	float pause_time = 0.0;
@@ -58,28 +60,27 @@ public:
 	float pause_start_time = 0;
 	float pause_start = 0;
 
-	Pouring_Flask(const char* name, string object_path, string out_path, int start_vol, float stop_duration, float stop_angle): 
+	Pouring_Flask(const char* name, string object_path, string out_path, int start_vol, float stop_duration, float stop_angle, int scene_number): 
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
 		output_path(out_path),    				// path to the output folder and file name
 		start_volume(start_vol), 				// volume of liquid in mL at the beginning of the simulation
 		pause_time(stop_duration), 				// time in seconds to pause the simulation after the liquid has reached the stop angle
-		stop_angle(stop_angle)					// stop angle in degrees
+		stop_angle(stop_angle),					// stop angle in degrees
+		scene_number(scene_number)				// number of the scene
 		{}
 
 	virtual void Initialize()
 	{
-		printf("Init\n");
+		//printf("Init\n");
 
 		// get data from config_file of pouring container if it exists --> maybe save there the TCP and center of rotation positions
 		ifstream config_file(pouring_container_path + ".cfg");
 		if (config_file.is_open()) {
-			printf("Config file found\n");
+			//printf("Config file found\n");
 			// read in the data from the config file
 
 		}
-		printf("Path %s \n", pouring_container_path.c_str());
-		//float TCP_x, TCP_y, radius;
 		config_file >> TCP_x;
 		config_file >> TCP_y;
 		config_file >> radius_CoR;
@@ -90,32 +91,11 @@ public:
 		prev_pos_x = TCP_x;
 		prev_pos_y = TCP_y;
 
-		printf("TCP %f %f, radius: %f, emitter_size: %f\n", TCP_x, TCP_y, radius_CoR, emitterSize);
+		//printf("TCP %f %f, radius: %f, emitter_size: %f\n", TCP_x, TCP_y, radius_CoR, emitterSize);
 
-		// create generator for random rotation speed between sqrt(0.005) and sqrt(0.1)
-		std::default_random_engine generator(chrono::steady_clock::now().time_since_epoch().count());
-		std::uniform_real_distribution<float> distribution(sqrt(0.005), sqrt(0.1));
-		rotationSpeed = distribution(generator);
-		rotationSpeed *= rotationSpeed;
 		rotationSpeed = 0.03;
-		//rotationSpeed = 0.05;
 
-		// create generator for random stop angle betweem 45 and 135 degrees
-		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
-		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
-		//stop_angle = distribution2(generator2);
-		//stop_angle = 5;
-		//stop_angle = 180;
-
-		ofstream param_file;
-		param_file.open(output_path + "_params.txt");
-		param_file << "rotation_speed " << rotationSpeed << std::endl;
-		param_file << "stop_angle " << stop_angle << std::endl;
-		param_file.close();
-		printf("Stop angle %f rot speed %f \n", stop_angle, rotationSpeed);
-
-
-		TCP_file.open(output_path + "_TCP.txt");
+		TCP_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_TCP.txt");
 		TCP_file << "pos_x, " << "pos_y, " << "theta (rad)" << std::endl;
 
 		// set drawing options
@@ -213,20 +193,20 @@ public:
 
 		g_numExtraParticles = start_volume*400; // number of particles in the emitter
 		numStartParticles = g_numExtraParticles;
-		printf("Num particles %d \n", g_numExtraParticles);
+		//printf("Num particles %d \n", g_numExtraParticles);
 
 		// The particles are spawned once every eight of a second. 10 seconds is added to let the water settle
 		startTime = g_numExtraParticles / 1500 + 10; // time to emit particles and let the liquid settle
 		g_emit = false;
 
-		theta_vs_volume_file.open(output_path +".text");
+		theta_vs_volume_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_theta_vs_volume.txt");
 		theta_vs_volume_file << "inside_count" << "\t" << "num_particles" << "\t" << "theta (rad)" << "\t" << "time (s)" << "\n";
 
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
 		}
 
-		printf("Initialized \n");
+		//printf("Initialized \n");
 	}
 
 
@@ -317,10 +297,10 @@ public:
 				pos_x = TCP_x + radius_CoR * (1 - cos(theta));
 				pos_y = TCP_y + radius_CoR * sin(theta);
 				
-				printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+				//printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
 				if (theta > next_stop_threshold) {
-					printf("Stopped activated: theta: %f\n", theta);
+					//printf("Stopped activated: theta: %f\n", theta);
 					pause_start_time = time;
 					next_stop_threshold += stop_distance;
 					stopped = true;
@@ -332,7 +312,7 @@ public:
 		}
 		else if (return_activated && prev_theta > 0) {
 			if (!pause_complete) {
-				printf("Pausing at max angle: %f for %.2f time\n", prev_theta, pause_time);
+				//printf("Pausing at max angle: %f for %.2f time\n", prev_theta, pause_time);
 				if (time - pause_start > pause_time) {
 					pause_complete = true;
 					theta = prev_theta;
@@ -356,10 +336,10 @@ public:
 					pos_x = TCP_x + radius_CoR * (1 - cos(theta));
 					pos_y = TCP_y + radius_CoR * sin(theta);
 
-					printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
+					//printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
 
 					if (theta < next_stop_threshold) {
-						printf("Stopped activated: theta: %f\n", theta);
+						//printf("Stopped activated: theta: %f\n", theta);
 						pause_start_time = time;
 						next_stop_threshold -= stop_distance;
 						stopped = true;
@@ -372,7 +352,7 @@ public:
 		}
 
 		else if (return_activated && prev_theta <= 0) {
-			printf("Return finished\n");
+			//printf("Return finished\n");
 
 			// Write the data to file
 			// open output.csv file
@@ -403,9 +383,9 @@ public:
 			//summary_file.open("../../output/summary_flask.csv");
 			// rotation speed, stop angle, pause time, volume start, volume poured, volume received, spilled volume 
 			//summary_file << rotationSpeed << "," << stop_angle << "," << pause_time << "," << (num_particles/400.0) << "," << (num_particles - not_poured_count)/400.0 << "," << received_count/400.0 << "," << (num_particles - not_poured_count - received_count)/400.0 << "\n";
-			printf("Writing to file\n");
+			//printf("Wrote to file\n");
+			printf("Scene %i finished\n", scene_number);
 			// close the output.csv file
-			summary_file.close();
 			g_scene_finished = true;
 			theta_vs_volume_file.close();
 			theta_vs_slosh_time_file.close();
@@ -441,26 +421,15 @@ public:
 		
 		// if stop angle is reached, start pause time and activate the return
 		if (theta > (stop_angle-0.05) * 3.14 / 180 && !return_activated) {
-					printf("Activated return\n");
+					//printf("Activated return\n");
 					pause_start = time;
 					return_activated = true;
 				}
 		stopped = false;
 
-		// Open the output file for writing:
-    	FILE *file = fopen("../../output/output.csv", "w");
-		if (row == 0){
-			fprintf(file, "pos_x,pos_y,theta\n");
-		}
-		else{
-			fprintf(file, "%f,%f,%f\n", pos_x-TCP_x, pos_y-TCP_y, theta);
-		}
-		fclose(file);
-
-		
 		// write pouring results in _params file
 		ofstream param_file;
-		param_file.open(output_path + "_params.txt");
+		param_file.open(output_path + "_" + to_string(int(start_volume)) + "_" + to_string(int(pause_time*10.0)) + "_" + to_string(int(stop_angle)) + "_params.txt");
 		param_file << "rotation_speed " << rotationSpeed << std::endl;
 		param_file << "stop_angle " << stop_angle << std::endl;
 		param_file << "pause_time " << pause_time << std::endl;
