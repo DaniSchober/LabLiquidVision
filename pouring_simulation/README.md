@@ -15,9 +15,7 @@ Please write description here.
 - [Requirements](#requirements)
 - [Further Information](#information)
 - [Usage](#usage)
-- [License](#license)
-- [Credits](#credits)
-- [Contact](#contact)
+- [Basic Explanation](#explanation)
 
 ## <a id="platforms"></a> Supported Platforms
 
@@ -45,5 +43,15 @@ And either:
 
 ## <a id="information"></a> Further Information
 
-For further information please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
+For further information about the installation please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
+
+## Usage
+
+
+## <a id="explanation"></a> Basic Explanation
+
+The provided code is a C++ program that simulates the pouring of a liquid from one container to another. Two containers used in cell culture processes were used. 
+For each container, there is a seperate scene header file, which defines the classes named Pouring_Flask and Pouring_Bottle, which inherit from a base class called Scene.
+These classes contain member variables and functions for simulating the pouring process. The 'Initialize' function initializes the simulation by creating the pouring and receiving containers, setting fluid parameters, and creating an emitter for the fluid particles.
+
 
