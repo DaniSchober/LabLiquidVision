@@ -41,7 +41,7 @@ public:
 
 	int row = 1;
 
-	float pause_time = 2.0;
+	float pause_time = 0.0;
 	bool pause_complete = false;
 	float stop_angle;
 	float next_stop_threshold = 0;
@@ -52,10 +52,13 @@ public:
 	float pause_start = 0;
 	float start_volume = 0;
 
-	Pouring_Bottle(const char* name, string object_path, string out_path) : 
+	Pouring_Bottle(const char* name, string object_path, string out_path, int start_vol, float stop_duration, float stop_angle) : 
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
-		output_path(out_path)    				// path to the output folder and file name
+		output_path(out_path),    				// path to the output folder and file name
+		start_volume(start_vol), 				// volume of liquid in mL at the beginning of the simulation
+		pause_time(stop_duration), 				// time in seconds to pause the simulation after the liquid has reached the stop angle
+		stop_angle(stop_angle)					// stop angle in degrees
 		{}
 
 	virtual void Initialize()
@@ -67,10 +70,9 @@ public:
 		if (config_file.is_open()) {
 			printf("Config file found\n");
 			// read in the data from the config file
-
 		}
+
 		printf("Path %s", pouring_container_path.c_str());
-		//float TCP_x, TCP_y, radius;
 		config_file >> TCP_x;
 		config_file >> TCP_y;
 		config_file >> radius_CoR;
@@ -93,9 +95,9 @@ public:
 		// create generator for random stop angle betweem 45 and 135 degrees
 		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
 		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
-		stop_angle = distribution2(generator2);
+		//stop_angle = distribution2(generator2);
 		//stop_angle = 50;
-		stop_angle = 5;
+		//stop_angle = 5;
 
 		ofstream param_file;
 		param_file.open(output_path + "_params.txt");
@@ -119,20 +121,18 @@ public:
 
 		//////////////////////////////////////////////////////// Add receiving container /////////////////////////////////////////////////////////////////////////////
 		
-		Mesh* receiver = ImportMesh(GetFilePathByPlatform("../../data/Assembly3.obj").c_str());
+		Mesh* receiver = ImportMesh(GetFilePathByPlatform("../../data/Assembly_Receiver.obj").c_str());
 		mesh_receiver = CreateTriangleMesh(receiver);
 
 		receive_pos = Vec3(0.0f, 0.1f, 0.0f); // x, y, z (y is up)! Changing position of the receiving container
-		//receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -0.244f); // turn around z-axis around 14 degrees (in radians 0.244f)
-		receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 0.0f); // turn around z-axis around 14 degrees (in radians 0.244f)
+		receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 0.0f); // turn around z-axis 
 		AddTriangleMesh(mesh_receiver, receive_pos, receive_rot, 1.0f); // change scale of the receiving container
 
 		//////////////////////////////////////////////////////// Add pouring container ////////////////////////////////////////////////////////////////////////////////
 		// Import mesh of pouring container 
 		Mesh* pourer = ImportMesh(GetFilePathByPlatform((pouring_container_path+".obj").c_str()).c_str());
 
-		// rotate the coordinate system of the pouring container around 90 degrees (so it's horizontal)
-		//float angle = -1.5708f;
+		// rotate the coordinate system of the pouring container around 14 degrees
 		float angle = -0.253f; 
 		alpha_start = 0.804761f + angle;
 
@@ -166,10 +166,6 @@ public:
 		float radius = 0.1f; // radius of particles
 		float restDistance = radius*0.6f;
 		Vec3 lower = (0.0f, 10.0f, 0.0f);
-		//int x_count = (int)(1.0f / restDistance); //not sure if needed
-		//int y_count = (int)(1.0f / restDistance);
-		//int z_count = (int)(1.0f / restDistance);
-		//int water_phase = NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid);
 		
 		g_numSubsteps = 10;
 		g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f); // blue
@@ -209,7 +205,7 @@ public:
 		g_sceneUpper.z = 5.0f;
 		g_emitters.push_back(e);
 
-		start_volume = 2; // volume of liquid in ml
+		//start_volume = 2; // volume of liquid in ml
 		g_numExtraParticles = start_volume*400; // number of particles in the emitter
 		//g_numExtraParticles = 20000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		printf("Num particles %d \n", g_numExtraParticles);

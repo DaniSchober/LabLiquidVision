@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 
-class Pouring : public Scene
+class Pouring_Flask : public Scene
 {
 public:
 	
@@ -39,7 +39,7 @@ public:
 	float start_volume = 0;
 	int row = 1;
 
-	float pause_time = 1.0;
+	float pause_time = 0.0;
 	bool pause_complete = false;
 	float stop_angle;
 	float next_stop_threshold = 0;
@@ -49,10 +49,13 @@ public:
 	float pause_start_time = 0;
 	float pause_start = 0;
 
-	Pouring(const char* name, string object_path, string out_path) : 
+	Pouring_Flask(const char* name, string object_path, string out_path, int start_vol, float stop_duration, float stop_angle): 
 		Scene(name), 
 		pouring_container_path(object_path), 	// path to the pouring container (.obj type)
-		output_path(out_path)    				// path to the output folder and file name
+		output_path(out_path),    				// path to the output folder and file name
+		start_volume(start_vol), 				// volume of liquid in mL at the beginning of the simulation
+		pause_time(stop_duration), 				// time in seconds to pause the simulation after the liquid has reached the stop angle
+		stop_angle(stop_angle)					// stop angle in degrees
 		{}
 
 	virtual void Initialize()
@@ -91,8 +94,8 @@ public:
 		// create generator for random stop angle betweem 45 and 135 degrees
 		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
 		std::uniform_real_distribution<float> distribution2(10.0, 60.0);
-		stop_angle = distribution2(generator2);
-		stop_angle = 5;
+		//stop_angle = distribution2(generator2);
+		//stop_angle = 5;
 		//stop_angle = 180;
 
 		ofstream param_file;
@@ -117,7 +120,7 @@ public:
 
 		//////////////////////////////////////////////////////// Add receiving container /////////////////////////////////////////////////////////////////////////////
 		
-		Mesh* receiver = ImportMesh(GetFilePathByPlatform("../../data/Assembly3.obj").c_str());
+		Mesh* receiver = ImportMesh(GetFilePathByPlatform("../../data/Assembly_Receiver.obj").c_str());
 		mesh_receiver = CreateTriangleMesh(receiver);
 
 		receive_pos = Vec3(0.0f, 0.1f, 0.0f); // x, y, z (y is up)! Changing position of the receiving container
@@ -199,7 +202,7 @@ public:
 		g_sceneUpper.z = 5.0f;
 		g_emitters.push_back(e);
 
-		start_volume = 150; // volume of liquid in ml
+		//start_volume = 150; // volume of liquid in ml
 		g_numExtraParticles = start_volume*400; // number of particles in the emitter
 		//g_numExtraParticles = 2000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		numStartParticles = g_numExtraParticles;
