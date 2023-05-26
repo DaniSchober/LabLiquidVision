@@ -4,6 +4,8 @@
 #include "../mesh_query/mesh_query.h"
 #include <windows.h>
 #include <stdio.h>
+#include <iostream>
+#include <fstream>
 
 
 class Pouring_Flask : public Scene
@@ -17,6 +19,7 @@ public:
 	ofstream theta_vs_volume_file;
 	ofstream theta_vs_slosh_time_file;
 	ofstream TCP_file;
+	ofstream summary_file;
 
 	NvFlexTriangleMeshId mesh_receiver, pouring_mesh;
 	Vec3 receive_pos;
@@ -202,31 +205,20 @@ public:
 		g_sceneUpper.z = 5.0f;
 		g_emitters.push_back(e);
 
-		//start_volume = 150; // volume of liquid in ml
 		g_numExtraParticles = start_volume*400; // number of particles in the emitter
-		//g_numExtraParticles = 2000; //(int)(75 * 3.14 * area * area / radius / radius / radius) + 2000;
 		numStartParticles = g_numExtraParticles;
 		printf("Num particles %d \n", g_numExtraParticles);
-		// The particles are spawned once every eight of a second.  It creates a number of
-		// particles proportional to the area of the emitter.  Five seconds is then added to
-		// let the water settle
-		//startTime = 1.0f * g_numExtraParticles / e.mWidth / e.mWidth / 8 + 20;// +5;
+
+		// The particles are spawned once every eight of a second. 10 seconds is added to let the water settle
 		startTime = g_numExtraParticles / 1500 + 10; // time to emit particles and let the liquid settle
-		//startTime = g_numExtraParticles / e.mWidth / e.mWidth / 8 + 5;
 		g_emit = false;
 
 		theta_vs_volume_file.open(output_path +".text");
 		theta_vs_volume_file << "inside_count" << "\t" << "num_particles" << "\t" << "theta (rad)" << "\t" << "time (s)" << "\n";
-		theta_vs_slosh_time_file.open(output_path + "_wait_times.text");
-		theta_vs_slosh_time_file << "wait_time" << "\t" << "theta" << "\n";
-
 
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
 		}
-
-
-
 
 		printf("Initialized \n");
 	}
@@ -235,31 +227,6 @@ public:
 
 	bool InPouringContainer(Vec4 position, float theta) {
 		return position.y > TCP_y - 1.5; // only checks if the particle is above a certain height
-		// maybe do the same for the receiver, with a specified range for minimum and maximum y
-		// problem: particles get stuck in flask holder??? that would be included in the height
-		// solution: holes in flask holder? Basically remove part of the "floor" of the flask holder where the flask sits on
-		
-		// I think this whole thing does nothing, but ask chatgpt 
-
-		/*
-		float x1 = -glass_width / 2 * cosf(theta); // Upper left
-		float y1 = TCP_y - glass_width/2 *sinf(theta);
-		float x2 = x1 + glass_height * cosf(1.57 - theta);// Lower left
-		float y2 = y1 - glass_height * sinf(1.57 - theta);
-
-        float x3 = glass_width / 2 * cosf(theta); // Upper right
-        float y3 = TCP_y + glass_width/2 *sinf(theta);
-        float x4 = x3 + glass_height * cosf(1.57 - theta); // lower right
-        float y4 = y3 - glass_height * sinf(1.57 - theta);
-
-		//printf("%f %f %f %f\n", x1, y1, x2, y2);
-		//return position.x * (y2 - y1) - position.y *(x2 - x1) < x1*y2 - x2*y1;
-		return (x2 - x1)*(position.y - y1) > (y2 - y1)*(position.x - x1) && // left bound
-			(x4 - x3)*(position.y - y3) < (y4 - y3)*(position.x - x3) && // right bound
-			(x3 - x1)*(position.y - y1) < (y3 - y1)*(position.x - x1) && // top bound
-			(x4 - x2)*(position.y - y2) > (y4 - y2)*(position.x - x2); // bottom bound
-
-		*/
 	}
 
 	bool InReceivingFlask(Vec4 position){
@@ -308,7 +275,6 @@ public:
 
 		// If true, the cup will stop every stop_angle degrees and wait for the water level to stop changing
 		bool continous = false;
-
 		float stop_distance = stop_angle*3.14/180;
 		float real_prev_theta = prev_theta;
 
@@ -347,7 +313,6 @@ public:
 			if (!pause_complete) {
 				printf("Pausing at max angle: %f for %.2f time\n", prev_theta, pause_time);
 				if (time - pause_start > pause_time) {
-					printf("Pause complete\n");
 					pause_complete = true;
 					theta = prev_theta;
 					prev_pos_x = pos_x;
@@ -357,8 +322,6 @@ public:
 					theta = prev_theta;
 					pos_x = prev_pos_x;
 					pos_y = prev_pos_y;
-					printf("Passed time: %f\n", time - pause_start);
-					printf("Pause_start: %f\n", pause_start);
 				}
 			}
 			else {
@@ -389,6 +352,17 @@ public:
 
 		else if (return_activated && prev_theta <= 0) {
 			printf("Return finished\n");
+
+			// Write the data to file
+			// open output.csv file
+			ofstream summary_file;
+			summary_file.open("../../output/summary.csv");
+			// add new line
+			summary_file << "This is the first cell in the first column.\n";
+			summary_file << "a,b,c,\n";
+			printf("Writing to file\n");
+			// close the output.csv file
+			summary_file.close();
 			g_scene_finished = true;
 			theta_vs_volume_file.close();
 			theta_vs_slosh_time_file.close();
@@ -396,20 +370,8 @@ public:
 		}	
 
 		/////////////////////////////////////////////////////////////////////////////////// End Movements /////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		/*
-		ofstream frame_particle_locations, frame_container_orientation;
-		bool output_render_data = false;
-		if (frame_count % 3 == 0 && output_render_data) {
-			frame_particle_locations.open(output_path + "_particles_" + std::to_string(frame_count) + ".obj");
-			frame_container_orientation.open(output_path + "_container_" + std::to_string(frame_count) + ".obj");
-			double theta_degree = theta / M_PI * 180;
-			frame_container_orientation << "v 0 0 " << theta_degree << std::endl;
-			frame_container_orientation << "v 0 " << TCP_y << " 0" << std::endl;
-		}
-		*/
-		
-		// that calculates the amount of particles still in the container
+				
+		// calculate the amount of particles still in the container
 		int not_poured_count = 0;
 		int received_count = 0;
 

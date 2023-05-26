@@ -2821,7 +2821,10 @@ int main(int argc, char* argv[])
 	*/
 	
 	g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask", 15, 1.2, 15)); 			// Scene name, input path, output path, start volume, stopping duration, stopping angle
+	//g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_2605", "../../output/CellFlask", 15, 1.2, 15)); 			// Scene name, input path, output path, start volume, stopping duration, stopping angle
 	g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle", 15, 1.2, 15)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
+	g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_2605", "../../output/MediumBottle", 15, 1.2, 15)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
+
 	g_scenes.push_back(new Calibration("Calibration Scene", "../../data/Cylinder_500ml")); 																// Scene name, input path
 
 #ifndef ANDROID

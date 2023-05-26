@@ -212,24 +212,15 @@ public:
 		// The particles are spawned once every eight of a second.  It creates a number of
 		// particles proportional to the area of the emitter.  Five seconds is then added to
 		// let the water settle
-		//startTime = 1.0f * g_numExtraParticles / e.mWidth / e.mWidth / 8 + 20;// +5;
 		startTime = g_numExtraParticles / 700 + 10; // time to emit particles and let the liquid settle
-		//startTime = 35; 
 		g_emit = false;
 
 		theta_vs_volume_file.open(output_path +".text");
 		theta_vs_volume_file << "inside_count" << "\t" << "num_particles" << "\t" << "theta (rad)" << "\t" << "time (s)" << "\n";
-		theta_vs_slosh_time_file.open(output_path + "_wait_times.text");
-		theta_vs_slosh_time_file << "wait_time" << "\t" << "theta" << "\n";
-
 
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
 		}
-
-		g_dt = 1.0f / 60.0f;
-
-
 
 		printf("Initialized \n");
 	}
