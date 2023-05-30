@@ -1,4 +1,4 @@
-inside_count	theta (rad)	time (s)
+inside_count	theta (degrees)	time (s)
 5877	0.0286479	0.0166245
 5877	0.0572957	0.0332909
 5877	0.0859435	0.0499573
