@@ -17,7 +17,6 @@ public:
 	string output_path;
 	string path;
 	ofstream theta_vs_volume_file;
-	ofstream theta_vs_slosh_time_file;
 	ofstream TCP_file;
 
 	NvFlexTriangleMeshId mesh_receiver, pouring_mesh;
@@ -53,6 +52,7 @@ public:
 	float next_stop_threshold = 0;
 	bool stopped = false;
 	bool return_activated = false;
+	bool pause_started = false;
 	int prev_particle_count = -1;
 	float pause_start_time = 0;
 	float pause_start = 0;
@@ -98,8 +98,6 @@ public:
 
 		rotationSpeed = 0.03;
 
-		TCP_file.open(path + "/TCP.txt");
-		TCP_file << "pos_x, " << "pos_y, " << "theta (rad)" << std::endl;
 
 		// set drawing options
 		g_drawPoints = false;
@@ -206,6 +204,9 @@ public:
 
 		theta_vs_volume_file.open(path + "/theta_vs_volume.txt");
 		theta_vs_volume_file << "inside_count" << "\t" << "theta (degrees)" << "\t" << "time (s)" << "\n";
+
+		TCP_file.open(path + "/TCP.txt");
+		TCP_file << "pos_x, " << "pos_y, " << "theta (rad)" << std::endl;
 
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
@@ -386,36 +387,42 @@ public:
 
 		else if (return_activated && prev_theta <= 0) {
 			//printf("Return finished\n");
-
-			// Write the data to summary file
-			string filename = "../../output/summary_medium.csv";
-    
-			if (isCSVFileEmpty(filename)) {
-				cout << "The CSV file is empty." << endl;
-				string header = "scene_number,path,rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume";
-				appendToCSVFile(filename, header);
+			// wait for 1 second before closing the scene
+			if (pause_started == false){
+				pause_start = time;
+				pause_started = true;
 			}
+			if (time - pause_start > 1.0) {
+				// Write the data to summary file
+				string filename = "../../output/summary_medium.csv";
+		
+				if (isCSVFileEmpty(filename)) {
+					cout << "The CSV file is empty." << endl;
+					string header = "scene_number,path,rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume";
+					appendToCSVFile(filename, header);
+				}
 
-			string dataString;
-			dataString += to_string(scene_number) + ",";
-			dataString += path + ",";
-			dataString += to_string(rotationSpeed) + ",";
-			dataString += to_string(stop_angle) + ",";
-			dataString += to_string(pause_time) + ",";
-			dataString += to_string(num_particles / 400.0) + ",";
-			dataString += to_string(poured_volume) + ",";
-			dataString += to_string(received_volume) + ",";
-			dataString += to_string(spilled_volume);
+				string dataString;
+				dataString += to_string(scene_number) + ",";
+				dataString += path + ",";
+				dataString += to_string(rotationSpeed) + ",";
+				dataString += to_string(stop_angle) + ",";
+				dataString += to_string(pause_time) + ",";
+				dataString += to_string(num_particles / 400.0) + ",";
+				dataString += to_string(poured_volume) + ",";
+				dataString += to_string(received_volume) + ",";
+				dataString += to_string(spilled_volume);
 
-    		appendToCSVFile(filename, dataString);
-			
-			//printf("Writing to file\n");
-			printf("Scene %i finished\n", scene_number);
+				appendToCSVFile(filename, dataString);
+				
+				//printf("Writing to file\n");
+				printf("Scene %i finished\n", scene_number);
 
-			g_scene_finished = true;
-			theta_vs_volume_file.close();
-			theta_vs_slosh_time_file.close();
-			return;
+				g_scene_finished = true;
+				theta_vs_volume_file.close();
+				TCP_file.close();
+				return;
+			}
 		}	
 
 		/////////////////////////////////////////////////////////////////////////////////// End Movements /////////////////////////////////////////////////////////////////////////////////////////////////

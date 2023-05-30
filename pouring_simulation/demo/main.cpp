@@ -2824,7 +2824,7 @@ int main(int argc, char* argv[])
 	//g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle/Medium", 5, 5, 5, count_scenes_bottle)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
 
 
-	for (int start_vol = 15; start_vol <= 150; start_vol += 5) {
+	for (int start_vol = 35; start_vol <= 150; start_vol += 5) {
 		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) {
 			for (int stop_angle = 2; stop_angle <= 50; stop_angle += 2) {
 				count_scenes_flaks++;
