@@ -68,8 +68,8 @@ for epoch in range(n_epochs):
     # evaluate accuracy at end of each epoch
     model.eval()
     y_pred = model(X_test)
-    mse = loss_fn(y_pred, y_test)
-    mse = float(mse)
+    loss = loss_fn(y_pred, y_test)
+    mse = float(loss)
     history.append(mse)
     if mse < best_mse:
         best_mse = mse

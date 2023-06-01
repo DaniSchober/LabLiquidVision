@@ -19,7 +19,6 @@ print("Device used: ", device)
 def train(model, criterion, optimizer, train_loader, epoch_str, len_dataset):
     model.train()
 
-
     # Wrap train_loader with tqdm for a progress bar
     progress_bar = tqdm(train_loader, desc=epoch_str)
 
@@ -39,15 +38,23 @@ def train(model, criterion, optimizer, train_loader, epoch_str, len_dataset):
         targets = data["vol_liquid"].to(device)
         targets = targets.float()
 
+        print("Targets batch ", i, ":", targets)
+
         optimizer.zero_grad()
         outputs = model(vessel_depth, liquid_depth, vessel_vol)
 
         loss = criterion(outputs, targets.unsqueeze(1))
+
+        print("Outputs batch ", i, ":", outputs)
+
+        print("Loss Batch ", i, ":", loss)
+        print("Loss item batch ", i, ":", loss.item())
         # add loss to list
         losses.append(loss.item())
 
         # Calculate RMSE
-        rmse = torch.sqrt(loss).item()
+        #rmse = torch.sqrt(loss).item()
+        rmse = torch.sqrt(loss.mean)
         rmse_epoch += rmse
 
         loss.backward()
@@ -57,14 +64,14 @@ def train(model, criterion, optimizer, train_loader, epoch_str, len_dataset):
         progress_bar.set_postfix({"loss": loss.item()/batch_size, "RMSE": (loss.item()/batch_size)**0.5})
 
     # get the average RMSE for the epoch
-    rmse_epoch /= len_dataset
+    rmse_epoch /= len_dataset/batch_size
     print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
 
     return statistics.mean(losses)
     
 data_dir = "data/processed"
 batch_size = 16
-num_epochs = 20
+num_epochs = 3
 learning_rate = 0.001
 
 # Load the dataset
