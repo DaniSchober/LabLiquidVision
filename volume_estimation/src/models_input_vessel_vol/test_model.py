@@ -38,7 +38,7 @@ with torch.no_grad():
         vessel_depth = data["vessel_depth"]
         liquid_depth = data["liquid_depth"]
         vessel_vol = data["vol_vessel"]
-        vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 480, 640)
+        vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 160, 214)
         #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
         #inputs = data["depth_image"]
         targets = data["vol_liquid"]

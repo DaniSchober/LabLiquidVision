@@ -21,7 +21,14 @@ class VolumeNet(nn.Module):
         )
         self.bn3 = nn.BatchNorm2d(128)
 
-        self.fc1 = nn.Linear(in_features=128 * 4800, out_features=1024)
+        self.conv4 = nn.Conv2d(
+            in_channels=128, out_channels=64, kernel_size=5, padding=2
+        )
+
+        self.bn4 = nn.BatchNorm2d(64)
+
+
+        self.fc1 = nn.Linear(in_features=64 * 520, out_features=1024) # 520 = 20*26, otherwise 4800
         self.fc2 = nn.Linear(in_features=1024, out_features=512)
         self.fc3 = nn.Linear(in_features=512, out_features=1)
 
@@ -40,7 +47,12 @@ class VolumeNet(nn.Module):
         x = F.max_pool2d(x, kernel_size=2)
         x = F.relu(self.bn3(self.conv3(x)))
         x = F.max_pool2d(x, kernel_size=2)
-        x = x.view(-1, 128 * 4800)
+        x = F.relu(self.bn4(self.conv4(x)))
+        # dropout layer 
+        x = F.dropout2d(x, p=0.2)
+        #print(x.shape)
+
+        x = x.view(-1, 64 * 520)
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
