@@ -90,3 +90,12 @@ class RobotiqGripper(object):
             True if the command succeeded, otherwise it returns False
         """
         return self.call("CLOSE", "rq_close_and_wait()")
+    
+    def get_position(self):
+        """ 
+        Get the position of the gripper.
+           
+        Returns: 
+            The position of the gripper in millimeters
+        """
+        return self.call("GET_POSITION", "rq_get_position()")

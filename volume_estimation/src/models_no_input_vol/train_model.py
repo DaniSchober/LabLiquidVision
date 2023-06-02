@@ -35,6 +35,9 @@ def train(model, criterion, optimizer, train_loader, valid_loader, epoch_str, tr
     for i, data in enumerate(progress_bar):
         vessel_depth = data["vessel_depth"].to(device)
         liquid_depth = data["liquid_depth"].to(device)
+        #vessel_depth = data["segmentation_vessel"].to(device)
+        #liquid_depth = data["segmentation_liquid"].to(device)
+
         #vessel_vol = data["vol_vessel"]
         #vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 480, 640)
         #vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 160, 214)
@@ -96,7 +99,7 @@ def train(model, criterion, optimizer, train_loader, valid_loader, epoch_str, tr
     
 data_dir = "data/processed"
 batch_size_train = 16
-num_epochs = 100
+num_epochs = 300
 learning_rate = 0.0001
 
 # Load the dataset
@@ -104,7 +107,7 @@ dataset = VesselCaptureDataset(data_dir)
 print(f"Loaded {len(dataset)} samples.")
 
 # Split the dataset into training and test data
-train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
+train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
 
 train_data, valid_data = train_test_split(train_data, test_size=0.1, random_state=42)
 

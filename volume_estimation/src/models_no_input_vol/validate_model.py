@@ -21,6 +21,9 @@ def validate(model, valid_loader, valid_size):
         for i, data in enumerate(valid_loader):
             vessel_depth = data["vessel_depth"].to(device)
             liquid_depth = data["liquid_depth"].to(device)
+
+            #vessel_depth = data["segmentation_vessel"].to(device)
+            #liquid_depth = data["segmentation_liquid"].to(device)
             #vessel_vol = data["vol_vessel"]
             #vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 160, 214)
             #vessel_vol = vessel_vol.to(device)

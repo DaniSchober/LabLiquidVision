@@ -5,6 +5,8 @@ from src.data.dataloader import VesselCaptureDataset
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from src.models_no_input_vol.model_new import VolumeNet
+import matplotlib.cm as cm
+import matplotlib.pyplot as plt
 import numpy as np
 
 data_dir = "data/processed"
@@ -14,7 +16,7 @@ dataset = VesselCaptureDataset(data_dir)
 print(f"Loaded {len(dataset)} samples")
 
 # Split the dataset into training and test data
-train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
+train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
 
 
 
@@ -32,6 +34,9 @@ model.eval()
 squared_error_liquid_total = 0
 squared_error_vessel_total = 0
 squared_error_liquid_array = []
+predicted_vol_liquid_list = []
+actual_vol_liquid_list = []
+vessel_name_list = []
 
 # create output folder for images with volume estimation
 import os
@@ -43,6 +48,12 @@ with torch.no_grad():
     for i, data in enumerate(test_loader):
         vessel_depth = data["vessel_depth"]
         liquid_depth = data["liquid_depth"]
+        vessel_name = data["vessel_name"]
+
+        #vessel_depth = data["segmentation_vessel"]
+        #liquid_depth = data["segmentation_liquid"]
+        
+
         #vessel_vol = data["vol_vessel"]
         #vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 160, 214)
         #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
@@ -50,6 +61,7 @@ with torch.no_grad():
         targets = data["vol_liquid"]
         targets = targets.float()
 
+        print("Liquid_depth shape: ", liquid_depth.shape)
         outputs = model(vessel_depth, liquid_depth)
         
         outputs = outputs.squeeze(0)
@@ -59,6 +71,15 @@ with torch.no_grad():
         # first element of output is volume of liquid, second is volume of vessel
         predicted_vol_liquid = outputs.item()
         actual_vol_liquid = targets.item()
+        #vessel_name = vessel_name.item()
+
+        # save them in a list
+        predicted_vol_liquid_list.append(predicted_vol_liquid)
+        actual_vol_liquid_list.append(actual_vol_liquid)
+        # convert vessel name from list object to string
+        vessel_name = vessel_name[0]
+
+        vessel_name_list.append(vessel_name)
         #predicted_vol_vessel = outputs[1].item()
         #actual_vol_vessel = targets[1].item()
 
@@ -75,8 +96,6 @@ with torch.no_grad():
         # save image with volume estimation
         cv2.imwrite(output_folder + "/image_" + str(i) + ".png", img)
 
-
-
         # calculate squared error for item
         squared_error_liquid = (predicted_vol_liquid - actual_vol_liquid) ** 2
         #squared_error_vessel = (predicted_vol_vessel - actual_vol_vessel) ** 2
@@ -92,7 +111,6 @@ with torch.no_grad():
     #rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
 
     # plot histogram of squared errors
-    import matplotlib.pyplot as plt
     plt.hist(squared_error_liquid_array, bins=100)
     plt.show()
     # xlabel
@@ -102,6 +120,35 @@ with torch.no_grad():
 
     # save histogram of squared errors
     plt.savefig("squared_error_liquid.png")
+
+    # plot predicted volume vs actual volume in scatter plot with color depending on vessel name
+    # get unique vessel names
+    vessel_name_list_unique = np.unique(vessel_name_list)
+    print(vessel_name_list)
+    # plot scatter plot
+    for i in range(len(vessel_name_list_unique)):
+        # get indices of vessel name
+        indices = [j for j, x in enumerate(vessel_name_list) if x == vessel_name_list_unique[i]]
+        print("Indices: ", indices)
+        # get predicted and actual volume for vessel name
+        predicted_vol_liquid_list_vessel = [predicted_vol_liquid_list[j] for j in indices]
+        actual_vol_liquid_list_vessel = [actual_vol_liquid_list[j] for j in indices]
+        print("Vessel name: ", vessel_name_list_unique[i])
+        print("Predicted volume: ", predicted_vol_liquid_list_vessel)
+        print("Actual volume: ", actual_vol_liquid_list_vessel)
+        # plot scatter plot
+        plt.scatter(actual_vol_liquid_list_vessel, predicted_vol_liquid_list_vessel, label=vessel_name_list_unique[i])
+    plt.legend()
+
+    #plt.scatter(actual_vol_liquid_list, predicted_vol_liquid_list, c=vessel_name_list, cmap=cm.get_cmap('jet', 10))
+
+    #plt.scatter(actual_vol_liquid_list, predicted_vol_liquid_list)
+    # xlabel
+    plt.xlabel("Actual volume")
+    # ylabel
+    plt.ylabel("Predicted volume")
+    plt.show()
+
 
 
     print("RMSE liquid: ", rmse_liquid)

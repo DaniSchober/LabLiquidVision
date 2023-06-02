@@ -2,7 +2,7 @@
 import argparse
 import src.data.make_dataset as make_dataset # uncommented for without torch
 import tkinter as tk
-import src.models.predict_vol as predict_vol
+from src.models_no_input_vol.predict_full_pipeline import predict
 
 
 def main():
@@ -27,12 +27,7 @@ def main():
         default="../segmentation_and_depth/models/55__03042023-2211.torch",
         help="Path to model",
     )
-    parser.add_argument(
-        "--image_path",
-        type=str,
-        default="",
-        help="Path to image",
-    )
+
 
     parser.add_argument(
         "--batch_size",
@@ -91,11 +86,10 @@ def main():
     )
 
     parser.add_argument(
-        "--folder_path",
+        "--image_path",
         type=str,
-        #default="data/processed/Tube_50mL_34ml_2404_5523",
-        default="data/processed/Pyrex_100mL_84ml_2404_5319",
-        help="Path to folder containing the .npy files",
+        default="data/test/Cell_Flask_160mL_31ml_1105_0605/Input_RGBImage.png",
+        help="Path to input image",
     )
 
     args = parser.parse_args()
@@ -112,7 +106,7 @@ def main():
     elif args.mode == "predict":
         # start src.models.predict_model.py
         print("Predicting model")
-        predict_vol.predict(args.folder_path)
+        predict(args.image_path)
         # predict_model.predict(model_path=args.model_path, image_path=args.image_path)
 
     elif args.mode == "test":

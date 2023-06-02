@@ -3,14 +3,14 @@ stop_angle 34
 pause_time 1.4
 num_particles 36000
 start_particles 34746
-poured_particles 27991
-received_particles 27545
-spilled_particles 446
-not_poured_particles 6755
+poured_particles 33012
+received_particles 32547
+spilled_particles 465
+not_poured_particles 1734
 
 
 start_volume 86.865 mL
-poured_volume 69.9775 mL
-received_volume 68.8625 mL
-spilled_volume 1.115 mL
-not_poured_volume 16.8875 mL
+poured_volume 82.53 mL
+received_volume 81.3675 mL
+spilled_volume 1.1625 mL
+not_poured_volume 4.335 mL
