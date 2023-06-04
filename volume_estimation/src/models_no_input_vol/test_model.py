@@ -8,6 +8,11 @@ from src.models_no_input_vol.model_new import VolumeNet
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib
+
+# Set font and fontsize globally
+matplotlib.rcParams['font.family'] = 'Arial'
+matplotlib.rcParams['font.size'] = 11
 
 data_dir = "data/processed"
 
@@ -43,6 +48,13 @@ import os
 output_folder = "output_no_vol_input"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
+
+
+output_folder_res = "output"
+if not os.path.exists(output_folder_res):
+    os.makedirs(output_folder_res)
+
+
 
 with torch.no_grad():
     for i, data in enumerate(test_loader):
@@ -108,48 +120,59 @@ with torch.no_grad():
     
     # calculate RMSE for test set
     rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
-    #rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
 
-    # plot histogram of squared errors
+    # Plot histogram of root squared errors
+    plt.figure(figsize=(6.3, 5))
     plt.hist(squared_error_liquid_array, bins=100)
-    plt.show()
-    # xlabel
-    plt.xlabel("RSE")
-    # ylabel
+    plt.xlabel("RMSE")
     plt.ylabel("Frequency")
-
-    # save histogram of squared errors
-    plt.savefig("squared_error_liquid.png")
+    plt.title("Histogram of RMSE for liquid volume estimation on the test set")
+    plt.tight_layout()
+    plt.savefig(output_folder_res + "/squared_error_liquid.png", format="png", dpi=1200)
+    plt.show()
 
     # plot predicted volume vs actual volume in scatter plot with color depending on vessel name
     # get unique vessel names
     vessel_name_list_unique = np.unique(vessel_name_list)
-    print(vessel_name_list)
+    # Create a colormap object with the desired colormap
+    cmap = cm.get_cmap('Paired', len(vessel_name_list_unique))
+
+    plt.figure(figsize=(6.3, 5))
+    
+    #print(vessel_name_list)
     # plot scatter plot
     for i in range(len(vessel_name_list_unique)):
         # get indices of vessel name
         indices = [j for j, x in enumerate(vessel_name_list) if x == vessel_name_list_unique[i]]
-        print("Indices: ", indices)
+
         # get predicted and actual volume for vessel name
         predicted_vol_liquid_list_vessel = [predicted_vol_liquid_list[j] for j in indices]
         actual_vol_liquid_list_vessel = [actual_vol_liquid_list[j] for j in indices]
-        print("Vessel name: ", vessel_name_list_unique[i])
-        print("Predicted volume: ", predicted_vol_liquid_list_vessel)
-        print("Actual volume: ", actual_vol_liquid_list_vessel)
+
+        # calculate RMSE for vessel name
+        rmse_liquid_vessel = (sum((np.array(predicted_vol_liquid_list_vessel) - np.array(actual_vol_liquid_list_vessel))**2) / len(predicted_vol_liquid_list_vessel))**0.5
+        print("RMSE", vessel_name_list_unique[i], ":", rmse_liquid_vessel)
         # plot scatter plot
-        plt.scatter(actual_vol_liquid_list_vessel, predicted_vol_liquid_list_vessel, label=vessel_name_list_unique[i])
-    plt.legend()
+        
+        plt.scatter(actual_vol_liquid_list_vessel, predicted_vol_liquid_list_vessel, label=vessel_name_list_unique[i],  color=cmap(i))
+    
 
-    #plt.scatter(actual_vol_liquid_list, predicted_vol_liquid_list, c=vessel_name_list, cmap=cm.get_cmap('jet', 10))
-
-    #plt.scatter(actual_vol_liquid_list, predicted_vol_liquid_list)
     # xlabel
-    plt.xlabel("Actual volume")
+    plt.xlabel("Actual volume (mL)")
     # ylabel
-    plt.ylabel("Predicted volume")
+    plt.ylabel("Predicted volume (mL)")
+    # plot diagonal line
+    plt.plot([0, 1], [0, 1], transform=plt.gca().transAxes, ls="--", c=".3")
+    # save scatter plot
+    plt.legend()
+    plt.title("Scatter plot of predicted vs actual volume")
+    # make legend smaller
+    plt.legend(fontsize=8)
+
+    plt.tight_layout()
+    plt.savefig(output_folder_res + "/scatter_plot.png", format="png", dpi=1200)
+    # show scatter plot
     plt.show()
-
-
 
     print("RMSE liquid: ", rmse_liquid)
     #print("RMSE vessel: ", rmse_vessel)
