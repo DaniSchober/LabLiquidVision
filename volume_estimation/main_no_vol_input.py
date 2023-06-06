@@ -1,6 +1,6 @@
 # main file, starts training or prediction depeeending on the arguments
 import argparse
-import src.data.make_dataset as make_dataset # uncommented for without torch
+import src.data.make_dataset as make_dataset  # uncommented for without torch
 import tkinter as tk
 from src.models_no_input_vol.predict_full_pipeline import predict
 
@@ -27,7 +27,6 @@ def main():
         default="../segmentation_and_depth/models/55__03042023-2211.torch",
         help="Path to model",
     )
-
 
     parser.add_argument(
         "--batch_size",
@@ -95,12 +94,13 @@ def main():
     args = parser.parse_args()
 
     # print args with "args"
-    #print("Args: " + str(args))
+    # print("Args: " + str(args))
 
     # if train then train else predict
     if args.mode == "train":
         print("Training model")
         import src.models_no_input_vol.train_model
+
         # train_model_epochs.train(args.batch_size, args.epochs, args.load_model, args.use_labpics)
 
     elif args.mode == "predict":
@@ -126,6 +126,7 @@ def main():
     elif args.mode == "record":
         # start src.data.make_dataset.py
         from src.data.record_data import App
+
         print("Recording dataset")
         if __name__ == "__main__":
             root = tk.Tk()

@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import threading
 import csv
 
+
 class App:
     def __init__(self, master):
         self.master = master
@@ -20,22 +21,21 @@ class App:
         self.window_name = "RGB Stream - Press q to quit"
 
         # Set the window size to half of the screen
-        #width = self.master.winfo_screenwidth() // 2
-        #height = self.master.winfo_screenheight()
-        #self.master.geometry(f"{width}x{height}")
+        # width = self.master.winfo_screenwidth() // 2
+        # height = self.master.winfo_screenheight()
+        # self.master.geometry(f"{width}x{height}")
 
         self.root = tk.Frame(self.master)
         self.root.pack()
 
-        #self.root.pack(side='left', fill='both', expand=True)
-
+        # self.root.pack(side='left', fill='both', expand=True)
 
         tk.Label(self.root, text="Vessel Name:").grid(
             row=0, column=0, padx=10, pady=10, sticky="w"
         )
-        #tk.Label(self.root, text="Vessel Volume (ml):").grid(
+        # tk.Label(self.root, text="Vessel Volume (ml):").grid(
         #    row=1, column=0, padx=10, pady=10, sticky="w"
-        #)
+        # )
         tk.Label(self.root, text="Liquid color:").grid(
             row=2, column=0, padx=10, pady=10, sticky="w"
         )
@@ -52,40 +52,43 @@ class App:
         self.liquid_color.set("Please select")  # set initial value to empty string
 
         with open(f"data/Vessel_Selection.csv") as csv_file:
-                    # Create a dictionary to store the values
-                    self.vessel_dict = {}
-                    # Read the CSV file into a dictionary
-                    csv_reader = csv.DictReader(csv_file)
-                    # Skip the header row
-                    #next(csv_reader)
-                    # Loop through each row in the CSV file
-                    for row in csv_reader:
-                        # Add the values to the dictionary
-                        # Extract the key and value from the row             
-                        pairs = list(row.items())[0] # get the first key-value pair as a tuple
-                        data_values = pairs[1].split(';')
-                        
-                        # Get the short name
-                        short_name = data_values[0]
-                        vol = data_values[1]
-                        
-                        # Add the key-value pair to the dictionary
-                        self.vessel_dict[short_name] = vol
+            # Create a dictionary to store the values
+            self.vessel_dict = {}
+            # Read the CSV file into a dictionary
+            csv_reader = csv.DictReader(csv_file)
+            # Skip the header row
+            # next(csv_reader)
+            # Loop through each row in the CSV file
+            for row in csv_reader:
+                # Add the values to the dictionary
+                # Extract the key and value from the row
+                pairs = list(row.items())[0]  # get the first key-value pair as a tuple
+                data_values = pairs[1].split(";")
+
+                # Get the short name
+                short_name = data_values[0]
+                vol = data_values[1]
+
+                # Add the key-value pair to the dictionary
+                self.vessel_dict[short_name] = vol
 
         # Define a dictionary with vessel names as keys and their values
-        #vessel_dict = {"Vessel1": 1, "Vessel2": 2, "Vessel3": 3}
+        # vessel_dict = {"Vessel1": 1, "Vessel2": 2, "Vessel3": 3}
 
         vessel_names = list(self.vessel_dict.keys())
 
         # Create a dropdown menu for the vessel name
-        self.vessel_name_dropdown = tk.OptionMenu(self.root, self.vessel_name, *vessel_names)
+        self.vessel_name_dropdown = tk.OptionMenu(
+            self.root, self.vessel_name, *vessel_names
+        )
         self.vessel_name_dropdown.grid(row=0, column=1, padx=10, pady=10)
 
+        # self.vessel_vol_entry = tk.Entry(self.root)
+        # self.vessel_vol_entry.grid(row=1, column=1, padx=10, pady=10)
 
-        #self.vessel_vol_entry = tk.Entry(self.root)
-        #self.vessel_vol_entry.grid(row=1, column=1, padx=10, pady=10)
-
-        self.liquid_color_dropdown = tk.OptionMenu(self.root, self.liquid_color, "transparent", "blue", "red", "green")
+        self.liquid_color_dropdown = tk.OptionMenu(
+            self.root, self.liquid_color, "transparent", "blue", "red", "green"
+        )
         self.liquid_color_dropdown.grid(row=2, column=1, padx=10, pady=10)
 
         self.liquid_vol_entry = tk.Entry(self.root)
@@ -106,11 +109,10 @@ class App:
         if not self.pipeline:
             self.init_pipeline()
 
-    
-        #vessel_name = self.vessel_name_dropdown.get()
-        #vessel_name_var = self.vessel_name_var.get()
+        # vessel_name = self.vessel_name_dropdown.get()
+        # vessel_name_var = self.vessel_name_var.get()
         vessel_name = self.vessel_name.get()
-        #vol_vessel = self.vessel_vol_entry.get()
+        # vol_vessel = self.vessel_vol_entry.get()
         vol_vessel = int(self.vessel_dict[vessel_name])
         color_liquid = self.liquid_color.get()
         vol_liquid = self.liquid_vol_entry.get()
@@ -118,7 +120,6 @@ class App:
         if not vessel_name or not vol_liquid or not vol_vessel:
             messagebox.showerror("Error", "Please fill in all the fields.")
             return
-        
 
         try:
             vol_liquid = int(vol_liquid)
@@ -143,19 +144,18 @@ class App:
         color_frame = frames.get_color_frame()
         if not depth_frame or not color_frame:
             return
-        
-        #if color_frame:
+
+        # if color_frame:
         #    color_image = np.asanyarray(color_frame.get_data())
         #    cv2.imshow("RGB Stream", color_image)
         #    key = cv2.waitKey(1)
-
 
         # Convert images to numpy arrays
         depth_image = np.asanyarray(depth_frame.get_data())
         color_image = np.asanyarray(color_frame.get_data())
 
-            # Display the color image in the window
-        #cv2.imshow('Color Stream', color_image)
+        # Display the color image in the window
+        # cv2.imshow('Color Stream', color_image)
 
         # Apply colormap on depth image (image must be converted to 8-bit per pixel first)
         depth_colormap = cv2.applyColorMap(
@@ -198,18 +198,16 @@ class App:
         with open(path + "/Input_color_liquid.txt", "w") as f:
             f.write(str(color_liquid))
 
-        #self.liquid_vol_entry.delete(
+        # self.liquid_vol_entry.delete(
         #    0, "end"
-        #)  # delete volume entry for easier data entry
+        # )  # delete volume entry for easier data entry
 
-        #messagebox.showinfo(
+        # messagebox.showinfo(
         #    "Capture Done", "Images have been captured and saved successfully!"
-        #)
+        # )
         print("Images have been captured and saved successfully! Path:", path)
         # show image in window
-        #plt.figure(figsize=(5, 5))
-
-
+        # plt.figure(figsize=(5, 5))
 
     def init_pipeline(self):
         self.pipeline = rs.pipeline()
@@ -219,9 +217,8 @@ class App:
         pipeline_profile = self.pipeline.start(self.config)
         device = pipeline_profile.get_device()
         self.device_product_line = str(device.get_info(rs.camera_info.product_line))
-    
-    def capture_frames(self):
 
+    def capture_frames(self):
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
 
@@ -234,14 +231,12 @@ class App:
                 color_image = np.asanyarray(color_frame.get_data())
                 cv2.imshow("RGB Stream - Press q to quit", color_image)
                 key = cv2.waitKey(1)
-                if key == ord('q'):
+                if key == ord("q"):
                     break
 
     def quit(self):
         cv2.destroyAllWindows()
-        #self.pipeline.stop()
+        # self.pipeline.stop()
         self.root.quit()
         self.root.destroy()
         # close all windows
-        
-

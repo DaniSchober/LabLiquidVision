@@ -1,6 +1,6 @@
 # main file, starts training or prediction depeeending on the arguments
 import argparse
-import src.data.make_dataset as make_dataset # uncommented for without torch
+import src.data.make_dataset as make_dataset  # uncommented for without torch
 import tkinter as tk
 import src.models.predict_vol as predict_vol
 
@@ -93,7 +93,7 @@ def main():
     parser.add_argument(
         "--folder_path",
         type=str,
-        #default="data/processed/Tube_50mL_34ml_2404_5523",
+        # default="data/processed/Tube_50mL_34ml_2404_5523",
         default="data/processed/Pyrex_100mL_84ml_2404_5319",
         help="Path to folder containing the .npy files",
     )
@@ -101,12 +101,13 @@ def main():
     args = parser.parse_args()
 
     # print args with "args"
-    #print("Args: " + str(args))
+    # print("Args: " + str(args))
 
     # if train then train else predict
     if args.mode == "train":
         print("Training model")
         import src.models.train_model
+
         # train_model_epochs.train(args.batch_size, args.epochs, args.load_model, args.use_labpics)
 
     elif args.mode == "predict":
@@ -132,6 +133,7 @@ def main():
     elif args.mode == "record":
         # start src.data.make_dataset.py
         from src.data.record_data import App
+
         print("Recording dataset")
         if __name__ == "__main__":
             root = tk.Tk()

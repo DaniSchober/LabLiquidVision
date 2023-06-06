@@ -20,6 +20,7 @@ import cv2
 import segmentation_and_depth.src.visualization.visualize as vis
 import matplotlib.pyplot as plt
 
+
 # load all folders in data/interim/initial
 def create_converted_dataset(
     path_input, path_output, model_path, MaxSize=3000, UseGPU=True
@@ -68,7 +69,6 @@ def create_converted_dataset(
 
     to_convert = len(os.listdir(path_input))
     progress = 0
-
 
     for folder in os.listdir(path_input):
         # ignore .gitignore
@@ -156,7 +156,8 @@ def create_converted_dataset(
                             image = image * 255
                             image = image.astype(np.uint8)
                             cv2.imwrite(
-                                file_path_output.replace("RGBImage.png", nm + ".png"), image
+                                file_path_output.replace("RGBImage.png", nm + ".png"),
+                                image,
                             )
 
                         elif nm in DepthList:
@@ -164,7 +165,8 @@ def create_converted_dataset(
                             tmIm = Prd[nm].copy()
                             tmIm = tmIm.squeeze()
                             np.save(
-                                file_path_output.replace("RGBImage.png", nm + ".npy"), tmIm
+                                file_path_output.replace("RGBImage.png", nm + ".npy"),
+                                tmIm,
                             )
                             if nm in depth2Mask:
                                 # Remove region out side of the object mask from the depth mask
@@ -199,18 +201,21 @@ def create_converted_dataset(
                                         image,
                                     )
 
-                    '''
+                    """
                     Only for visualization and checking of dataset               
                     
-                    '''
+                    """
                     Prd = {}
                     for nm in PrdDepth:
                         # convert to numpy and transpose to (H,W,C)
-                        Prd[nm] = (PrdDepth[nm].transpose(1, 2).transpose(2, 3)).data.cpu().numpy()
+                        Prd[nm] = (
+                            (PrdDepth[nm].transpose(1, 2).transpose(2, 3))
+                            .data.cpu()
+                            .numpy()
+                        )
                     for nm in PrdMask:
                         # convert to numpy
                         Prd[nm] = (PrdMask[nm]).data.cpu().numpy()
-
 
                     # Visualize results
                     count_vis = 2
@@ -238,7 +243,9 @@ def create_converted_dataset(
                                     tmIm = tmIm - tmIm.min()
                                     tmIm = tmIm / tmIm.max() * 255
                                 if np.ndim(tmIm) == 2:
-                                    tmIm = cv2.cvtColor(tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR)
+                                    tmIm = cv2.cvtColor(
+                                        tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR
+                                    )
                             plt.subplot(3, 2, count_vis)
                             plt.imshow(tmIm)
                             plt.axis("off")
@@ -272,9 +279,9 @@ def create_converted_dataset(
                             # turn off axis
                             plt.axis("off")
                             plt.title(nm)
-                    plt.savefig(file_path_output.replace(
-                                            "RGBImage.png", "visualize.png"))
+                    plt.savefig(
+                        file_path_output.replace("RGBImage.png", "visualize.png")
+                    )
 
-                
     print("Created {} new folders.".format(count))
     print("Total size of dataset: {} folders.".format(len(os.listdir(path_output))))

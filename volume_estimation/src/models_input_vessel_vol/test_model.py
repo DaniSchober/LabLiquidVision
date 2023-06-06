@@ -17,7 +17,6 @@ print(f"Loaded {len(dataset)} samples")
 train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
 
 
-
 # Set up the data loader and training parameters for the test data
 test_loader = DataLoader(test_data, batch_size=1, shuffle=False)
 test_size = len(test_data)
@@ -39,13 +38,13 @@ with torch.no_grad():
         liquid_depth = data["liquid_depth"]
         vessel_vol = data["vol_vessel"]
         vessel_vol = vessel_vol.view(vessel_depth.shape[0], 1, 1).repeat(1, 160, 214)
-        #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
-        #inputs = data["depth_image"]
+        # inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
+        # inputs = data["depth_image"]
         targets = data["vol_liquid"]
         targets = targets.float()
 
         outputs = model(vessel_depth, liquid_depth, vessel_vol)
-        
+
         outputs = outputs.squeeze(0)
         targets = targets.squeeze(0)
         print("Sample ", i, ":", outputs, targets)
@@ -53,25 +52,28 @@ with torch.no_grad():
         # first element of output is volume of liquid, second is volume of vessel
         predicted_vol_liquid = outputs.item()
         actual_vol_liquid = targets.item()
-        #predicted_vol_vessel = outputs[1].item()
-        #actual_vol_vessel = targets[1].item()
+        # predicted_vol_vessel = outputs[1].item()
+        # actual_vol_vessel = targets[1].item()
 
         # calculate squared error for item
         squared_error_liquid = (predicted_vol_liquid - actual_vol_liquid) ** 2
-        #squared_error_vessel = (predicted_vol_vessel - actual_vol_vessel) ** 2
+        # squared_error_vessel = (predicted_vol_vessel - actual_vol_vessel) ** 2
 
         # add squared error to total
         squared_error_liquid_total += squared_error_liquid
 
-        squared_error_liquid_array = np.append(squared_error_liquid_array, squared_error_liquid**0.5)
-        #squared_error_vessel_total += squared_error_vessel
-    
+        squared_error_liquid_array = np.append(
+            squared_error_liquid_array, squared_error_liquid**0.5
+        )
+        # squared_error_vessel_total += squared_error_vessel
+
     # calculate RMSE for test set
     rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
-    #rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
+    # rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
 
     # plot histogram of squared errors
     import matplotlib.pyplot as plt
+
     plt.hist(squared_error_liquid_array, bins=100)
     plt.show()
     # xlabel
@@ -82,13 +84,5 @@ with torch.no_grad():
     # save histogram of squared errors
     plt.savefig("squared_error_liquid.png")
 
-
     print("RMSE liquid: ", rmse_liquid)
-    #print("RMSE vessel: ", rmse_vessel)
-
-
-
-
-
-
-
+    # print("RMSE vessel: ", rmse_vessel)

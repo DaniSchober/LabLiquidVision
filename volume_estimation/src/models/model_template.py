@@ -1,5 +1,5 @@
 import copy
- 
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -9,20 +9,20 @@ import torch.optim as optim
 import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import fetch_california_housing
- 
+
 # Read data
 data = fetch_california_housing()
 X, y = data.data, data.target
- 
+
 # train-test split for model evaluation
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.7, shuffle=True)
- 
+
 # Convert to 2D PyTorch tensors
 X_train = torch.tensor(X_train, dtype=torch.float32)
 y_train = torch.tensor(y_train, dtype=torch.float32).reshape(-1, 1)
 X_test = torch.tensor(X_test, dtype=torch.float32)
 y_test = torch.tensor(y_test, dtype=torch.float32).reshape(-1, 1)
- 
+
 # Define the model
 model = nn.Sequential(
     nn.Linear(8, 24),
@@ -31,30 +31,30 @@ model = nn.Sequential(
     nn.ReLU(),
     nn.Linear(12, 6),
     nn.ReLU(),
-    nn.Linear(6, 1)
+    nn.Linear(6, 1),
 )
- 
+
 # loss function and optimizer
 loss_fn = nn.MSELoss()  # mean square error
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
- 
-n_epochs = 100   # number of epochs to run
+
+n_epochs = 100  # number of epochs to run
 batch_size = 10  # size of each batch
 batch_start = torch.arange(0, len(X_train), batch_size)
- 
+
 # Hold the best model
-best_mse = np.inf   # init to infinity
+best_mse = np.inf  # init to infinity
 best_weights = None
 history = []
- 
+
 for epoch in range(n_epochs):
     model.train()
     with tqdm.tqdm(batch_start, unit="batch", mininterval=0, disable=True) as bar:
         bar.set_description(f"Epoch {epoch}")
         for start in bar:
             # take a batch
-            X_batch = X_train[start:start+batch_size]
-            y_batch = y_train[start:start+batch_size]
+            X_batch = X_train[start : start + batch_size]
+            y_batch = y_train[start : start + batch_size]
             # forward pass
             y_pred = model(X_batch)
             loss = loss_fn(y_pred, y_batch)
@@ -74,7 +74,7 @@ for epoch in range(n_epochs):
     if mse < best_mse:
         best_mse = mse
         best_weights = copy.deepcopy(model.state_dict())
- 
+
 # restore model and return best accuracy
 model.load_state_dict(best_weights)
 print("MSE: %.2f" % best_mse)
@@ -83,8 +83,8 @@ plt.plot(history)
 plt.show()
 
 
-
 ###############################################
+
 
 class NeuralNetwork(nn.Module):
     def __init__(self):
@@ -113,26 +113,26 @@ class NeuralNetwork(nn.Module):
             nn.Linear(9, 64),
             nn.ReLU(inplace=True),
             nn.Dropout(),
-            nn.Linear(64, 64*3),
+            nn.Linear(64, 64 * 3),
             nn.ReLU(inplace=True),
             nn.Dropout(),
-            nn.Linear(64*3, 64*3*3),
+            nn.Linear(64 * 3, 64 * 3 * 3),
             nn.ReLU(inplace=True),
         )
         self.combined_features_ = nn.Sequential(
-            nn.Linear(64*3*3*2, 64*3*3*2*2),
+            nn.Linear(64 * 3 * 3 * 2, 64 * 3 * 3 * 2 * 2),
             nn.ReLU(inplace=True),
             nn.Dropout(),
-            nn.Linear(64*3*3*2*2, 64*3*3*2),
+            nn.Linear(64 * 3 * 3 * 2 * 2, 64 * 3 * 3 * 2),
             nn.ReLU(inplace=True),
-            nn.Linear(64*3*3*2, 64),
+            nn.Linear(64 * 3 * 3 * 2, 64),
             nn.Linear(64, 5),
         )
 
-    def forward(self, x,y):
+    def forward(self, x, y):
         x = self.image_features_(x)
-        x=x.view(-1, 64*3*3)
-        y=self.numeric_features_(y)
-        z=torch.cat((x,y),1)
-        z=self.combined_features_(z)
+        x = x.view(-1, 64 * 3 * 3)
+        y = self.numeric_features_(y)
+        z = torch.cat((x, y), 1)
+        z = self.combined_features_(z)
         return z

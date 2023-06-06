@@ -22,10 +22,11 @@ import segmentation_and_depth.src.visualization.visualize as vis
 import segmentation_and_depth.src.models.model as NET_FCN  # The net Class
 from volume_estimation.src.models_no_input_vol.model_new import VolumeNet
 
+
 def predict(image_path):
-    model_path = r"../segmentation_and_depth/models/55__03042023-2211.torch" # Trained model path
+    model_path = r"../segmentation_and_depth/models/55__03042023-2211.torch"  # Trained model path
     UseGPU = True  # Use GPU or not
-    MaxSize=3000
+    MaxSize = 3000
 
     # get depth maps from segmentation and depth model
     DepthList = ["EmptyVessel_Depth", "ContentDepth", "VesselOpening_Depth"]
@@ -48,7 +49,6 @@ def predict(image_path):
         model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
     model.eval()
 
-
     # Load image
     image = cv2.imread(image_path)
     image = vis.ResizeToMaxSize(image, MaxSize)
@@ -60,8 +60,6 @@ def predict(image_path):
         PrdDepth, PrdProb, PrdMask = model.forward(
             Images=image, TrainMode=False, UseGPU=UseGPU
         )  # Run net inference and get prediction
-    
-
 
     with torch.no_grad():
         PrdDepth, PrdProb, PrdMask = model.forward(
@@ -71,18 +69,14 @@ def predict(image_path):
     Prd = {}
     for nm in PrdDepth:
         # convert to numpy and transpose to (H,W,C)
-        Prd[nm] = (
-            (PrdDepth[nm].transpose(1, 2).transpose(2, 3))
-            .data.cpu()
-            .numpy()
-        )
+        Prd[nm] = (PrdDepth[nm].transpose(1, 2).transpose(2, 3)).data.cpu().numpy()
     for nm in PrdMask:
         # convert to numpy
         Prd[nm] = (PrdMask[nm]).data.cpu().numpy()
 
     # loop over all masks and depth maps
     for nm in Prd:
-        '''
+        """
         if nm in MaskList:
             np.save(
                 image_path.replace(".png", "_" + nm + ".npy"),
@@ -112,15 +106,15 @@ def predict(image_path):
             cv2.imwrite(
                 image_path.replace(".png", nm + ".png"), image
             )
-        '''
+        """
 
         if nm in DepthList:
             # copy depth map for visualization
             tmIm = Prd[nm].copy()
             tmIm = tmIm.squeeze()
-            #np.save(
+            # np.save(
             #    image_path.replace(".png", nm + ".npy"), tmIm
-            #)
+            # )
 
             if nm == "ContentDepth":
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
@@ -128,8 +122,8 @@ def predict(image_path):
             elif nm == "EmptyVessel_Depth":
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
                 vessel_depth = tmIm
-            
-            '''
+
+            """
             if nm in depth2Mask:
                 # Remove region out side of the object mask from the depth mask
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
@@ -162,26 +156,40 @@ def predict(image_path):
                         ),
                         image,
                     )
-            '''
-
-    
-                
+            """
 
     liquid_depth = torch.from_numpy(liquid_depth).float()
-    #print(liquid_depth.shape)
-    #liquid_depth = liquid_depth.unsqueeze(0).unsqueeze(0)
-    #print(liquid_depth.shape)
-    liquid_depth = F.interpolate(liquid_depth.unsqueeze(0).unsqueeze(0), size=(160, 214), mode='bilinear', align_corners=False)
+    # print(liquid_depth.shape)
+    # liquid_depth = liquid_depth.unsqueeze(0).unsqueeze(0)
+    # print(liquid_depth.shape)
+    liquid_depth = F.interpolate(
+        liquid_depth.unsqueeze(0).unsqueeze(0),
+        size=(160, 214),
+        mode="bilinear",
+        align_corners=False,
+    )
     liquid_depth = liquid_depth.squeeze(0)
-    #print(liquid_depth.shape)
+    # print(liquid_depth.shape)
 
     vessel_depth = torch.from_numpy(vessel_depth).float()
-    vessel_depth = F.interpolate(vessel_depth.unsqueeze(0).unsqueeze(0), size=(160, 214), mode='bilinear', align_corners=False)
+    vessel_depth = F.interpolate(
+        vessel_depth.unsqueeze(0).unsqueeze(0),
+        size=(160, 214),
+        mode="bilinear",
+        align_corners=False,
+    )
     vessel_depth = vessel_depth.squeeze(0)
-    #print(vessel_depth.shape)
+    # print(vessel_depth.shape)
 
     model = VolumeNet()
-    model.load_state_dict(torch.load("models/volume_model.pth"))
+
+    # print current location
+    print(os.getcwd())
+
+    model_path_volume = (
+        r"../volume_estimation/models/volume_model.pth"  # Trained model path
+    )
+    model.load_state_dict(torch.load(model_path_volume))
 
     with torch.no_grad():
         model.eval()
@@ -189,14 +197,9 @@ def predict(image_path):
 
     print(f"Predicted liquid volume: {outputs[0].item():.2f} mL")
 
-
-
-    '''
-    
-    
-    
+    """
     Visualize results    
-    '''
+    """
     Prd = {}
     for nm in PrdDepth:
         # convert to numpy and transpose to (H,W,C)
@@ -208,7 +211,7 @@ def predict(image_path):
     DepthList = ["EmptyVessel_Depth", "ContentDepth"]
     MaskList = [
         "VesselMask",
-        "ContentMaskClean"
+        "ContentMaskClean",
     ]  # List of segmentation Masks to predict
 
     # Visualize results
@@ -223,7 +226,7 @@ def predict(image_path):
     plt.axis("off")
     # loop over all masks and depth maps
     for nm in Prd:
-        '''
+        """
         if nm in MaskList:
             #count_vis += 1
             # copy mask for visualization
@@ -244,7 +247,7 @@ def predict(image_path):
             #plt.imshow(tmIm)
             #plt.axis("off")
             #plt.title(nm)
-        '''
+        """
         if nm in DepthList:
             count_vis += 1
             # copy depth map for visualization
@@ -276,13 +279,19 @@ def predict(image_path):
             plt.title(nm)
 
     # draw text on top of image to show predicted volume with 2 digits after decimal point
-    plt.subplot(1, 4, 4) 
+    plt.subplot(1, 4, 4)
     plt.axis("off")
-    # write text on subplot 
-    plt.text(0.5, 0.5, f"Predicted liquid volume: {outputs[0].item():.2f} ml", ha='center', va='center', fontsize=12)
+    # write text on subplot
+    plt.text(
+        0.5,
+        0.5,
+        f"Predicted liquid volume: {outputs[0].item():.2f} ml",
+        ha="center",
+        va="center",
+        fontsize=12,
+    )
     # show image
-    
-    plt.savefig(image_path.replace(
-                            ".png", "visualize.png"))
-    
+
+    plt.savefig(image_path.replace(".png", "visualize.png"))
+
     plt.show()

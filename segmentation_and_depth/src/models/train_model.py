@@ -1,6 +1,5 @@
 # Train net that predict depth map and segmentation of vessel, vessel content, and vessel opening
 import os
-
 import numpy as np
 import torch
 import torch.nn as nn
@@ -10,9 +9,25 @@ import src.data.load_data as DepthReader
 import src.data.make_dataset as MakeDataset
 import src.models.loss_functions as LossFunctions
 import time
+from tqdm import tqdm
+
+"""
+This file contains the training loop for the segmentation and depth prediction model
+
+The main function takes in the following arguments:
+    --batch_size: batch size for training
+    --num_epochs: number of epochs for training
+    --load_pretrained_model: True or False (loading of pretrained model)
+    --use_labpics: True or False (use lab pictures for training)
+
+Outputs:
+    Trained model gets saved in models folder every 5 epochs
+    Train loss statistics get saved in logs folder
+
+"""
 
 
-def train():
+def train(batch_size, num_epochs, load_pretrained_model, use_labpics):
     Trained_model_path = ""  # Path of trained model weights if you want to return to trained model, else if there is no pretrained mode this should be =""
     Learning_Rate = 1e-5  # intial learning rate
     TrainedModelWeightDir = "logs/"  # Output Folder where trained model weight and information will be stored
@@ -22,18 +37,12 @@ def train():
     )  # Where train losses statistics will be written
 
     Weight_Decay = 4e-5  # Weight for the weight decay loss function
-    MAX_ITERATION = int(100000010)  # Max number of training iteration
 
-    # device = "cpu"
     device = (
         torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     )  # Use GPU if available
-    print("Device", device)
 
-    ################## List of depth maps and segmentation Mask to predict ###################################################################################################################3
-
-    MaskClasses = {}
-    # XYZList = ["VesselXYZ","ContentXYZ","VesselOpening_XYZ"] # List of XYZ maps to predict
+    # List of depth maps and segmentation Mask to predict
     DepthList = [
         "EmptyVessel_Depth",
         "ContentDepth",
@@ -44,287 +53,253 @@ def train():
         "ContentMaskClean",
         "VesselOpeningMask",
     ]  # List of segmentation Masks to predict
-    # XYZ2Mask={"VesselXYZ":"VesselMask","ContentXYZ":"ContentMaskClean","VesselOpening_XYZ":"VesselOpeningMask"} # Dictionary connecting XYZ maps and segmentation maps of same object
     depth2Mask = {
         "EmptyVessel_Depth": "VesselMask",
         "ContentDepth": "ContentMaskClean",
         "VesselOpening_Depth": "VesselOpeningMask",
     }  # Dictionary connecting depth maps and segmentation maps of same object
-    # XYZ2LossFactor={"VesselXYZ":1,"ContentXYZ":1.,"VesselOpening_XYZ":0.4} # Weight of loss of XYZ prediction per object (some object will contribute less to the loss function)
-    depth2LossFactor = {
-        "EmptyVessel_Depth": 1,
-        "ContentDepth": 1.0,
-        "VesselOpening_Depth": 0.4,
-    }  # Weight of loss of depth prediction per object (some object will contribute less to the loss function)
 
-    # =========================Load net weights====================================================================================================================
-    InitStep = 1
-    if os.path.exists(TrainedModelWeightDir + "/Defult.torch"):
-        Trained_model_path = TrainedModelWeightDir + "/Defult.torch"
-    if os.path.exists(TrainedModelWeightDir + "/Learning_Rate.npy"):
-        Learning_Rate = np.load(TrainedModelWeightDir + "/Learning_Rate.npy")
-    if os.path.exists(TrainedModelWeightDir + "/itr.npy"):
-        InitStep = int(np.load(TrainedModelWeightDir + "/itr.npy"))
-
-    #################### Create and Initiate net and create optimizer ##########################################################################################3
-
+    # Create and initiate net
     Net = NET_FCN.Net(
         MaskList=MaskList, DepthList=DepthList
     )  # Create net and load pretrained
 
-    # --------------------if previous model exist load it--------------------------------------------------------------------------------------------
+    # Load net weights of previous training if exist
+    InitStep = 1
+    InitEpoch = 1
+    if load_pretrained_model:
+        if os.path.exists("models/40__29032023-0231.torch"):
+            Trained_model_path = "models/40__29032023-0231.torch"
+            print("Loading pretrained model...")
+            print("Trained_model_path: ", Trained_model_path)
+        if os.path.exists(TrainedModelWeightDir + "/Learning_Rate.npy"):
+            Learning_Rate = np.load(TrainedModelWeightDir + "/Learning_Rate.npy")
+        if os.path.exists(TrainedModelWeightDir + "/epoch.npy"):
+            InitEpoch = int(np.load(TrainedModelWeightDir + "/epoch.npy"))
     if (
         Trained_model_path != ""
     ):  # Optional initiate full net by loading a pretrained net
         Net.load_state_dict(torch.load(Trained_model_path))
+
     Net = Net.to(device)  # Send net to GPU if available
-    # --------------------------------Optimizer--------------------------------------------------------------------------------------------
+
+    # Create adam optimizer
     optimizer = torch.optim.Adam(
         params=Net.parameters(), lr=Learning_Rate, weight_decay=Weight_Decay
-    )  # Create adam optimizer
+    )
 
-    # ----------------------------------------Create reader for data sets--------------------------------------------------------------------------------------------------------------
-    """
-    Readers = {}  # Transproteus readers
-    for nm in TransProteusFolder:
-        Readers[nm] = DepthReader.Reader(
-            TransProteusFolder[nm],
-            MaxBatchSize,
-            MinSize,
-            MaxSize,
-            MaxPixels,
-            TrainingMode=True,
-        )
+    # Create reader for data sets
+    Readers = MakeDataset.create_reader(batch_size)
+    if use_labpics:
+        LPReaders = MakeDataset.create_reader_LabPics(batch_size)
 
-    """
+    # get number of samples
+    num_samples = MakeDataset.get_num_samples(
+        Readers
+    ) + MakeDataset.get_num_samples_LabPics(LPReaders)
+    print("Num_samples ", num_samples)
 
-    Readers = MakeDataset.create_reader()  # Create readers for datasets
+    itr_per_epoch = int(num_samples / batch_size)
 
-    # --------------------------- Create logs files for saving loss during training----------------------------------------------------------------------------------------------------------
+    # Create logs files for saving loss during training
 
     if not os.path.exists(TrainedModelWeightDir):
         os.makedirs(TrainedModelWeightDir)  # Create folder for trained weight
     torch.save(
         Net.state_dict(), TrainedModelWeightDir + "/" + "test" + ".torch"
-    )  # test saving to see the everything is fine
+    )  # test saving to see that everything is fine
 
-    # f = open(TrainLossTxtFile, "w+")  # Training loss log file
-    # f.write("Iteration\tloss\t Learning Rate=")
-    # f.close()
-    # -------------------Loss Parameters--------------------------------------------------------------------------------
-    PrevAvgLoss = (
-        0  # Average loss in the past (to compare see if loss as been decrease)
-    )
+    # Loss Parameters
     AVGCatLoss = {}  # Average loss for each prediction
 
-    ############################################################################################################################
-    # ..............Start Training loop: Main Training....................................................................
+    # Start training loop
     print("Start Training")
-    for itr in range(InitStep, MAX_ITERATION):  # Main training loop
-        print(
-            "------------------------------ Iteration: ",
-            itr,
-            "------------------------------------------------",
-        )
 
-        # ***************************Reading batch ******************************************************************************
-        Mode = "Virtual"  # Transproteus data
-        if Mode == "Virtual":  # Read transproteus
-            readertype = list(Readers)[
-                np.random.randint(len(list(Readers)))
-            ]  # Pick reader (folder)
-            # print(readertype)
-            GT = Readers[readertype].LoadBatch()  # Read batch
+    for epoch_num in range(InitEpoch, num_epochs):
+        print("Epoch ", epoch_num)
+        for itr in tqdm(range(1, itr_per_epoch)):  # tqdm for progress bar
+            # read batch
+            Mode = "Virtual"  # Transproteus data
 
-        print("Run prediction")
+            if use_labpics and np.random.rand() < 0.33:
+                Mode = "LabPics"  # randomly selecting dataset
 
-        # PrdXYZ, PrdProb, PrdMask = Net.forward(Images=GT["VesselWithContentRGB"]) # Run net inference and get prediction
-        PrdDepth, PrdProb, PrdMask = Net.forward(
-            Images=GT["VesselWithContentRGB"]
-        )  # Run net inference and get prediction
+            if Mode == "Virtual":  # Read transproteus
+                readertype = list(Readers)[
+                    np.random.randint(len(list(Readers)))
+                ]  # Pick reader (folder)
+                GT = Readers[readertype].LoadBatch()
 
-        Net.zero_grad()
+            if Mode == "LabPics":  # Read Labpics data
+                readertype = list(LPReaders)[
+                    np.random.randint(len(list(LPReaders)))
+                ]  # Pick reader (folder)
+                GT = LPReaders[readertype].LoadBatch()
 
-        for nm in MaskList:
-            # change to device
-            PrdMask[nm] = PrdMask[nm].to(device)
-            PrdProb[nm] = PrdProb[nm].to(device)
+            PrdDepth, PrdProb, PrdMask = Net.forward(
+                Images=GT["VesselWithContentRGB"]
+            )  # Run net inference and get prediction
 
-        for nm in DepthList:
-            PrdDepth[nm] = PrdDepth[nm].to(device)
+            Net.zero_grad()
 
-        # ------------------------Calculating loss---------------------------------------------------------------------
+            for nm in MaskList:
+                # change to device
+                PrdMask[nm] = PrdMask[nm].to(device)
+                PrdProb[nm] = PrdProb[nm].to(device)
 
-        CatLoss = {}  # will store the Category loss per object
-
-        # **************************************Depth Map Loss*************************************************************************************************************************
-
-        ###############
-        # Dani: change this to depth loss!!!!!!
-        ###############
-        ###############
-
-        if Mode == "Virtual":  # depth loss is calculated only for transproteus
-            print("Calculating Depth Loss")
-            TGT = {}  # GT depth in torch format
-
-            NormConst = []  # Scale constant to normalize the predicted depth map
             for nm in DepthList:
-                # ------------------------ROI Punish depth prediction only within  the object mask, resize  ROI to prediction size (prediction map is shrink version of the input image)----------------------------------------------------
-                ROI = torch.autograd.Variable(
-                    torch.from_numpy(GT[depth2Mask[nm]] * GT["ROI"])
-                    .unsqueeze(1)
-                    .to(device),
-                    requires_grad=False,
-                )  # ROI to torch
-                ROI = nn.functional.interpolate(
-                    ROI,
-                    tuple(
-                        (PrdDepth[nm].shape[2], PrdDepth["EmptyVessel_Depth"].shape[3])
-                    ),
-                    mode="bilinear",
-                    align_corners=False,
-                )  # ROI to output scale
-                ROI[
-                    ROI < 0.9
-                ] = 0  # Resize have led to some intirmidiate values ignore them
-                ROI[
-                    ROI > 0.9
-                ] = 1  # Resize have led to some intirmidiate values ignore them
+                PrdDepth[nm] = PrdDepth[nm].to(device)
 
-                TGT[nm] = torch.log(
-                    torch.from_numpy(GT[nm]).to(device).unsqueeze(1) + 0.0001
-                )  ### GT Depth log
-                TGT[nm].requires_grad = False
-                TGT[nm] = nn.functional.interpolate(
-                    TGT[nm],
-                    tuple((PrdDepth[nm].shape[2], PrdDepth[nm].shape[3])),
-                    mode="bilinear",
-                    align_corners=False,
-                )  # convert to prediction size
+            CatLoss = {}  # will store the category loss per object
 
-                CatLoss[nm] = 5 * LossFunctions.DepthLoss(
-                    PrdDepth[nm], TGT[nm], ROI
-                )  # Loss function
+            if Mode == "Virtual":  # depth loss is calculated only for transproteus
+                TGT = {}  # GT depth in torch format
+                for nm in DepthList:
+                    # ROI Punish depth prediction only within the object mask, resize ROI to prediction size (prediction map is shrink version of the input image)
+                    ROI = torch.autograd.Variable(
+                        torch.from_numpy(GT[depth2Mask[nm]] * GT["ROI"])
+                        .unsqueeze(1)
+                        .to(device),
+                        requires_grad=False,
+                    )  # ROI to torch
+                    ROI = nn.functional.interpolate(
+                        ROI,
+                        tuple(
+                            (
+                                PrdDepth[nm].shape[2],
+                                PrdDepth["EmptyVessel_Depth"].shape[3],
+                            )
+                        ),
+                        mode="bilinear",
+                        align_corners=False,
+                    )  # ROI to output scale
+                    ROI[
+                        ROI < 0.9
+                    ] = 0  # Resize have led to some intirmidiate values ignore them
+                    ROI[
+                        ROI > 0.9
+                    ] = 1  # Resize have led to some intirmidiate values ignore them
 
-        ###############################################################################################################################################
-        # ******************Segmentation Mask Loss************************************************************************************************************************************
-        # -----------------------------ROI---------------------------------------------------------------------------
-        ROI = torch.autograd.Variable(
-            torch.from_numpy(GT["ROI"]).unsqueeze(1).to(device), requires_grad=False
-        )  # Region of interest in the image where loss is calulated
-        ROI = nn.functional.interpolate(
-            ROI,
-            tuple((PrdProb[MaskList[0]].shape[2], PrdProb[MaskList[0]].shape[3])),
-            mode="bilinear",
-            align_corners=False,
-        )  # Resize ROI to prediction
-        # -------------------
-        print("Calculating Mask Loss")
+                    TGT[nm] = torch.log(
+                        torch.from_numpy(GT[nm]).to(device).unsqueeze(1) + 0.0001
+                    )  # GT Depth log
+                    TGT[nm].requires_grad = False
+                    TGT[nm] = nn.functional.interpolate(
+                        TGT[nm],
+                        tuple((PrdDepth[nm].shape[2], PrdDepth[nm].shape[3])),
+                        mode="bilinear",
+                        align_corners=False,
+                    )  # convert to prediction size
 
-        for nm in MaskList:
-            if nm in GT:
-                TGT = torch.autograd.Variable(
-                    torch.from_numpy(GT[nm]).to(device), requires_grad=False
-                ).unsqueeze(
-                    1
-                )  # Convert GT segmentation mask to pytorch
-                TGT = nn.functional.interpolate(
-                    TGT,
-                    tuple((PrdProb[nm].shape[2], PrdProb[nm].shape[3])),
-                    mode="bilinear",
-                    align_corners=False,
-                )  # Resize GT mask to predicted image size (prediction is scaled down version of the image)
-                CatLoss[nm] = -torch.mean(
-                    TGT[:, 0] * torch.log(PrdProb[nm][:, 1] + 0.00001) * ROI[:, 0]
-                ) - torch.mean(
-                    (1 - TGT[:, 0])
-                    * torch.log(PrdProb[nm][:, 0] + 0.0000001)
-                    * ROI[:, 0]
-                )  # Calculate cross entropy loss
+                    CatLoss[nm] = 5 * LossFunctions.DepthLoss(
+                        PrdDepth[nm], TGT[nm], ROI
+                    )  # Loss function
 
-        # ==========================================================================================================================
-        # ---------------Calculate Total Loss and average loss by using the sum of all objects losses----------------------------------------------------------------------------------------------------------
-        print("Calculating Total Loss")
-        fr = 1 / np.min([itr - InitStep + 1, 2000])
-        TotalLoss = 0  # will be used for backptop
-        AVGCatLoss["Depth"] = 0  # will be used to collect statitics
-        AVGCatLoss["Mask"] = 0  # will be used to collect statitics
-        AVGCatLoss["Total"] = 0  # will be used to collect statitics
-        for nm in CatLoss:  # Go over all object losses and sum them
-            if not nm in AVGCatLoss:
-                AVGCatLoss[nm] = 0
-            if CatLoss[nm] > 0:
-                AVGCatLoss[nm] = (1 - fr) * AVGCatLoss[nm] + fr * CatLoss[
-                    nm
-                ].data.cpu().numpy()
-            TotalLoss += CatLoss[nm]
+            # Segmentation mask loss
+            ROI = torch.autograd.Variable(
+                torch.from_numpy(GT["ROI"]).unsqueeze(1).to(device), requires_grad=False
+            )  # Region of interest in the image where loss is calulated
+            ROI = nn.functional.interpolate(
+                ROI,
+                tuple((PrdProb[MaskList[0]].shape[2], PrdProb[MaskList[0]].shape[3])),
+                mode="bilinear",
+                align_corners=False,
+            )  # Resize ROI to prediction size (prediction map is shrink version of the input image)
 
-            if "Depth" in nm:
-                AVGCatLoss["Depth"] += AVGCatLoss[nm]
-            if "Mask" in nm:
-                AVGCatLoss["Mask"] += AVGCatLoss[nm]
-            AVGCatLoss["Total"] += AVGCatLoss[nm]
-        # --------------Apply backpropogation-----------------------------------------------------------------------------------
-        print("Back Propagation")
-        TotalLoss.backward()  # Backpropogate loss
-        optimizer.step()  # Apply gradient descent change to weight
-        print("Done")
+            for nm in MaskList:
+                if nm in GT:
+                    TGT = torch.autograd.Variable(
+                        torch.from_numpy(GT[nm]).to(device), requires_grad=False
+                    ).unsqueeze(
+                        1
+                    )  # Convert GT segmentation mask to pytorch
+                    TGT = nn.functional.interpolate(
+                        TGT,
+                        tuple((PrdProb[nm].shape[2], PrdProb[nm].shape[3])),
+                        mode="bilinear",
+                        align_corners=False,
+                    )  # Resize GT mask to predicted image size (prediction is scaled down version of the image)
+                    CatLoss[nm] = -torch.mean(
+                        TGT[:, 0] * torch.log(PrdProb[nm][:, 1] + 0.00001) * ROI[:, 0]
+                    ) - torch.mean(
+                        (1 - TGT[:, 0])
+                        * torch.log(PrdProb[nm][:, 0] + 0.0000001)
+                        * ROI[:, 0]
+                    )  # Calculate cross entropy loss
 
-        ###############################################################################################################################
-        # ===================Display, Save and update learning rate======================================================================================
-        #########################################################################################################################33
+            fr = 1 / np.min(
+                [itr + (epoch_num - 1) * itr_per_epoch - InitStep + 1, 2000]
+            )
+            TotalLoss = 0  # will be used for backpropagation
+            AVGCatLoss["Depth"] = 0  # will be used to collect statitics
+            AVGCatLoss["Mask"] = 0  # will be used to collect statitics
+            AVGCatLoss["Total"] = 0  # will be used to collect statitics
+            for nm in CatLoss:  # Go over all object losses and sum them
+                if not nm in AVGCatLoss:
+                    AVGCatLoss[nm] = 0
+                if CatLoss[nm] > 0:
+                    AVGCatLoss[nm] = (1 - fr) * AVGCatLoss[nm] + fr * CatLoss[
+                        nm
+                    ].data.cpu().numpy()
+                    AVGCatLoss[nm] = CatLoss[nm].data.cpu().numpy()
+                TotalLoss += CatLoss[nm]
 
-        # --------------Save trained model------------------------------------------------------------------------------------------------------------------------------------------
+                if "Depth" in nm:
+                    AVGCatLoss["Depth"] += AVGCatLoss[nm]
+                if "Mask" in nm:
+                    AVGCatLoss["Mask"] += AVGCatLoss[nm]
+                AVGCatLoss["Total"] += AVGCatLoss[nm]
+
+            # Apply backpropogation
+            TotalLoss.backward()  # Backpropogate loss
+            optimizer.step()  # Apply gradient descent change to weight
+
+            # print results to file every 4 iterations
+            if itr % 4 == 0 and Mode == "Virtual":
+                txt = "\n" + str((epoch_num - 1) * itr_per_epoch + itr)
+                for nm in AVGCatLoss:
+                    txt += (
+                        "\tAverage Cat Loss ["
+                        + nm
+                        + "] "
+                        + str(float("{:.4f}".format(AVGCatLoss[nm])))
+                    )
+                # Write train loss to file
+                with open(TrainLossTxtFile, "a") as f:
+                    f.write(txt)
+                    f.close()
+
+        # Save trained model after each epoch
+        print("Saving Model to file in " + TrainedModelWeightDir + "/Defult.torch")
+        torch.save(Net.state_dict(), TrainedModelWeightDir + "/Defult.torch")
+        torch.save(Net.state_dict(), TrainedModelWeightDir + "/DefultBackUp.torch")
+        print("Model saved.")
+        np.save(TrainedModelWeightDir + "/Learning_Rate.npy", Learning_Rate)
+        np.save(TrainedModelWeightDir + "/epoch.npy", epoch_num)
         if (
-            itr % 3000 == 0
-        ):  # and itr>0: #Save model weight once every 300 steps, temp file
-            print("Saving Model to file in " + TrainedModelWeightDir + "/Defult.torch")
-            torch.save(Net.state_dict(), TrainedModelWeightDir + "/Defult.torch")
-            torch.save(Net.state_dict(), TrainedModelWeightDir + "/DefultBack.torch")
-            print("model saved")
-            np.save(TrainedModelWeightDir + "/Learning_Rate.npy", Learning_Rate)
-            np.save(TrainedModelWeightDir + "/itr.npy", itr)
-        if (
-            itr % 60000 == 0 and itr > 0
-        ):  # Save model weight once every 60k steps permenant file
+            epoch_num % 5 == 0
+        ):  # Save model weight once every 5 epochs (to save space and time) and at the end of training
             print(
-                "Saving Model to file in "
-                + TrainedModelWeightDir
-                + "/"
-                + str(itr)
-                + ".torch"
+                "Saving Model to file in " + "models" + "/" + str(epoch_num) + ".torch"
             )
             torch.save(
-                Net.state_dict(), TrainedModelWeightDir + "/" + str(itr) + ".torch"
+                Net.state_dict(),
+                "models"
+                + "/"
+                + str(epoch_num)
+                + "__"
+                + time.strftime("%d%m%Y-%H%M")
+                + ".torch",
             )
             print("model saved")
-        # ......................Write and display train loss..........................................................................
-        if itr % 2 == 0:  # Display train loss and write to statics file
-            txt = "\n" + str(itr)
-            for nm in AVGCatLoss:
-                txt += (
-                    "\tAverage Cat Loss ["
-                    + nm
-                    + "] "
-                    + str(float("{:.4f}".format(AVGCatLoss[nm])))
-                    + "  "
-                )
-                # get two decimal places of AVGCatLoss
-                # AVGCatLoss[nm] = float("{:.2f}".format(AVGCatLoss[nm]))
-            if itr % 10 == 0:
-                print(txt)
-            # Write train loss to file
-            with open(TrainLossTxtFile, "a") as f:
-                f.write(txt)
-                f.close()
-        # #----------------Update learning rate -------------------------------------------------------------------------------
-        if itr % 20000 == 0:
+
+        # Update learning rate
+        if epoch_num % 5 == 0:
             if "TotalPrevious" not in AVGCatLoss:
                 AVGCatLoss["TotalPrevious"] = AVGCatLoss["Total"]
             elif (
                 AVGCatLoss["Total"] * 0.95 < AVGCatLoss["TotalPrevious"]
-            ):  # If average loss did not decrease in the last 20k steps update training loss
+            ):  # If average loss did not decrease in the last 10 epochs update training loss
                 Learning_Rate *= 0.9  # Reduce learning rate
                 if Learning_Rate <= 3e-7:  # If learning rate to small increae it
                     Learning_Rate = 5e-6
@@ -340,3 +315,4 @@ def train():
             AVGCatLoss["TotalPrevious"] = (
                 AVGCatLoss["Total"] + 0.0000000001
             )  # Save current average loss for later comparison
+        tqdm.write(f"Epoch {epoch_num} completed")

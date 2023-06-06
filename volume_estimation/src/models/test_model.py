@@ -16,7 +16,6 @@ print(f"Loaded {len(dataset)} samples")
 train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
 
 
-
 # Set up the data loader and training parameters for the test data
 test_loader = DataLoader(test_data, batch_size=1, shuffle=False)
 test_size = len(test_data)
@@ -35,13 +34,13 @@ with torch.no_grad():
     for i, data in enumerate(test_loader):
         vessel_depth = data["vessel_depth"]
         liquid_depth = data["liquid_depth"]
-        #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
-        #inputs = data["depth_image"]
+        # inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
+        # inputs = data["depth_image"]
         targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1)
         targets = targets.float()
 
         outputs = model(vessel_depth, liquid_depth)
-        
+
         outputs = outputs.squeeze(0)
         targets = targets.squeeze(0)
         print("Sample ", i, ":", outputs, targets)
@@ -59,17 +58,10 @@ with torch.no_grad():
         # add squared error to total
         squared_error_liquid_total += squared_error_liquid
         squared_error_vessel_total += squared_error_vessel
-    
+
     # calculate RMSE for test set
     rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
     rmse_vessel = (squared_error_vessel_total / test_size) ** 0.5
 
     print("RMSE liquid: ", rmse_liquid)
     print("RMSE vessel: ", rmse_vessel)
-
-
-
-
-
-
-

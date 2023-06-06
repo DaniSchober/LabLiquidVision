@@ -1,10 +1,7 @@
-# ------------------------------------------------------------------------------
 # The code is from GLPDepth (https://github.com/vinvino02/GLPDepth).
-# For non-commercial purpose only (research, evaluation etc).
-# ------------------------------------------------------------------------------
+# https://arxiv.org/pdf/1406.2283.pdf
 
 import torch
-import copy
 
 
 def eval_depth(pred, target):
@@ -12,33 +9,13 @@ def eval_depth(pred, target):
     pred: [B, H, W]
     target: [B, H, W]
 
-    return: {'d1': d1.item(), 'd2': d2.item(), 'd3': d3.item(), 'abs_rel': abs_rel.item(),
-            'sq_rel': sq_rel.item(), 'rmse': rmse.item(), 'rmse_log': rmse_log.item(),
-            'log10':log10.item(), 'silog':silog.item()}
+    return: dict of metrics
 
     """
     assert pred.shape == target.shape
-    # ignore zeros in pred and target
-    # pred_cop = copy.copy(pred)
-    # target_cop = copy.copy(target)
-    # pred_cop[pred_cop == 0] = 1
-    # target_cop[target_cop == 0] = 1
-
-    # thresh = torch.max((target_cop / pred_cop), (pred_cop / target_cop))
-    # thresh = torch.max(target / (pred), (pred / target))
-    # set all the ones to zero
-    # thresh[thresh == 1] = 0
-    # print("Thresh:", thresh)
-
-    # pred = torch.pow(2.718281, pred)
-
-    # d1 = torch.sum(thresh < 1.25).float() / len(thresh)
-    # d2 = torch.sum(thresh < 1.25 ** 2).float() / len(thresh)
-    # d3 = torch.sum(thresh < 1.25 ** 3).float() / len(thresh)
 
     # only take the ones that are not zero
     pred = pred[pred != 0]
-    # pred = torch.pow(2.718281, pred)
     target = target[target != 0]
 
     diff = pred - target

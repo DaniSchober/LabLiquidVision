@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch
-#from torch.utils.data import DataLoader
+
+# from torch.utils.data import DataLoader
 import torch.nn.functional as F
 import numpy as np
 
@@ -27,30 +28,33 @@ class VolumeNet(nn.Module):
 
         self.bn4 = nn.BatchNorm2d(64)
 
-
-        self.fc1 = nn.Linear(in_features=64 * 520, out_features=1024) # 520 = 20*26, otherwise 4800
+        self.fc1 = nn.Linear(
+            in_features=64 * 520, out_features=1024
+        )  # 520 = 20*26, otherwise 4800
         self.fc2 = nn.Linear(in_features=1024, out_features=512)
         self.fc3 = nn.Linear(in_features=512, out_features=1)
 
     def forward(self, vessel_depth, liquid_depth, vessel_vol):
         # print(depth_image.shape)
-        #x = depth_image.unsqueeze(1)  # add channel dimension
+        # x = depth_image.unsqueeze(1)  # add channel dimension
         # print(depth_image.shape)
-        x = torch.stack([vessel_depth, liquid_depth, vessel_vol], dim=1) # stack the two input tensors along the channel dimension
-        #print(x.shape)
+        x = torch.stack(
+            [vessel_depth, liquid_depth, vessel_vol], dim=1
+        )  # stack the two input tensors along the channel dimension
+        # print(x.shape)
 
         x = F.relu(self.bn1(self.conv1(x)))
-        #x = F.batch_norm(x, momentum=0.1, eps=1e-5)
+        # x = F.batch_norm(x, momentum=0.1, eps=1e-5)
         x = F.max_pool2d(x, kernel_size=2)
         x = F.relu(self.bn2(self.conv2(x)))
-        #x = F.batch_norm(x)
+        # x = F.batch_norm(x)
         x = F.max_pool2d(x, kernel_size=2)
         x = F.relu(self.bn3(self.conv3(x)))
         x = F.max_pool2d(x, kernel_size=2)
         x = F.relu(self.bn4(self.conv4(x)))
-        # dropout layer 
+        # dropout layer
         x = F.dropout2d(x, p=0.2)
-        #print(x.shape)
+        # print(x.shape)
 
         x = x.view(-1, 64 * 520)
         x = F.relu(self.fc1(x))

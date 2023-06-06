@@ -1,2 +1,0 @@
-
-0	Average Cat Loss [Depth] -0.0  	Average Cat Loss [Mask] -0.0  	Average Cat Loss [Total] -0.0  	Average Cat Loss [EmptyVessel_Depth] -0.0  	Average Cat Loss [ContentDepth] -0.0  	Average Cat Loss [VesselOpening_Depth] -0.0  	Average Cat Loss [VesselMask] -0.0  	Average Cat Loss [ContentMaskClean] -0.0  	Average Cat Loss [VesselOpeningMask] -0.0  

@@ -21,6 +21,7 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 from volume_estimation.src.models_no_input_vol.predict_full_pipeline import predict
 
+
 class App:
     def __init__(self, master):
         self.master = master
@@ -71,7 +72,6 @@ class App:
         self.image_path = f"{path}/Input_RGBImage.png"
         np.save(path + "/Input_RGBImage.npy", color_image)
 
-
         print("Image has been captured and saved successfully! Path:", path)
 
         # Predict volume
@@ -95,9 +95,8 @@ class App:
                 color_image = np.asanyarray(color_frame.get_data())
                 cv2.imshow("RGB Stream - Press q to quit", color_image)
                 key = cv2.waitKey(1)
-                if key == ord('q'):
+                if key == ord("q"):
                     break
-
 
     def quit(self):
         cv2.destroyAllWindows()

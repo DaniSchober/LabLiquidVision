@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch
-#from torch.utils.data import DataLoader
+
+# from torch.utils.data import DataLoader
 import torch.nn.functional as F
 
 
@@ -23,16 +24,18 @@ class VolumeNet(nn.Module):
 
     def forward(self, vessel_depth, liquid_depth):
         # print(depth_image.shape)
-        #x = depth_image.unsqueeze(1)  # add channel dimension
+        # x = depth_image.unsqueeze(1)  # add channel dimension
         # print(depth_image.shape)
-        x = torch.stack([vessel_depth, liquid_depth], dim=1) # stack the two input tensors along the channel dimension
-        #print(x.shape)
+        x = torch.stack(
+            [vessel_depth, liquid_depth], dim=1
+        )  # stack the two input tensors along the channel dimension
+        # print(x.shape)
 
         x = F.relu(self.conv1(x))
-        #x = F.batch_norm(x, momentum=0.1, eps=1e-5)
+        # x = F.batch_norm(x, momentum=0.1, eps=1e-5)
         x = F.max_pool2d(x, kernel_size=2)
         x = F.relu(self.conv2(x))
-        #x = F.batch_norm(x)
+        # x = F.batch_norm(x)
         x = F.max_pool2d(x, kernel_size=2)
         x = F.relu(self.conv3(x))
         x = F.max_pool2d(x, kernel_size=2)

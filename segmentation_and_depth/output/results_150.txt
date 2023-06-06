@@ -1,0 +1,26 @@
+Count 150.0
+--------------------
+Depth Estimation results:
+EmptyVessel_Depth abs_rel 0.026026082690805197
+EmptyVessel_Depth sq_rel 0.2879623577495416
+EmptyVessel_Depth rmse 7.606708614031474
+EmptyVessel_Depth rmse_log 0.035321302426358066
+EmptyVessel_Depth log10 0.011332058561965824
+EmptyVessel_Depth silog 0.03530413160100579
+ContentDepth abs_rel 0.03088536769306908
+ContentDepth sq_rel 0.42350387323647737
+ContentDepth rmse 7.517694779237112
+ContentDepth rmse_log 0.037999374895977475
+ContentDepth log10 0.013487300383858383
+ContentDepth silog 0.03798073610911767
+VesselOpening_Depth abs_rel 0.03591368861651669
+VesselOpening_Depth sq_rel 0.43126102796755733
+VesselOpening_Depth rmse 8.360461192131043
+VesselOpening_Depth rmse_log 0.04254343648130695
+VesselOpening_Depth log10 0.015562246761595209
+VesselOpening_Depth silog 0.042508315052837135
+--------------------
+Segmentation results:
+VesselMask 	IOU =  0.9614042878302828 	Precision =  0.9940661884050224 	Recall =  0.9669534841200447
+ContentMaskClean 	IOU =  0.8435912013153486 	Precision =  0.9015231650810979 	Recall =  0.9292173786633247
+VesselOpeningMask 	IOU =  0.9419100051131738 	Precision =  0.9823257633527763 	Recall =  0.9581477998622276

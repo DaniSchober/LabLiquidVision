@@ -7,8 +7,8 @@ import torch.nn as nn
 from src.models.model_new import VolumeNet
 
 device = (
-        torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-    )  # Use GPU if available
+    torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+)  # Use GPU if available
 
 print("Device used: ", device)
 
@@ -27,9 +27,11 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
     for i, data in enumerate(progress_bar):
         vessel_depth = data["vessel_depth"].to(device)
         liquid_depth = data["liquid_depth"].to(device)
-        #inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
-        #inputs = data["depth_image"]
-        targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1).to(device)
+        # inputs = torch.cat([vessel_depth, liquid_depth], dim=1)
+        # inputs = data["depth_image"]
+        targets = torch.stack([data["vol_liquid"], data["vol_vessel"]], dim=1).to(
+            device
+        )
         targets = targets.float()
 
         optimizer.zero_grad()
@@ -40,27 +42,34 @@ def train(model, criterion, optimizer, train_loader, epoch_str):
         losses.append(loss.item())
 
         # Calculate RMSE
-        rmse = torch.sqrt(loss.item()/batch_size)
-        #rmse = torch.sqrt(loss).item()
+        rmse = torch.sqrt(loss.item() / batch_size)
+        # rmse = torch.sqrt(loss).item()
         rmse_epoch += rmse
 
         loss.backward()
         optimizer.step()
 
         # Update progress bar
-        progress_bar.set_postfix({"loss": loss.item()/batch_size, "RMSE": (loss.item()/batch_size)**0.5})
+        progress_bar.set_postfix(
+            {
+                "loss": loss.item() / batch_size,
+                "RMSE": (loss.item() / batch_size) ** 0.5,
+            }
+        )
 
     # get the average RMSE for the epoch
     model.eval()
 
-    rmse_epoch /= len(train_loader/batch_size)
+    rmse_epoch /= len(train_loader / batch_size)
     print(f"RMSE for epoch {epoch_str}: {rmse_epoch:.2f}")
 
     # plot the loss
     import matplotlib.pyplot as plt
+
     plt.plot(losses)
     plt.show()
-    
+
+
 data_dir = "data/processed"
 batch_size = 4
 num_epochs = 3
@@ -93,7 +102,3 @@ for epoch in range(num_epochs):
 
 # Save the trained model
 torch.save(model.state_dict(), "models/volume_model.pth")
-
-
-
-

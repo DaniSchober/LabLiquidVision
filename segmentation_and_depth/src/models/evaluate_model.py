@@ -2,24 +2,31 @@ import numpy as np
 import src.models.model as NET_FCN  # The net Class
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import src.models.loss_functions
-import src.data.load_data as ReaderData
 import src.data.make_dataset as MakeDataset
 
-def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/interim/TranProteus/Testing/LiquidContent", UseGPU=True):
+"""
+This file contains the evaluation function for the segmentation and depth prediction model
+
+The evaluation function takes in the following arguments:
+    --model_path: path to trained model
+    --folder_path: path to folder for evaluation
+    --UseGPU: True or False (use GPU for evaluation)
+
+
+"""
+
+
+def evaluate(
+    model_path=r"models/segmentation_depth_model.torch",
+    folder_path=r"data/interim/TranProteus1/Testing/LiquidContent",
+    UseGPU=True,
+):
     TestFolder = folder_path  # input folder
 
-    OutputStatisticsFile = "Statistics.txt"
-    MaxSize = 1000  # max image dimension
     UseChamfer = False  # Evaluate chamfer distance (this takes lots of time)
-    # SetNormalizationUsing="ContentXYZ"
-    SetNormalizationUsing = (
-        "VesselXYZ"  # Normalize prediction scale to GT scale by matching the vessel scale
-    )
+
     batch_size = 1  # Batch size
 
-    MaskClasses = {}
     DepthList = [
         "EmptyVessel_Depth",
         "ContentDepth",
@@ -30,12 +37,6 @@ def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/in
         "ContentMaskClean",
         "VesselOpeningMask",
     ]  # List of segmentation Masks to predict
-    depth2Mask = {
-        "EmptyVessel_Depth": "VesselMask",
-        "ContentDepth": "ContentMaskClean",
-        "VesselOpening_Depth": "VesselOpeningMask",
-    }
-    Statics = {""}
 
     # https://arxiv.org/pdf/1406.2283.pdf
 
@@ -50,8 +51,6 @@ def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/in
     Readers = MakeDataset.create_reader_Test(batch_size, TestFolder)
     Readers = Readers["Liquid1"]
 
-    # ---------------------------------------Create Statistics dictionaries for Mask IOU for segmentation-------------------------------------------------------------
-
     MaskEvalType = ["InterSection", "Union", "SumGT", "SumPrd"]
     StatMask = {}
     for nm in MaskList:
@@ -59,7 +58,6 @@ def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/in
         for et in MaskEvalType:
             StatMask[nm][et] = 0
 
-    # -------------------------------Create Evaluation statistics dictionary for XYZ--------------------------------------------------------------------
     # https://arxiv.org/pdf/1406.2283.pdf
     ##https://cseweb.ucsd.edu//~haosu/papers/SI2PC_arxiv_submit.pdf
     EvalTypes = [
@@ -83,7 +81,7 @@ def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/in
         for et in EvalTypes:
             StatDepth[nm][et] = 0
 
-    while Readers.epoch == 0 and Readers.itr < 60:  # Test 60 example or one epoch
+    while Readers.epoch == 0 and Readers.itr < 1000:  # Test 1000 examples or one epoch
         GT = Readers.LoadSingle()  # Load example
 
         print(
@@ -91,14 +89,12 @@ def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/in
             Readers.itr,
             "------------------------------",
         )
-        #print("RUN PREDICTION")
 
         with torch.no_grad():
             PrdDepth, PrdProb, PrdMask = model.forward(
                 Images=GT["VesselWithContentRGB"]
             )  # Run net inference and get prediction
 
-        ###################### Predict segmentation Mask Accuracy IOU#######################################################################
         for nm in MaskList:
             if nm in GT:
                 ROI = GT["ROI"][0]
@@ -109,15 +105,16 @@ def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/in
                     align_corners=False,
                 )
                 Pmask = (
-                    (Pmask[0][1] > 0.5).squeeze().cpu().detach().numpy().astype(np.float32)
+                    (Pmask[0][1] > 0.5)
+                    .squeeze()
+                    .cpu()
+                    .detach()
+                    .numpy()
+                    .astype(np.float32)
                 )  # Predicted mask
                 Pmask *= ROI  # Limit to the region of interse
-                Gmask = GT[nm][0] * ROI  # GT mask  limite to region of ineterstr (ROI)
-                # ****************************************************
-                # Im=GT["VesselWithContentRGB"][0].copy()
-                # Im[:,:,0][Gmask>0]=0
-                # Im[:, :, 1][Pmask > 0] = 0
-                # vis.show(Im)
+                Gmask = GT[nm][0] * ROI  # GT mask  limite to region of interest (ROI)
+
                 # ***************Calculate IOU***********
                 InterSection = (Pmask * Gmask).sum()
                 Union = (Pmask + Gmask).sum() - InterSection
@@ -128,19 +125,8 @@ def evaluate(model_path=r"models/55__03042023-2211.torch", folder_path=r"data/in
                     StatMask[nm]["SumGT"] += (Gmask).sum()
                     StatMask[nm]["SumPrd"] += (Pmask).sum()
 
-                    #if nm == "ContentMaskClean":
-                    #    print(
-                    #        "IOU Content: ",
-                    #        StatMask[nm]["InterSection"] / StatMask[nm]["Union"],
-                    #    )
-                    #    print("Intersection: ", InterSection)
-                    #    print("Union: ", Union)
-                    #    print("IOU content: ", InterSection / Union)
-
     # ======================Display Segmentation statistics==============================================================================
-    print(
-        "\n\n\n Segmentation statistics\n"
-    )
+    print("\n\n\n Segmentation statistics\n")
     for nm in MaskList:
         if StatMask[nm]["Union"] == 0:
             continue

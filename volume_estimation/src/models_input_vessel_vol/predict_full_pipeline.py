@@ -18,10 +18,11 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 import segmentation_and_depth.src.visualization.visualize as vis
 import segmentation_and_depth.src.models.model as NET_FCN  # The net Class
 
+
 def predict(image_path):
-    model_path = r"../segmentation_and_depth/models/55__03042023-2211.torch" # Trained model path
+    model_path = r"../segmentation_and_depth/models/55__03042023-2211.torch"  # Trained model path
     UseGPU = True  # Use GPU or not
-    MaxSize=3000
+    MaxSize = 3000
 
     # get depth maps from segmentation and depth model
     DepthList = ["EmptyVessel_Depth", "ContentDepth", "VesselOpening_Depth"]
@@ -55,11 +56,8 @@ def predict(image_path):
             Images=image, TrainMode=False, UseGPU=UseGPU
         )  # Run net inference and get prediction
 
-
-
     model = VesselNet()
     model.load_state_dict(torch.load("models/vessel_net.pth"))
-
 
     depth_image = np.load(args.depth_image).astype(np.float32)
     # print(depth_image.shape)
@@ -67,7 +65,6 @@ def predict(image_path):
     # print(depth_image.shape)
     depth_image = depth_image.unsqueeze(0)
     # print(depth_image.shape)
-
 
     with torch.no_grad():
         model.eval()
