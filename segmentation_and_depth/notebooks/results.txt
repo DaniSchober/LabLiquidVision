@@ -1,0 +1,116 @@
+Mean IoU liquid: 0.8643843335675678
+Mean IoU vessel: 0.9226735154443325
+Mean recall liquid: 0.960085240385342
+Mean recall vessel: 0.9531944782631645
+Mean precision liquid: 0.8975735534297254
+Mean precision vessel: 0.9665639256368223
+
+Class: Cell_Flask_160mL
+Mean IoU liquid: 0.8442580875191403
+Mean recall liquid: 0.9826036704288879
+Mean precision liquid: 0.8580676164759924
+Mean IoU vessel: 0.9594501669051807
+Mean recall vessel: 0.9768140641950142
+Mean precision vessel: 0.9817792918492465
+
+Class: Cell_Flask_400mL
+Mean IoU liquid: 0.7446202328045347
+Mean recall liquid: 0.9846207043860697
+Mean precision liquid: 0.7544342457147107
+Mean IoU vessel: 0.8871244958112168
+Mean recall vessel: 0.9758599276080115
+Mean precision vessel: 0.9086854975292464
+
+Class: Duran_100mL
+Mean IoU liquid: 0.8957670301396871
+Mean recall liquid: 0.9560390908523836
+Mean precision liquid: 0.9345367794952146
+Mean IoU vessel: 0.9056348042662895
+Mean recall vessel: 0.9163246205110752
+Mean precision vessel: 0.9870923582788731
+
+Class: Duran_250mL
+Mean IoU liquid: 0.9175504105366906
+Mean recall liquid: 0.9568120433557572
+Mean precision liquid: 0.9574454573752023
+Mean IoU vessel: 0.9367912376793802
+Mean recall vessel: 0.9467514542516027
+Mean precision vessel: 0.9889754687093287
+
+Class: Duran_500mL
+Mean IoU liquid: 0.9140990295307938
+Mean recall liquid: 0.948639451044294
+Mean precision liquid: 0.9608888664949159
+Mean IoU vessel: 0.9271979497217456
+Mean recall vessel: 0.9376919888546549
+Mean precision vessel: 0.9881260014152943
+
+Class: Gibco_125mL
+Mean IoU liquid: 0.7974828667801751
+Mean recall liquid: 0.9800911306892093
+Mean precision liquid: 0.8140806727103961
+Mean IoU vessel: 0.9219235986980238
+Mean recall vessel: 0.9596947528035207
+Mean precision vessel: 0.9593547930029501
+
+Class: Gibco_500mL
+Mean IoU liquid: 0.890935361048791
+Mean recall liquid: 0.9852316713772563
+Mean precision liquid: 0.9042951506518332
+Mean IoU vessel: 0.9421581569860574
+Mean recall vessel: 0.975032298764009
+Mean precision vessel: 0.965788860673307
+
+Class: Pyrex_100mL
+Mean IoU liquid: 0.9258076348954705
+Mean recall liquid: 0.9675173658940519
+Mean precision liquid: 0.9554434221698246
+Mean IoU vessel: 0.9413883924158135
+Mean recall vessel: 0.9528589711166069
+Mean precision vessel: 0.9874034120890535
+
+Class: StorageBottle_250mL
+Mean IoU liquid: 0.9344863329070222
+Mean recall liquid: 0.9696449176280648
+Mean precision liquid: 0.9628231658825044
+Mean IoU vessel: 0.9500766424681126
+Mean recall vessel: 0.964422188460798
+Mean precision vessel: 0.9844292955113871
+
+Class: StorageBottle_500mL
+Mean IoU liquid: 0.928262394350968
+Mean recall liquid: 0.9630314693688939
+Mean precision liquid: 0.962748280858089
+Mean IoU vessel: 0.9496658913097102
+Mean recall vessel: 0.9597620476715056
+Mean precision vessel: 0.9890084443182156
+
+Class: Tube_15mL
+Mean IoU liquid: 0.7372244925371744
+Mean recall liquid: 0.9073377389691085
+Mean precision liquid: 0.7987832832499028
+Mean IoU vessel: 0.8194832699050218
+Mean recall vessel: 0.9133205203861227
+Mean precision vessel: 0.888919663555954
+
+Class: Tube_50mL
+Mean IoU liquid: 0.8421181297603668
+Mean recall liquid: 0.9194536306301277
+Mean precision liquid: 0.9073357000781208
+Mean IoU vessel: 0.9311875791654382
+Mean recall vessel: 0.9598009045350533
+Mean precision vessel: 0.9692040207090082
+
+Mean IoU liquid plastic: 0.8399234872135215
+Mean IoU vessel plastic: 0.9201337251560953
+Mean recall liquid plastic: 0.9615018666847023
+Mean recall vessel plastic: 0.9605883380530044
+Mean precision liquid plastic: 0.8703210144526937
+Mean precision vessel plastic: 0.9558962333936644
+
+Mean IoU liquid glass: 0.9133060262756605
+Mean IoU vessel glass: 0.9277530960208072
+Mean recall liquid glass: 0.9572519877866217
+Mean recall vessel glass: 0.9384067586834848
+Mean precision liquid glass: 0.9520786313837893
+Mean precision vessel glass: 0.9878993101231375

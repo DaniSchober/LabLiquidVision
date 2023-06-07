@@ -22,6 +22,8 @@ def evaluate(
     folder_path=r"data/interim/TranProteus1/Testing/LiquidContent",
     UseGPU=True,
 ):
+    
+    
     TestFolder = folder_path  # input folder
 
     batch_size = 1  # Batch size

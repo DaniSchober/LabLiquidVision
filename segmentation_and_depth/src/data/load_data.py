@@ -1,10 +1,17 @@
 import json
 import os
 import threading
-
 os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "1"
 import cv2
 import numpy as np
+
+'''
+This file contains the data reader classes for the segmentation and depth estimation project
+
+The reader reads the data from the dataset and prepares it for training and testing
+
+
+'''
 
 
 MapsAndDepths = {  # List of maps to use and their depths (layers)
@@ -25,7 +32,7 @@ MapsAndDepths = {  # List of maps to use and their depths (layers)
 
 class Reader:
     """
-    This class is used to read the data from the dataset
+    This class is used to read the data from the TransProteus dataset
 
     MainDir: The main directory of the dataset
     MaxBatchSize: The maximum number of images in the batch
@@ -113,10 +120,25 @@ class Reader:
         self.AnnData = False
 
     def GetNumSamples(self):
+        '''
+        This function returns the number of samples in the dataset
+        '''
         return len(self.AnnList)
 
-    # Crop and resize image and mask and ROI to feet batch size
+    # Crop and resize image and mask and ROI to fit batch size
     def CropResize(self, Maps, Hb, Wb):
+        '''
+        This function crops and resizes the image and mask and ROI to fit the batch size
+
+        Input:
+            --Maps: dictionary of maps
+            --Hb: height of batch
+            --Wb: width of batch
+        
+        Output:
+            --Maps: dictionary of maps
+
+        '''
         # resize image if it too small to the batch size
 
         h, w = Maps["ROI"].shape
@@ -161,16 +183,31 @@ class Reader:
         return Maps
 
     def Augment(self, Maps):
+        '''
+        This function augments the image and mask
+
+        It applies the following augmentations for 10% of the images:
+            --Gaussian blur
+            --Dark light
+            --GreyScale
+
+        Input:
+            --Maps: dictionary of maps
+
+        Output:
+            --Maps: dictionary of augmented maps
+
+        '''
         for nm in Maps:
             if "RGB" in nm:
-                if np.random.rand() < 0.1:  # Gaussian blur
+                if np.random.rand() < 0.1:  # Gaussian blur (10% of the time)
                     Maps[nm] = cv2.GaussianBlur(Maps[nm], (5, 5), 0)
 
-                if np.random.rand() < 0.1:  # Dark light
+                if np.random.rand() < 0.1:  # Dark light (10% of the time)
                     Maps[nm] = Maps[nm] * (0.5 + np.random.rand() * 0.65)
                     Maps[nm][Maps[nm] > 255] = 255
 
-                if np.random.rand() < 0.1:  # GreyScale
+                if np.random.rand() < 0.1:  # GreyScale (10% of the time)
                     Gr = Maps[nm].mean(axis=2)
                     r = np.random.rand()
 
@@ -180,8 +217,20 @@ class Reader:
 
         return Maps
 
-    # Read image annotation and data
     def LoadNext(self, pos, Hb, Wb):
+
+        '''
+        This function reads the next image annotation and data
+
+        Input:
+            --pos: position in batch
+            --Hb: height of batch
+            --Wb: width of batch
+
+        Output:
+            --Maps: dictionary of maps
+
+        '''
         # Select random example from the batch
         AnnInd = np.random.randint(len(self.AnnList))
         Ann = self.AnnList[AnnInd]
@@ -237,19 +286,21 @@ class Reader:
             Maps["ContentDepth"] > 5000
         ] = 0  # Remove far away background points
 
-        # Augment Crop and resize
-        #  self.before = Maps['VesselWithContentRGB'].copy()
         Maps = self.Augment(Maps)
         if Hb != -1:
             Maps = self.CropResize(Maps, Hb, Wb)
 
-        # Put maps in the batch
         for nm in Maps:
             if nm in self.Maps:
                 self.Maps[nm][pos] = Maps[nm]
 
     # Start load batch of images
     def StartLoadBatch(self):
+
+        '''
+        This function starts loading the next batch of images
+
+        '''
         # Initiate batch
         while True:
             Hb = np.random.randint(low=self.MinSize, high=self.MaxSize)
@@ -279,23 +330,40 @@ class Reader:
 
     # Wait until the data batch loading started at StartLoadBatch is finished
     def WaitLoadBatch(self):
+        '''
+        This function waits until the data batch loading started at StartLoadBatch is finished
+
+        '''
         for th in self.thread_list:
             th.join()
 
     def LoadBatch(self):
-        # Load batch for training (muti threaded  run in parallel with the training proccess)
-        # return previously  loaded batch and start loading new batch
+        '''
+        This function loads the next batch of images
+
+        Output:
+            --Maps: dictionary of maps
+
+        '''
         self.WaitLoadBatch()
         Maps = self.Maps
-        #    self.before2 = self.before.copy()
-        #    self.after2 = self.after.copy()
+
         self.StartLoadBatch()
         return Maps
 
     # Read single image annotation and data with no augmentation for testing
     def LoadSingle(self, MaxSize=1000):
-        # print("LoadSingle")
-        #  pick the next image in the list
+
+        '''
+        This function reads a single image annotation and data with no augmentation for testing
+
+        Input:
+            --MaxSize: maximum size of image
+
+        Output:
+            --Maps: dictionary of maps
+
+        '''
         if self.itr >= len(self.AnnList):
             self.itr = 0
             self.epoch += 1
@@ -303,7 +371,6 @@ class Reader:
         Ann = self.AnnList[self.itr]
         self.itr += 1
         print(Ann["VesselWithContentRGB"])
-        # -------------Read data-----------------------------
         Maps = {}  # Annotaion maps
 
         with open(Ann["CameraParameters"]) as f:
@@ -379,11 +446,9 @@ class Reader:
         for nm in Maps:
             Maps[nm] = np.expand_dims(Maps[nm], axis=0)
         # Return
-        # print("Loaded", Ann["VesselMask"])
         return Maps
 
 
-#########################################################################################################################
 
 MapsAndDepths_LabPics = {
     "VesselMask": 1,  # Depth/Layers
@@ -393,8 +458,17 @@ MapsAndDepths_LabPics = {
 }
 
 
-#########################################################################################################################
 class LabPics_Reader:
+    """
+    This class is used to read the data from the LabPics dataset
+
+    MainDir: The main directory of the dataset
+    MaxBatchSize: The maximum number of images in the batch
+    MinSize: The minimum size of the image in pixels
+    MaxSize: The maximum size of the image in pixels
+    MaxPixels: The maximum number of pixels in the batch
+    """
+
     # Initiate reader and define the main parameters for the data reader
     def __init__(
         self,
@@ -410,7 +484,6 @@ class LabPics_Reader:
         self.MaxPixels = MaxPixels  # Max number of pixel in all the batch (reduce to solve  out of memory issues)
         self.epoch = 0  # Training Epoch
         self.itr = 0  # Training iteratation
-        # ----------------------------------------Create list of annotations arranged by class--------------------------------------------------------------------------------------------------------------
         self.AnnList = []  # Image/annotation list
         self.AnnByCat = {}  # Image/annotation list by class
 
@@ -418,7 +491,6 @@ class LabPics_Reader:
         for AnnDir in os.listdir(MainDir):  # List of all example
             self.AnnList.append(MainDir + "/" + AnnDir)
 
-        # ------------------------------------------------------------------------------------------------------------
 
         print(
             "Done making file list.\nTotal number of samples = "
@@ -429,16 +501,25 @@ class LabPics_Reader:
         self.AnnData = False
 
     def GetNumSamples(self):
+        '''
+        This function returns the number of samples in the dataset
+        '''
+
         return len(self.AnnList)
 
-    #############################################################################################################################
-
-    # Crop and resize image and mask and ROI to feet batch size
-
-    #############################################################################################################################
-    # Crop and resize image and maps and ROI to feet batch size
     def CropResize(self, Maps, Hb, Wb):
-        # ========================resize image if it too small to the batch size==================================================================================
+        '''
+        This function crops and resizes the image and maps and ROI to fit the batch size
+
+        Input:
+            --Maps: dictionary of maps
+            --Hb: height of batch
+            --Wb: width of batch
+
+        Output:
+            --Maps: dictionary of maps
+
+        '''
         h, w = Maps["ROI"].shape
         Bs = np.min((h / Hb, w / Wb))
         if (
@@ -456,14 +537,13 @@ class LabPics_Reader:
                         Maps[nm] = cv2.resize(
                             Maps[nm], dsize=(w, h), interpolation=cv2.INTER_NEAREST
                         )
-        # =======================Crop image to fit batch size===================================================================================
 
         if w > Wb:
-            X0 = np.random.randint(w - Wb)  #
+            X0 = np.random.randint(w - Wb) 
         else:
             X0 = 0
         if h > Hb:
-            Y0 = np.random.randint(h - Hb)  # int((h - Hb)/2)#
+            Y0 = np.random.randint(h - Hb)  
         else:
             Y0 = 0
 
@@ -471,7 +551,6 @@ class LabPics_Reader:
             if hasattr(Maps[nm], "shape"):  # check if array
                 Maps[nm] = Maps[nm][Y0 : Y0 + Hb, X0 : X0 + Wb]
 
-        # -------------------If still not batch size resize again--------------------------------------------
         for nm in Maps:
             if hasattr(Maps[nm], "shape"):  # check if array
                 if not (Maps[nm].shape[0] == Hb and Maps[nm].shape[1] == Wb):
@@ -479,12 +558,26 @@ class LabPics_Reader:
                         Maps[nm], dsize=(Wb, Hb), interpolation=cv2.INTER_NEAREST
                     )
 
-        # -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         return Maps
 
-    ######################################################Augmented Image##################################################################################################################################
-
     def Augment(self, Maps):
+        '''
+        This function augments the image and mask
+
+        It applies the following augmentations for 50% of the images:
+            --Flip left right
+            --Gaussian blur
+            --Dark light
+            --GreyScale
+
+        Input:
+            --Maps: dictionary of maps
+
+        Output:
+            --Maps: dictionary of augmented maps
+
+        '''
+
         if np.random.rand() < 0.5:  # flip left right
             for nm in Maps:
                 if hasattr(Maps[nm], "shape"):
@@ -508,27 +601,29 @@ class LabPics_Reader:
 
         return Maps
 
-    ##################################################################################################################################################################
-
-    # Read single image and annotation into batch
-
     def LoadNext(self, pos, Hb, Wb):
-        # -----------------------------------select image-----------------------------------------------------------------------------------------------------
+        '''
+        This function reads the next image annotation and data
+
+        Input:
+            --pos: position in batch
+            --Hb: height of batch
+            --Wb: width of batch
+
+        Output:
+            --Maps: dictionary of maps
+
+        '''
         AnnInd = np.random.randint(len(self.AnnList))
-        # #AnnInd=1220
-        # print(AnnInd)
+
         InPath = self.AnnList[AnnInd]
-        # print(InPath)
-        # print("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{")
-        #  data = json.load(open(InPath + '/Data.json', 'r'))
-        # print(Ann)
+
         Img = cv2.imread(InPath + "/Image.jpg")  # Load Image
         if Img.ndim == 2:  # If grayscale turn to rgb
             Img = np.expand_dims(Img, 3)
             Img = np.concatenate([Img, Img, Img], axis=2)
         Img = Img[:, :, 0:3]  # Get first 3 channels in case there are more
 
-        # -----------------------------Read All segmentation mask if exists else set to zero----------------------------------------------------------------------------------------
         SemanticDir = InPath + r"/SemanticMaps/FullImage/"
 
         VesselMask = np.zeros(Img.shape)
@@ -545,7 +640,6 @@ class LabPics_Reader:
             PartsMask = cv2.imread(SemanticDir + "//PartInsideVessel.png")
         if os.path.exists(SemanticDir + "//MaterialScattered.png"):
             MaterialScattered = cv2.imread(SemanticDir + "//MaterialScattered.png")
-            # print("Reading material scattered")
         if os.path.exists(InPath + "//Ignore.png"):
             Ignore = cv2.imread(InPath + "//Ignore.png", 0)
 
@@ -561,22 +655,20 @@ class LabPics_Reader:
             "VesselMask"
         ]
 
-        # -----------------------------------Augment Crop and resize-----------------------------------------------------------------------------------------------------
-        #  self.before = Maps['VesselWithContentRGB'].copy()
         Maps = self.Augment(Msk)
         if Hb != -1:
             Maps = self.CropResize(Maps, Hb, Wb)
 
-        #   self.after=np.hstack([cv2.resize(self.before,(Wb,Hb)),Maps['VesselWithContentRGB'].copy()])
-        # ----------------------Generate forward and background segment mask-----------------------------------------------------------------------------------------------------------
         for nm in Maps:
             if nm in self.Maps:
                 self.Maps[nm][pos] = Maps[nm]
 
-    ############################################################################################################################################################
-    # Start load batch of images (multi  thread the reading will occur in background and will will be ready once waitLoad batch as run
     def StartLoadBatch(self):
-        # =====================Initiate batch=============================================================================================
+        '''
+        This function starts loading the next batch of images
+            
+        '''
+        
         while True:
             Hb = np.random.randint(
                 low=self.MinSize, high=self.MaxSize
@@ -589,7 +681,6 @@ class LabPics_Reader:
         BatchSize = np.int(
             np.min((np.floor(self.MaxPixels / (Hb * Wb)), self.MaxBatchSize))
         )
-        # ===================Create empty batch ===========================================================
         self.Maps = {}
         for nm in MapsAndDepths_LabPics:  # Create enoty
             if MapsAndDepths_LabPics[nm] > 1:
@@ -598,7 +689,6 @@ class LabPics_Reader:
                 )
             else:
                 self.Maps[nm] = np.zeros([BatchSize, Hb, Wb], dtype=np.float32)
-        # ====================Start reading data multithreaded===================================================
         self.thread_list = []
         for pos in range(BatchSize):
             th = threading.Thread(
@@ -607,19 +697,23 @@ class LabPics_Reader:
             self.thread_list.append(th)
             th.start()
 
-    ###########################################################################################################
-    # Wait until the data batch loading started at StartLoadBatch is finished
     def WaitLoadBatch(self):
+        '''
+        This function waits until the data batch loading started at StartLoadBatch is finished
+            
+        '''
         for th in self.thread_list:
             th.join()
 
-    ########################################################################################################################################################################################
     def LoadBatch(self):
-        # Load batch for training (muti threaded  run in parallel with the training proccess)
-        # return previously  loaded batch and start loading new batch
+        '''
+        This function loads the next batch of images
+
+        Output:
+            --Maps: dictionary of maps
+
+        '''
         self.WaitLoadBatch()
         Maps = self.Maps
-        #    self.before2 = self.before.copy()
-        #    self.after2 = self.after.copy()
         self.StartLoadBatch()
         return Maps

@@ -26,7 +26,6 @@ def showcv2(Im, txt=""):
     cv2.imshow(txt, ResizeToScreen(Im.astype(np.uint8)))
     ch = cv2.waitKey()
     cv2.destroyAllWindows()
-    # cv2.destroyAllWindows()
     return ch
 
 

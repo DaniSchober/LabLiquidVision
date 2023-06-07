@@ -3,6 +3,18 @@
 
 import torch
 
+'''
+This file contains the evaluation metrics for the depth prediction model
+
+The evaluation function takes in the following arguments:
+    --pred: predicted depth map
+    --target: ground truth depth map
+
+Output:
+    Dictionary of metrics
+    
+'''
+
 
 def eval_depth(pred, target):
     """

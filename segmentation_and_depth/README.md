@@ -1,4 +1,4 @@
-liquid depth estimation
+Segmentaion and Depth Estimation of Liquids and Transparent Vessels
 ==============================
 
 Liquid Depth Estimation for use in Laboratories
@@ -7,44 +7,36 @@ Project Organization
 ------------
 
     ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
     ├── README.md          <- The top-level README for developers using this project.
     ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
+    │   └── interim        <- 8 Transproteus folders and one LabPics folder.
     │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+    ├── models             <- Location where trained models are saved. Contains final model "segmentation_depth_model.torch"
     │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
+    ├── notebooks          <- Notebooks for testing of segmentation on a subset of self generated dataset, and plotting the loss.
+    │    
     ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
     │   └── figures        <- Generated graphics and figures to be used in reporting
     │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
+    ├── requirements.txt   <- The requirements file for reproducing the analysis environment.
     │
     ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   │
-    │   ├── data           <- Scripts to download or generate data
+    │   ├── data           <- Scripts to generate data and create the readers for the training and testing data
+    │   │   ├── load_data.py    
     │   │   └── make_dataset.py
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
     │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
+    │   │   │                 predictions as well as evaluating it
+    │   │   ├── evaluate_model.py
+    │   │   ├── loss_functions.py
+    │   │   ├── model.py
     │   │   ├── predict_model.py
     │   │   └── train_model.py
+    │   │    
+    │   ├── utils         <- contains utils for model evaluation
     │   │
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py

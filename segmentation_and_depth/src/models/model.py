@@ -5,6 +5,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 
+"""
+This file contains the model architecture for the segmentation and depth prediction model
+
+"""
+
 
 class Net(nn.Module):
     def __init__(
@@ -67,7 +72,6 @@ class Net(nn.Module):
             )
         )
 
-        # Skip connection squeeze applied to the (concat of upsample+skip connecection layers)
         self.SqueezeUpsample = nn.ModuleList()
         self.SqueezeUpsample.append(
             nn.Sequential(
@@ -95,12 +99,6 @@ class Net(nn.Module):
             )
         )
 
-        # Final prediction Depth maps
-        #######################
-        #######################
-        # Dani: change this to depth prediction like in github for Sun3D
-        #######################
-        #######################
         self.OutLayersList = nn.ModuleList()
         self.OutLayersDicDepth = {}
         self.OutLayersDicMask = {}
@@ -127,6 +125,24 @@ class Net(nn.Module):
         PredictMasks=True,
         FreezeBatchNorm_EvalON=False,
     ):
+        
+        '''
+        This function runs the forward pass of the model
+
+        Input:
+            Images: [B, 3, H, W] RGB images
+            UseGPU: True or False (use GPU)
+            TrainMode: True or False (train or inference mode)
+            PredictDepth: True or False (predict depth maps)
+            PredictMasks: True or False (predict segmentation masks)
+            FreezeBatchNorm_EvalON: True or False (freeze batch norm during evaluation)
+
+        Output:
+            OutDepth: dictionary of predicted depth maps
+            OutProbMask: dictionary of predicted segmentation masks probabilities
+            OutMask: dictionary of predicted segmentation masks
+            
+        '''
         # Convert image to pytorch and normalize values
         RGBMean = [123.68, 116.779, 103.939]
         RGBStd = [65, 65, 65]
@@ -164,7 +180,6 @@ class Net(nn.Module):
         x = InpImages
 
         SkipConFeatures = []  # Store features map of layers used for skip connection
-        # ---------------Run Encoder-----------------------------------------------------------------------------------------------------
         x = self.Encoder.conv1(x)
         x = self.Encoder.bn1(x)
         x = self.Encoder.relu(x)
@@ -196,11 +211,6 @@ class Net(nn.Module):
             )  # Apply skip connection and concat with upsample
             x = self.SqueezeUpsample[i](x)  # Squeeze
 
-        # Final Depth map prediction
-        #####################
-        # Dani: Changed this to prediction of depth maps (see: Github Sun3D)
-        #####################
-        #####################
         self.OutDepth = {}
         if PredictDepth:
             for nm in self.OutLayersDicDepth:
