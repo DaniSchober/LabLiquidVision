@@ -14,23 +14,37 @@ The TransProteus dataset can be downloaded from [here](https://e.pcloud.link/pub
 
 ## Usage
 
-The main function takes in the following arguments:
-    --mode: train or predict or evaluate
-    --cuda: True or False
-    --model_path: path to trained model
-    --batch_size: batch size for training
-    --epochs: number of epochs for training
-    --load_model: True or False (loading of pretrained model)
-    --use_labpics: True or False (use lab pictures for training)
-    --image_path: path to image to predict
-    --folder_path: path to folder for evaluation
+The main function takes the following arguments:
+
+- `--mode`: Specify the mode (train, predict, or evaluate).
+- `--cuda`: Set to `True` or `False` to enable or disable CUDA.
+- `--model_path`: Path to the trained model.
+- `--batch_size`: Batch size for training.
+- `--epochs`: Number of epochs for training.
+- `--load_model`: Set to `True` or `False` to load a pretrained model.
+- `--use_labpics`: Set to `True` or `False` to use lab pictures for training.
+- `--image_path`: Path to the image to predict.
+- `--folder_path`: Path to the folder for evaluation.
  
  ### Training a model
+ 
+ To train a model, get the data as explained above first. Change the paths to the training data folders in `src/data/make_dataset.py` for your folder structure.
  
  Example usage:
  ```
  python main.py --mode train --cuda True --batch_size 6 --epochs 75 --load_model False --use_labpics True
  ```
+ 
+ The saved model gets saved in `models`, the parameters of the training in `logs`.
+ 
+ ### Evaluating a model
+ Example usage:
+ ```
+ python main.py --mode evaluate --cuda True --model_path models/segmentation_depth_model.torch --folder_path data/interim/TranProteus1/Testing/LiquidContent
+ ```
+ 
+ The results of the testing get saved in `output/results.txt`.
+ 
  
 
 
