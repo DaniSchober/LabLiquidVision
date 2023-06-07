@@ -12,6 +12,29 @@ Please refer to the installation paragrah of the parent repository to create the
 
 The TransProteus dataset can be downloaded from [here](https://e.pcloud.link/publink/show?code=kZfx55Zx1GOrl4aUwXDrifAHUPSt7QUAIfV). To train the model, save the data in `data/interim`, or change the paths to the training folders in `src/data/make_dataset.py`. The LabPics data can be downloaded [here](https://zenodo.org/record/4736111). To get only the folders with liquid content and the required LabPics data, run `dvc pull` in this subfolder. 
 
+## Usage
+
+The main function takes in the following arguments:
+    --mode: train or predict or evaluate
+    --cuda: True or False
+    --model_path: path to trained model
+    --batch_size: batch size for training
+    --epochs: number of epochs for training
+    --load_model: True or False (loading of pretrained model)
+    --use_labpics: True or False (use lab pictures for training)
+    --image_path: path to image to predict
+    --folder_path: path to folder for evaluation
+ 
+ ### Training a model
+ 
+ Example usage:
+ ```
+ python main.py --mode train --cuda True --batch_size 6 --epochs 75 --load_model False --use_labpics True
+ ```
+ 
+
+
+
 Project Organization
 ------------
 
