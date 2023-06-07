@@ -187,7 +187,7 @@ def predict(image_path, predict_volume=False, save_segmentation=False, save_dept
         print(os.getcwd())
 
         model_path_volume = (
-            r"../volume_estimation/models/volume_model.pth"  # Trained model path
+            r"../volume_estimation/models/volume_model_no_input_vol_good.pth"  # Trained model path
         )
         model.load_state_dict(torch.load(model_path_volume))
 
@@ -196,6 +196,10 @@ def predict(image_path, predict_volume=False, save_segmentation=False, save_dept
             outputs = model(vessel_depth, liquid_depth)
 
         print(f"Predicted liquid volume: {outputs[0].item():.2f} mL")
+
+        # save predicted volume to file
+        with open(image_path.replace(".png", "volume.txt"), "w") as f:
+            print(f"Predicted liquid volume: {outputs[0].item():.2f} mL", file=f)
 
         """
         Visualize results    
