@@ -52,20 +52,14 @@ The main function takes the following arguments:
  ```
  
  The results of the prediction get saved in a subfolder in `example/results`. The output contains 8 images:
- - `Original Image.png`: Specify the mode (train, predict, or evaluate).
- - `ContentMaskClean.png`: Set to `True` or `False` to enable or disable CUDA.
- - `--model_path`: Path to the trained model.
- - `--batch_size`: Batch size for training.
- - `--epochs`: Number of epochs for training.
- - `--load_model`: Set to `True` or `False` to load a pretrained model.
- - `--use_labpics`: Set to `True` or `False` to use lab pictures for training.
- - `--image_path`: Path to the image to predict.
- - `--folder_path`: Path to the folder for evaluation.
- 
- 
- 
- 
-
+ - `Original Image.png`: Input image.
+ - `ContentMaskClean.png`: Segmentation mask of the liquid.
+ - `VesselMask.png`: Segmentation mask of the transparent vessel.
+ - `VesselOpeningMask.png`: Segmentation mask of the opening of the vessel.
+ - `ContentDepth.png`: Normalized depth map of the liquid content.
+ - `EmptyVessel_Depth`: Normalized depth map of the transparent vessel.
+ - `VesselOpening_Depth.png`: Normalized depth map of the opening of the vessel.
+ - `Summary.png`: Summary picture containing the input image, and the predicted segmentation and depth maps.
 
 
 Project Organization
