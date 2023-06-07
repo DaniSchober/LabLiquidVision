@@ -45,6 +45,25 @@ The main function takes the following arguments:
  
  The results of the testing get saved in `output/results.txt`.
  
+ ### Predict segmentation and depth maps on an image using a trained model
+ Example usage:
+ ```
+ python main.py --mode predict --cuda True --model_path models/segmentation_depth_model.torch --image_path example/RGBImage.png
+ ```
+ 
+ The results of the prediction get saved in a subfolder in `example/results`. The output contains 8 images:
+ - `Original Image`: Specify the mode (train, predict, or evaluate).
+- `--cuda`: Set to `True` or `False` to enable or disable CUDA.
+- `--model_path`: Path to the trained model.
+- `--batch_size`: Batch size for training.
+- `--epochs`: Number of epochs for training.
+- `--load_model`: Set to `True` or `False` to load a pretrained model.
+- `--use_labpics`: Set to `True` or `False` to use lab pictures for training.
+- `--image_path`: Path to the image to predict.
+- `--folder_path`: Path to the folder for evaluation.
+ 
+ 
+ 
  
 
 
