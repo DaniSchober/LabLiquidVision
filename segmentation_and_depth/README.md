@@ -11,12 +11,16 @@ Project Organization
     ├── data
     │   └── interim        <- 8 Transproteus folders and one LabPics folder.
     │
+    ├── example            <- Location for example pictures used in prediction.
+    │   └── results        <- Contains subfolders for the results of the prediction of images in example. 
+    │
+    ├── logs               <- Stored training parameters.
+    │
     ├── models             <- Location where trained models are saved. Contains final model "segmentation_depth_model.torch"
     │
     ├── notebooks          <- Notebooks for testing of segmentation on a subset of self generated dataset, and plotting the loss.
     │    
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
+    ├── output             <- Results of model evaluation.
     │
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment.
     │
@@ -36,10 +40,12 @@ Project Organization
     │   │   ├── predict_model.py
     │   │   └── train_model.py
     │   │    
-    │   ├── utils         <- contains utils for model evaluation
+    │   ├── utils          <- contains utils for model evaluation
     │   │
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py
+    │
+    ├── main.py            <- Main file to train and evaluate models, and run inferences on images.
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
