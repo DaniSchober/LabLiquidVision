@@ -4,6 +4,14 @@ The aim is to create **segmentation and depth maps of both transparent vessels a
 
 The approach is based on the idea and data provided by Eppel et al. in [2020](https://github.com/sagieppel/LabPics-medical-Computer-vision-for-liquid-samples-in-hospitals-and-medical-lab-) and [2022](https://github.com/sagieppel/Predicting-3D-shape-of-liquid-and-objects-inside-transparent-vessels-as-XYZ-map-from-a-single-image). However, the model trained [here](https://github.com/sagieppel/Predicting-3D-shape-of-liquid-and-objects-inside-transparent-vessels-as-XYZ-map-from-a-single-image) tries to predict the XYZ map directly from an RGB input image. As suggested by the authors, an approach to predicting a depth map and then transforming it into XYZ coordinates using the known camera parameters is preferable over predicting the 3D model as an XYZ map. In autonomous systems in research laboratories, the camera does not change, and the camera parameters can be assumed to be known. Hence, the model from [Eppel et al.](https://github.com/sagieppel/Predicting-3D-shape-of-liquid-and-objects-inside-transparent-vessels-as-XYZ-map-from-a-single-image) is modified to predict the depth maps instead of the XYZ maps. Also, the provided model in this work is only trained specifically on liquid content rather than on object and liquid content. 
 
+## Installation
+
+Please refer to the installation paragrah of the parent repository to create the required conda environment.
+
+## Dataset 
+
+The TransProteus dataset can be downloaded from [here](https://e.pcloud.link/publink/show?code=kZfx55Zx1GOrl4aUwXDrifAHUPSt7QUAIfV). To train the model, save the data in `data/interim`, or change the paths to the training folders in `src/data/make_dataset.py`. The LabPics data can be downloaded [here](https://zenodo.org/record/4736111). To get only the folders with liquid content and the required LabPics data, run `dvc pull` in this subfolder. 
+
 Project Organization
 ------------
 
