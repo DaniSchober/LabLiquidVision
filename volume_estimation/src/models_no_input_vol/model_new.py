@@ -63,12 +63,14 @@ class VolumeNet(nn.Module):
         return x
 
 """
-"""
+
 
 # Define the neural network architecture (good results with this one)
 class VolumeNet(nn.Module):
-    def __init__(self):
+    def __init__(self, dropout_rate):
         super(VolumeNet, self).__init__()
+
+        self.dropout_rate = dropout_rate
 
         self.conv1 = nn.Conv2d(in_channels=2, out_channels=32, kernel_size=5, padding=2)
         self.bn1 = nn.BatchNorm2d(32)
@@ -102,7 +104,7 @@ class VolumeNet(nn.Module):
         x = F.relu(self.bn1(self.conv1(x)))
         #x = F.batch_norm(x, momentum=0.1, eps=1e-5)
         x = F.max_pool2d(x, kernel_size=2)
-        x = F.dropout2d(x, p=0.2)
+        x = F.dropout2d(x, p=self.dropout_rate)
         x = F.relu(self.bn2(self.conv2(x)))
         #x = F.batch_norm(x)
         x = F.max_pool2d(x, kernel_size=2)
@@ -121,9 +123,9 @@ class VolumeNet(nn.Module):
         x = self.fc3(x)
         return x
 
+
+
 """
-
-
 # Define the neural network architecture (good results with this one)
 class VolumeNet(nn.Module):
     def __init__(self):
@@ -196,3 +198,6 @@ class VolumeNet(nn.Module):
         x = F.relu(self.fc3(x))
         x = self.fc4(x)
         return x
+
+
+"""

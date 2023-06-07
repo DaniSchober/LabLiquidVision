@@ -26,11 +26,11 @@ def capture_image():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Create a directory for saving the captured images
-    save_dir = "captured_images"
+    save_dir = "captured_images/" + str(timestamp) + "/"
     os.makedirs(save_dir, exist_ok=True)
 
     # Save the color image
-    image_path = os.path.join(save_dir, f"image_{timestamp}.png")
+    image_path = os.path.join(save_dir, f"image.png")
     cv2.imwrite(image_path, color_image)
     print("Image saved")
 

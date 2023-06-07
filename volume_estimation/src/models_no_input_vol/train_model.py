@@ -10,7 +10,9 @@ import statistics
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models_no_input_vol.validate_model import validate
-
+import math
+#import wandb
+#wandb.init(project="volume-estimation")
 
 device = (
     torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -30,6 +32,9 @@ def train(
     train_size,
     valid_size,
 ):
+    #wandb.watch(model, criterion, log="all", log_freq=10)
+    #log_interval = 10
+    
     model.train()
 
     # Wrap train_loader with tqdm for a progress bar
@@ -89,6 +94,9 @@ def train(
         loss.backward()
         optimizer.step()
 
+        #if i % log_interval == 0:
+        #    wandb.log({"loss": loss})
+
         # Update progress bar
         progress_bar.set_postfix(
             {"loss": loss_epoch / (i + 1), "RMSE": rmse_epoch / (i + 1)}
@@ -111,57 +119,90 @@ def train(
 
 data_dir = "data/processed"
 batch_size_train = 16
-num_epochs = 300
+num_epochs = 200
 learning_rate = 0.0001
 
-# Load the dataset
-dataset = VesselCaptureDataset(data_dir)
-print(f"Loaded {len(dataset)} samples.")
+for i in range(150):
+    print("Starting training run ", i+1, " of 100")
 
-# Split the dataset into training and test data
-train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
+    # random learning rate between 0.0001 and 0.001
+    learning_rate = np.random.uniform(0.0001, 0.001)
+    print("Learning rate: ", learning_rate)
 
-train_data, valid_data = train_test_split(train_data, test_size=0.1, random_state=42)
+    # random batch size of 2, 4, 8, 16, 32
+    batch_size_train = int(np.random.choice([2, 4, 8, 16, 32]))
+    print("Batch size: ", batch_size_train)
 
-print(f"Training on {len(train_data)} samples.")
-# print(f"Validating on {len(valid_data)} samples.")
-print(f"Testing on {len(test_data)} samples.")
-
-# Set up the data loader and training parameters for the training data
-train_loader = DataLoader(train_data, batch_size=batch_size_train, shuffle=True)
-
-# do data augmentation on training data
+    # random dropout rate between 0.1 and 0.5
 
 
-train_size = len(train_data)
+    dropout_rate = np.random.uniform(0.1, 0.5) 
+    print("Dropout rate: ", dropout_rate)
 
-# Set up the data loader and training parameters for the validation data
-valid_loader = DataLoader(valid_data, batch_size=1, shuffle=True)
-valid_size = len(valid_data)
 
-model = VolumeNet()
-model = model.to(device)  # Send net to GPU if available
-criterion = nn.MSELoss().to(device)
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-# Train the model
-losses_total_train = []
-losses_total_valid = []
-for epoch in range(num_epochs):
-    epoch_str = "Epoch " + str(epoch + 1)
-    losses_train, losses_valid = train(
-        model,
-        criterion,
-        optimizer,
-        train_loader,
-        valid_loader,
-        epoch_str,
-        train_size,
-        valid_size,
-    )
-    losses_total_train.append(losses_train)
-    losses_total_valid.append(losses_valid)
+    # Load the dataset
+    dataset = VesselCaptureDataset(data_dir)
+    print(f"Loaded {len(dataset)} samples.")
 
+    # Split the dataset into training and test data
+    train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
+
+    train_data, valid_data = train_test_split(train_data, test_size=0.1, random_state=42)
+
+    print(f"Training on {len(train_data)} samples.")
+    # print(f"Validating on {len(valid_data)} samples.")
+    print(f"Testing on {len(test_data)} samples.")
+
+    # Set up the data loader and training parameters for the training data
+    train_loader = DataLoader(train_data, batch_size=batch_size_train, shuffle=True)
+
+    # do data augmentation on training data
+
+
+    train_size = len(train_data)
+
+    # Set up the data loader and training parameters for the validation data
+    valid_loader = DataLoader(valid_data, batch_size=1, shuffle=True)
+    valid_size = len(valid_data)
+
+    model = VolumeNet(dropout_rate)
+    model = model.to(device)  # Send net to GPU if available
+    criterion = nn.MSELoss().to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+    # Train the model
+    losses_total_train = []
+    losses_total_valid = []
+    for epoch in range(num_epochs):
+        epoch_str = "Epoch " + str(epoch + 1)
+        losses_train, losses_valid = train(
+            model,
+            criterion,
+            optimizer,
+            train_loader,
+            valid_loader,
+            epoch_str,
+            train_size,
+            valid_size,
+        )
+        losses_total_train.append(losses_train)
+        losses_total_valid.append(losses_valid)
+
+    loss_valid, rmse_valid = validate(model, valid_loader, valid_size)
+    # save final loss and rmse for this training run to txt file
+    with open("results_no_input_vol.txt", "a") as f:
+        f.write("Training run " + str(i+1) + " of 100\n")
+        f.write("Learning rate: " + str(learning_rate) + "\n")
+        f.write("Batch size: " + str(batch_size_train) + "\n")
+        f.write("Dropout rate: " + str(dropout_rate) + "\n")
+        # write averag loss of the last 5 epochs
+        f.write("Average train RMSE of last 5 epochs: " + str(math.sqrt(statistics.mean(losses_total_train[-5:]))) + "\n")
+        f.write("Average valid RMSE of last 5 epochs: " + str(math.sqrt(statistics.mean(losses_total_valid[-5:]))) + "\n")
+        f.write("Final valid loss: " + str(loss_valid) + "\n")
+        f.write("Final valid RMSE: " + str(rmse_valid) + "\n\n")
+
+'''
 print("Creating figure")
 plt.figure(figsize=(10, 5))
 # print(losses_total)
@@ -175,5 +216,8 @@ plt.yscale("log")
 plt.show()
 plt.savefig(time.strftime("%d%m%Y-%H%M") + ".png")
 
+
 # Save the trained model
 torch.save(model.state_dict(), "models/volume_model.pth")
+
+'''

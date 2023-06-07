@@ -90,7 +90,7 @@ def main():
     parser.add_argument(
         "--image_path",
         type=str,
-        default="example/RGBImage10.png",
+        default="example/RGBImage.png",
         help="Path to image",
     )
 

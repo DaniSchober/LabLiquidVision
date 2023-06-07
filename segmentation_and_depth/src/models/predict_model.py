@@ -1,13 +1,26 @@
 # Run inference on image with trained model
 
 import numpy as np
-import src.models.model as NET_FCN
 import torch
-import src.visualization.visualize as vis
 import cv2
 import matplotlib.pyplot as plt
 import time
 import os
+import sys
+import warnings
+
+# add parent folder to sys.path
+sys.path.insert(0, os.path.abspath(".."))
+
+# ignore DeprecationWarning messages
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+# ignore RuntimeWarning messages
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+
+import segmentation_and_depth.src.models.model as NET_FCN
+import segmentation_and_depth.src.visualization.visualize as vis
+
 
 """
 This file contains the function to predict the segmentation and depth maps of an input RGB image
