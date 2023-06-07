@@ -61,6 +61,7 @@ The main function takes the following arguments:
  - `VesselOpening_Depth.png`: Normalized depth map of the opening of the vessel.
  - `Summary.png`: Summary picture containing the input image, and the predicted segmentation and depth maps.
 
+![Summary](https://github.com/DaniSchober/thesis/assets/75242605/bba07710-c954-4ed0-9e41-69d154d6517a)
 
 Project Organization
 ------------
