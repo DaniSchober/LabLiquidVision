@@ -93,7 +93,7 @@ def evaluate(
 
     i = 0
 
-    while Readers.epoch == 0 and Readers.itr < 150:  # Test 1000 examples or one epoch
+    while Readers.epoch == 0 and Readers.itr < 500:  # Test 1000 examples or one epoch
         GT = Readers.LoadSingle()  # Load example
 
         print(
@@ -185,11 +185,12 @@ def evaluate(
                     ROI > 0.9
                 ] = 1  # Resize have led to some intirmidiate values ignore them
 
-                # calculate metrics
-                dic = metrics.eval_depth(Pdepth, Gdepth)
+                
                 # print(dic)
 
-                if Pdepth is not None:
+                if Pdepth[Pdepth != 0] is not None and Gdepth[Gdepth != 0] is not None and  Pdepth[Pdepth != 0].shape ==  Gdepth[Gdepth != 0].shape:
+                    # calculate metrics
+                    dic = metrics.eval_depth(Pdepth, Gdepth)
                     # add results to dictionary
                     for et in EvalTypes:
                         StatDepth[nm][et] += dic[et]
