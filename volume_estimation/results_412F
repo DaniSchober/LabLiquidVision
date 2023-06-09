@@ -1,0 +1,102 @@
+(3) 2 segmentation in and liquid volume out: 
+
+RMSE training set: 32.9
+RMSE valid set: 57.06
+Testing:
+RMSE Cell_Flask_160mL : 91.53385444448799
+Average actual volume Cell_Flask_160mL :  126.55434782608695
+RMSE Cell_Flask_400mL : 66.0189530322625
+Average actual volume Cell_Flask_400mL :  279.84892086330933
+RMSE Duran_100mL : 52.71491320671237
+Average actual volume Duran_100mL :  58.91428571428571
+RMSE Duran_250mL : 43.60390259689902
+Average actual volume Duran_250mL :  154.10227272727272
+RMSE Duran_500mL : 55.569025072735585
+Average actual volume Duran_500mL :  294.8692307692308
+RMSE Gibco_125mL : 28.35117065466592
+Average actual volume Gibco_125mL :  84.72727272727273
+RMSE Gibco_500mL : 70.60522988567062
+Average actual volume Gibco_500mL :  317.0894308943089
+RMSE Pyrex_100mL : 23.67799068009384
+Average actual volume Pyrex_100mL :  57.794117647058826
+RMSE StorageBottle_250mL : 43.293042287109515
+Average actual volume StorageBottle_250mL :  187.0
+RMSE StorageBottle_500mL : 37.78801961082212
+Average actual volume StorageBottle_500mL :  261.6309523809524
+RMSE Tube_15mL : 7.759425942827758
+Average actual volume Tube_15mL :  8.607142857142858
+RMSE Tube_50mL : 19.074157713822082
+Average actual volume Tube_50mL :  32.523809523809526
+RMSE liquid:  53.913884203518364
+Average actual volume test set: 194 mL
+
+(4) 2 normalized depth maps * median of real depth map in segmented part in and liquid vol out
+
+RMSE for epoch Epoch 150 on training data: 13.84
+Loss for epoch Epoch 150 on validation data: 1859.55
+RMSE for epoch Epoch 150 on validation data: 43.12
+New best RMSE:  42.497674121312805
+
+RMSE Cell_Flask_160mL : 86.30390019227191
+Average actual volume Cell_Flask_160mL :  126.55434782608695
+RMSE Cell_Flask_400mL : 64.15099846973796
+Average actual volume Cell_Flask_400mL :  280.6521739130435
+RMSE Duran_100mL : 61.322074711213375
+Average actual volume Duran_100mL :  58.91428571428571
+RMSE Duran_250mL : 31.51522263685154
+Average actual volume Duran_250mL :  154.10227272727272
+RMSE Duran_500mL : 63.06548980148417
+Average actual volume Duran_500mL :  294.8692307692308
+RMSE Gibco_125mL : 22.894150374322738
+Average actual volume Gibco_125mL :  84.72727272727273
+RMSE Gibco_500mL : 59.28106826983591
+Average actual volume Gibco_500mL :  317.0894308943089
+RMSE Pyrex_100mL : 23.62030827474833
+Average actual volume Pyrex_100mL :  57.794117647058826
+RMSE StorageBottle_250mL : 38.2573959673399
+Average actual volume StorageBottle_250mL :  187.0
+RMSE StorageBottle_500mL : 29.795748956461363
+Average actual volume StorageBottle_500mL :  261.6309523809524
+RMSE Tube_15mL : 14.554306947048817
+Average actual volume Tube_15mL :  8.814814814814815
+RMSE Tube_50mL : 17.127648957861712
+Average actual volume Tube_50mL :  32.523809523809526
+RMSE liquid:  51.26726726823192
+
+(2) Depth vessel and vessel volume in 
+
+RMSE for epoch Epoch 150 on training data: 5.98
+Loss for epoch Epoch 150 on validation data: 783.70
+RMSE for epoch Epoch 150 on validation data: 27.99
+New best RMSE:  28.668435809103382
+
+RMSE Cell_Flask_160mL : 15.006724279096515
+Average actual volume Cell_Flask_160mL :  126.55434782608695
+RMSE Cell_Flask_400mL : 44.042620737631914
+Average actual volume Cell_Flask_400mL :  279.84892086330933
+RMSE Duran_100mL : 4.920474163627222
+Average actual volume Duran_100mL :  58.91428571428571
+RMSE Duran_250mL : 13.55873231168279
+Average actual volume Duran_250mL :  154.10227272727272
+RMSE Duran_500mL : 22.69251014529101
+Average actual volume Duran_500mL :  294.8692307692308
+RMSE Gibco_125mL : 11.246582005359276
+Average actual volume Gibco_125mL :  84.72727272727273
+RMSE Gibco_500mL : 34.69388956435135
+Average actual volume Gibco_500mL :  317.0894308943089
+RMSE Pyrex_100mL : 7.225706620547491
+Average actual volume Pyrex_100mL :  57.794117647058826
+RMSE StorageBottle_250mL : 10.012038573890846
+Average actual volume StorageBottle_250mL :  187.0
+RMSE StorageBottle_500mL : 16.589607952984295
+Average actual volume StorageBottle_500mL :  261.6309523809524
+RMSE Tube_15mL : 3.2275502856024216
+Average actual volume Tube_15mL :  8.607142857142858
+RMSE Tube_50mL : 3.8742957809182705
+Average actual volume Tube_50mL :  32.523809523809526
+RMSE liquid:  22.91201337482164
+
+ 
+
+
+

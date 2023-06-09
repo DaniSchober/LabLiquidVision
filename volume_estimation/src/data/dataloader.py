@@ -90,6 +90,37 @@ class VesselCaptureDataset(Dataset):
         segmentation_vessel = np.load(segmentation_vessel_path).astype(np.float32)
         depth_map = np.load(depth_map_path).astype(np.float32)
 
+        depth_map_vessel = depth_map * segmentation_vessel
+        depth_map_liquid = depth_map * segmentation_liquid
+        # get median of depth map of non-zero values
+        ground_truth_depth_vessel = np.median(depth_map_vessel[depth_map_vessel != 0])
+        ground_truth_depth_liquid = np.median(depth_map_liquid[depth_map_liquid != 0])
+
+        # normalize vessel depth map of non zero values
+        vessel_depth_normalized = vessel_depth.copy()
+        # Create a mask to identify the non-zero values
+        mask = vessel_depth != 0
+        # Calculate the mean and standard deviation of the non-zero values
+        mean = np.mean(vessel_depth[mask])
+        std = np.std(vessel_depth[mask])
+        # Normalize/standardize the non-zero values
+        vessel_depth_normalized[mask] = (vessel_depth[mask] - mean + 10) / std
+
+        # normalize liquid depth map of non zero values
+        liquid_depth_normalized = liquid_depth.copy()
+        # Create a mask to identify the non-zero values
+        mask = liquid_depth != 0
+        # Calculate the mean and standard deviation of the non-zero values
+        mean = np.mean(liquid_depth[mask])
+        std = np.std(liquid_depth[mask])
+        # Normalize/standardize the non-zero values
+        liquid_depth_normalized[mask] = (liquid_depth[mask] - mean + 10) / std
+
+        # scale the depth maps to the ground truth depth
+        vessel_depth_scaled = vessel_depth_normalized * ground_truth_depth_vessel
+        liquid_depth_scaled = liquid_depth_normalized * ground_truth_depth_liquid
+
+
         # vessel_depth_masked = depth_map * segmentation_vessel
         # ground_truth_depth = vessel_depth_masked[vessel_depth_masked != 0].mean()
 
@@ -163,6 +194,25 @@ class VesselCaptureDataset(Dataset):
             )
             segmentation_vessel = segmentation_vessel.squeeze(0).squeeze(0)
 
+            vessel_depth_scaled = torch.from_numpy(vessel_depth_scaled)
+            vessel_depth_scaled = F.interpolate(
+                vessel_depth_scaled.unsqueeze(0).unsqueeze(0),
+                size=(160, 214),
+                mode="bilinear",
+                align_corners=False,
+            )
+            vessel_depth_scaled = vessel_depth_scaled.squeeze(0).squeeze(0)
+
+            liquid_depth_scaled = torch.from_numpy(liquid_depth_scaled)
+            liquid_depth_scaled = F.interpolate(
+                liquid_depth_scaled.unsqueeze(0).unsqueeze(0),
+                size=(160, 214),
+                mode="bilinear",
+                align_corners=False,
+            )
+            liquid_depth_scaled = liquid_depth_scaled.squeeze(0).squeeze(0)
+
+
         # convert from numpy matrix to tensor
         # liquid_depth = torch.from_numpy(liquid_depth)
         # liquid_depth = F.interpolate(liquid_depth.unsqueeze(0), size=(160, 214), mode='bilinear', align_corners=False)
@@ -188,4 +238,6 @@ class VesselCaptureDataset(Dataset):
             "image_path": image_path,
             "segmentation_liquid": segmentation_liquid,
             "segmentation_vessel": segmentation_vessel,
+            "vessel_depth_scaled": vessel_depth_scaled,
+            "liquid_depth_scaled": liquid_depth_scaled,
         }

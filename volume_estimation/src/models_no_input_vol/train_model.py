@@ -122,9 +122,9 @@ data_dir = "data/processed"
 num_epochs = 150
 #learning_rate = 0.0001
 
-learning_rates = [0.001, 0.0001, 0.00001]
-batch_sizes = [2, 4, 8, 16]
-dropout_rates = [0.15, 0.2, 0.4, 0.6]
+learning_rates = [0.001, 0.0001]
+batch_sizes = [2, 4, 8]
+dropout_rates = [0.05, 0.1, 0.15, 0.2]
 
 best_rmse = float('inf')
 best_params = {}

@@ -1,5 +1,5 @@
 import torch
-from src.models.model_new import VolumeNet
+from src.models_no_input_vol.model_new import VolumeNet
 import numpy as np
 import sys
 import os
