@@ -85,11 +85,16 @@ def predict(model_path, image_path):
         # convert to numpy and transpose to (H,W,C)
         Prd[nm] = (PrdDepth[nm].transpose(1, 2).transpose(2, 3)).data.cpu().numpy()
         # print("Predicted Depth Map: ", Prd[nm].shape)
+
+        # convert depth map from log space to linear space
+        Prd[nm] = np.exp(Prd[nm])
+        
     for nm in PrdMask:
         # convert to numpy
         Prd[nm] = (PrdMask[nm]).data.cpu().numpy()
 
     print("Predicted Masks and Depth Maps: ", Prd.keys())
+
 
     # create folder to save results
     os.makedirs("example/results/" + time.strftime("%d%m%Y-%H%M%S"), exist_ok=True)

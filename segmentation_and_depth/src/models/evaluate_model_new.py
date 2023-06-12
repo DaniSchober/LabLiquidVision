@@ -166,6 +166,9 @@ def evaluate(
                 )  # GT depth  limite to region of intersection (ROI)
                 # get only the region of segmentation mask
 
+                # convert Pdepth from log to linear
+                Pdepth = np.exp(Pdepth)
+
                 Gdepth = Gdepth * Gmask
                 scale_factor = Gdepth[Gdepth > 0].mean() / Pdepth[Pdepth > 0].mean()
                 Pdepth *= scale_factor

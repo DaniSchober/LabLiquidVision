@@ -18,7 +18,7 @@ class Net(nn.Module):
         # Build layers for standard FCN with only image as input
         super(Net, self).__init__()
 
-        # Load pretrained  encoder
+        # Load pretrained encoder
         self.Encoder = models.resnet101(weights="ResNet101_Weights.DEFAULT")
 
         # Dilated convolution ASPP layers (same as deep lab)
@@ -99,6 +99,7 @@ class Net(nn.Module):
             )
         )
 
+        # Final prediction depth map
         self.OutLayersList = nn.ModuleList()
         self.OutLayersDicDepth = {}
         self.OutLayersDicMask = {}
@@ -108,7 +109,7 @@ class Net(nn.Module):
             )
             self.OutLayersList.append(self.OutLayersDicDepth[nm])
 
-        # Final prediction segmentation Mask
+        # Final prediction segmentation mask
         self.OutLayersDicMask = {}
         for nm in MaskList:
             self.OutLayersDicMask[nm] = nn.Conv2d(
@@ -200,7 +201,7 @@ class Net(nn.Module):
         x = torch.cat(ASPPFeatures, dim=1)
         x = self.SqueezeLayers(x)
 
-        # Upsample features map  and combine with layers from encoder using skip connections
+        # Upsample features map and combine with layers from encoder using skip connections
         for i in range(len(self.SkipConnections)):
             sp = (SkipConFeatures[-1 - i].shape[2], SkipConFeatures[-1 - i].shape[3])
             x = nn.functional.interpolate(
