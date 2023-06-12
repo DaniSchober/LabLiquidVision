@@ -90,6 +90,12 @@ class VesselCaptureDataset(Dataset):
         segmentation_vessel = np.load(segmentation_vessel_path).astype(np.float32)
         depth_map = np.load(depth_map_path).astype(np.float32)
 
+        # convert vessel depth map from log to linear
+        vessel_depth = np.exp(vessel_depth)
+
+        # convert liquid depth map from log to linear
+        liquid_depth = np.exp(liquid_depth)
+
         depth_map_vessel = depth_map * segmentation_vessel
         depth_map_liquid = depth_map * segmentation_liquid
         # get median of depth map of non-zero values

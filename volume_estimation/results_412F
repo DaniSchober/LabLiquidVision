@@ -98,5 +98,16 @@ RMSE liquid:  22.91201337482164
 
  
 
+(1) Original: 2 depth maps in and 1 liquid vol out
+Learning rate: 0.0001
+Batch size: 4
+Dropout rate: 0.05
+Average train RMSE of last 5 epochs: 12.68645115913065
+Average valid RMSE of last 5 epochs: 39.00376206687513
+Final valid loss: 1137.1484633587543
+Final valid RMSE: 33.721631979469116
+
+
+
 
 

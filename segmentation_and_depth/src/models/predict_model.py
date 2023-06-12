@@ -205,8 +205,10 @@ def predict(model_path, image_path):
         else:
             # copy depth map for visualization
             tmIm = Prd[nm].copy()
+
             # squeeze depth map
             tmIm = tmIm.squeeze()
+
             if nm in depth2Mask:
                 # Remove region out side of the object mask from the depth mask
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0

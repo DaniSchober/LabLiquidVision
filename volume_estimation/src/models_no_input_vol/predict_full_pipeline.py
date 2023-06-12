@@ -24,7 +24,7 @@ from volume_estimation.src.models_no_input_vol.model_new import VolumeNet
 
 
 def predict(image_path, predict_volume=False, save_segmentation=False, save_depth=False):
-    model_path = r"../segmentation_and_depth/models/55__03042023-2211.torch"  # Trained model path
+    model_path = r"../segmentation_and_depth/models/segmentation_depth_model.torch"  # Trained model path
     UseGPU = True  # Use GPU or not
     MaxSize = 3000
 
@@ -159,9 +159,10 @@ def predict(image_path, predict_volume=False, save_segmentation=False, save_dept
     
     if predict_volume == True:
         liquid_depth = torch.from_numpy(liquid_depth).float()
-        # print(liquid_depth.shape)
-        # liquid_depth = liquid_depth.unsqueeze(0).unsqueeze(0)
-        # print(liquid_depth.shape)
+
+        #convert from log to linear space
+        liquid_depth = torch.exp(liquid_depth)
+
         liquid_depth = F.interpolate(
             liquid_depth.unsqueeze(0).unsqueeze(0),
             size=(160, 214),
@@ -172,6 +173,8 @@ def predict(image_path, predict_volume=False, save_segmentation=False, save_dept
         # print(liquid_depth.shape)
 
         vessel_depth = torch.from_numpy(vessel_depth).float()
+        # convert from log to linear space
+        vessel_depth = torch.exp(vessel_depth)
         vessel_depth = F.interpolate(
             vessel_depth.unsqueeze(0).unsqueeze(0),
             size=(160, 214),

@@ -21,7 +21,7 @@ dataset = VesselCaptureDataset(data_dir)
 print(f"Loaded {len(dataset)} samples")
 
 # Split the dataset into training and test data
-train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
+train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=38)
 
 
 # Set up the data loader and training parameters for the test data
@@ -31,7 +31,7 @@ test_size = len(test_data)
 print("Size test set: ", test_size)
 
 # load model from models/model_new.py
-model = VolumeNet()
+model = VolumeNet(dropout_rate=0.05)
 model.load_state_dict(torch.load("models/volume_model.pth"))
 model.eval()
 
@@ -138,6 +138,9 @@ with torch.no_grad():
     # calculate RMSE for test set
     rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
 
+    # calculate average of liquid amount
+    avg_liquid_total = sum(actual_vol_liquid_list) / len(actual_vol_liquid_list)
+
     # Plot histogram of root squared errors
     plt.figure(figsize=(6.3, 5))
     plt.hist(squared_error_liquid_array, bins=100)
@@ -182,6 +185,11 @@ with torch.no_grad():
             / len(predicted_vol_liquid_list_vessel)
         ) ** 0.5
         print("RMSE", vessel_name_list_unique[i], ":", rmse_liquid_vessel)
+
+        avg_liquid = sum(actual_vol_liquid_list_vessel) / len(actual_vol_liquid_list_vessel)
+        # calculate percentage of error 
+        percentage_error = rmse_liquid_vessel / avg_liquid * 100
+        print("Mean percentage error", vessel_name_list_unique[i], ":", percentage_error, "%")
         # plot scatter plot
 
         plt.scatter(
@@ -208,5 +216,6 @@ with torch.no_grad():
     # show scatter plot
     plt.show()
 
+    print("Mean of actual volume: ", avg_liquid_total)
     print("RMSE liquid: ", rmse_liquid)
-    # print("RMSE vessel: ", rmse_vessel)
+    print("RMSE liquid percentage: ", rmse_liquid / avg_liquid_total * 100, "%")
