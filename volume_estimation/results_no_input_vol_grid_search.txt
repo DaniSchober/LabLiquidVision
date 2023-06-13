@@ -433,3 +433,12 @@ Average valid RMSE of last 5 epochs: 41.11060786954807
 Final valid loss: 1729.0180663529422
 Final valid RMSE: 41.58146301361873
 
+Training run 23 of 100
+Learning rate: 0.0001
+Batch size: 8
+Dropout rate: 0.15
+Average train RMSE of last 5 epochs: 16.77496530362511
+Average valid RMSE of last 5 epochs: 41.910160652018
+Final valid loss: 1804.11102547505
+Final valid RMSE: 42.47482813944101
+
