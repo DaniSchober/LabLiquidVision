@@ -34,6 +34,7 @@ class VesselCaptureDataset(Dataset):
                     sample_path, "Input_ContentMaskClean.npy"
                 )
                 depth_map_path = os.path.join(sample_path, "Input_DepthMap.npy")
+                color_path = os.path.join(sample_path, "Input_color_liquid.txt")
 
                 if (
                     os.path.exists(vessel_depth_path)
@@ -45,6 +46,7 @@ class VesselCaptureDataset(Dataset):
                     and os.path.exists(segmentation_vessel_path)
                     and os.path.exists(segmentation_liquid_path)
                     and os.path.exists(depth_map_path)
+                    and os.path.exists(color_path)
                 ):
                     self.samples.append(
                         (
@@ -57,6 +59,7 @@ class VesselCaptureDataset(Dataset):
                             segmentation_liquid_path,
                             segmentation_vessel_path,
                             depth_map_path,
+                            color_path,
                         )
                     )
         self.transform = transforms.Compose(
@@ -82,6 +85,7 @@ class VesselCaptureDataset(Dataset):
             segmentation_liquid_path,
             segmentation_vessel_path,
             depth_map_path,
+            color_path,
         ) = self.samples[index]
 
         vessel_depth = np.load(vessel_depth_path).astype(np.float32)
@@ -89,6 +93,7 @@ class VesselCaptureDataset(Dataset):
         segmentation_liquid = np.load(segmentation_liquid_path).astype(np.float32)
         segmentation_vessel = np.load(segmentation_vessel_path).astype(np.float32)
         depth_map = np.load(depth_map_path).astype(np.float32)
+
 
         # convert vessel depth map from log to linear
         vessel_depth = np.exp(vessel_depth)
@@ -234,6 +239,7 @@ class VesselCaptureDataset(Dataset):
         vol_liquid = int(open(vol_liquid_path, "r").read().strip())
         vessel_name = open(vessel_path, "r").read().strip()
         vol_vessel = int(open(vol_vessel_path, "r").read().strip())
+        color_liquid = open(color_path, "r").read().strip()
 
         return {
             "vessel_depth": vessel_depth,
@@ -246,4 +252,5 @@ class VesselCaptureDataset(Dataset):
             "segmentation_vessel": segmentation_vessel,
             "vessel_depth_scaled": vessel_depth_scaled,
             "liquid_depth_scaled": liquid_depth_scaled,
+            "color": color_liquid,
         }
