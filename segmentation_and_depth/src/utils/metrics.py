@@ -41,7 +41,7 @@ def eval_depth(pred, target):
 
     log10 = torch.mean(torch.abs(torch.log10(pred) - torch.log10(target)))
     silog = torch.sqrt(
-        torch.pow(diff, 2).mean() - 0.5 * torch.pow(diff.mean(), 2)
+        torch.pow(diff_log, 2).mean() - 0.5 * torch.pow(diff_log.mean(), 2)
     )
 
     return {
