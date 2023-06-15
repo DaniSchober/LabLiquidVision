@@ -442,3 +442,42 @@ Average valid RMSE of last 5 epochs: 41.910160652018
 Final valid loss: 1804.11102547505
 Final valid RMSE: 42.47482813944101
 
+Training run 24 of 100
+Learning rate: 0.0001
+Batch size: 8
+Dropout rate: 0.2
+Average train RMSE of last 5 epochs: 18.27976916639264
+Average valid RMSE of last 5 epochs: 46.79627208711396
+Final valid loss: 2261.9179451671885
+Final valid RMSE: 47.55962515797605
+
+Best hyperparameters: {'learning_rate': 0.0001, 'batch_size': 4, 'dropout_rate': 0.1}
+Best RMSE: 37.12034535714722
+
+Training run 1 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.15
+Average train RMSE of last 5 epochs: 12.191144849934973
+Average valid RMSE of last 5 epochs: 40.97735068744429
+Final valid loss: 1654.6306460211931
+Final valid RMSE: 40.677151400032834
+
+Best hyperparameters: {'learning_rate': 0.001, 'batch_size': 4, 'dropout_rate': 0.15}
+Best RMSE: 40.677151400032834
+
+Training run 1 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.15
+Average train RMSE of last 5 epochs: 12.464582825687973
+Average valid RMSE of last 5 epochs: 40.909576972230624
+Final valid loss: 1563.9973424880934
+Final valid RMSE: 39.54740626751764
+
+Best hyperparameters: {'learning_rate': 0.001, 'batch_size': 4, 'dropout_rate': 0.15}
+Best RMSE: 39.54740626751764
+
+Best hyperparameters: {'learning_rate': 0.001, 'batch_size': 8, 'dropout_rate': 0.15}
+Best RMSE: 44.136406125939146
+

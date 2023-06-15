@@ -1,0 +1,66 @@
+Training run 1 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.1
+Average train RMSE of last 5 epochs: 10.749992819996772
+Average valid RMSE of last 5 epochs: 43.07322415747591
+Final valid loss: 2020.6941648850968
+Final valid RMSE: 44.95213192814215
+Final test loss: 2109.2214036414034
+Final test RMSE: 45.92626050138856
+
+Training run 2 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.15
+Average train RMSE of last 5 epochs: 11.241974224597511
+Average valid RMSE of last 5 epochs: 40.06740034672609
+Final valid loss: 1633.819854610158
+Final valid RMSE: 40.42053753489874
+Final test loss: 1980.082595714222
+Final test RMSE: 44.498119013214726
+
+Training run 3 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.2
+Average train RMSE of last 5 epochs: 13.064911974710407
+Average valid RMSE of last 5 epochs: 43.80326864055481
+Final valid loss: 1855.7738340619267
+Final valid RMSE: 43.07869350458445
+Final test loss: 2072.251228228764
+Final test RMSE: 45.52198620698315
+
+Training run 4 of 100
+Learning rate: 0.001
+Batch size: 8
+Dropout rate: 0.1
+Average train RMSE of last 5 epochs: 12.75339574923885
+Average valid RMSE of last 5 epochs: 40.60461849004158
+Final valid loss: 1452.7508269956986
+Final valid RMSE: 38.114968542499135
+Final test loss: 2115.767263631103
+Final test RMSE: 45.997470187295114
+
+Training run 5 of 100
+Learning rate: 0.001
+Batch size: 8
+Dropout rate: 0.15
+Average train RMSE of last 5 epochs: 11.596766091058154
+Average valid RMSE of last 5 epochs: 40.03542526806614
+Final valid loss: 1448.3583115381148
+Final valid RMSE: 38.05730299874276
+Final test loss: 1948.0223457138384
+Final test RMSE: 44.136406125939146
+
+Training run 6 of 100
+Learning rate: 0.001
+Batch size: 8
+Dropout rate: 0.2
+Average train RMSE of last 5 epochs: 13.082579413961886
+Average valid RMSE of last 5 epochs: 37.99237848243675
+Final valid loss: 1538.5058214989815
+Final valid RMSE: 39.223791523754834
+Final test loss: 2158.6065348479215
+Final test RMSE: 46.460806437769904
+
