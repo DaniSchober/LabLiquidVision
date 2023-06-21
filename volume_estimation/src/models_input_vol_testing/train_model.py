@@ -135,12 +135,12 @@ def train(
 
 data_dir = "data/processed"
 #batch_size_train = 16
-num_epochs = 150
+num_epochs = 200
 #learning_rate = 0.0001
 
-learning_rates = [0.0001]
-batch_sizes = [4]
-dropout_rates = [0.15]
+learning_rates = [0.001]
+batch_sizes = [8]
+dropout_rates = [0.2]
 
 best_rmse = float('inf')
 best_params = {}
@@ -173,7 +173,7 @@ for learning_rate in learning_rates:
             print(f"Loaded {len(dataset)} samples.")
 
             # Split the dataset into training and test data
-            train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
+            train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
 
             train_data, valid_data = train_test_split(train_data, test_size=0.1, random_state=42)
 
@@ -224,7 +224,7 @@ for learning_rate in learning_rates:
                 best_params = {'learning_rate': learning_rate, 'batch_size': batch_size_train, 'dropout_rate': dropout_rate}
                 print("New best RMSE: ", best_rmse)
                 # Save the trained model
-                torch.save(model.state_dict(), "models/volume_model_input_vol_testing.pth")
+                torch.save(model.state_dict(), "models/volume_model_input_vol_log.pth")
 
             # save final loss and rmse for this training run to txt file
             with open("results_input_vol_testing.txt", "a") as f:

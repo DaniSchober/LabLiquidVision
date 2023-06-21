@@ -1,0 +1,100 @@
+Sample folder: ../../output/CellFlask/Flask_90_1000_24, Starting volume: 86.865, Poured volume: 82.4760036, Stop angle: 24.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_65_1399_24, Starting volume: 62.72, Poured volume: 56.285998799999994, Stop angle: 24.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_105_200_40, Starting volume: 101.5525, Poured volume: 101.5525, Stop angle: 40.0, Stop time: 0.2
+
+Sample folder: ../../output/CellFlask/Flask_65_1000_14, Starting volume: 62.72, Poured volume: 17.709, Stop angle: 14.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_150_1000_44, Starting volume: 144.92, Poured volume: 144.92, Stop angle: 44.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_105_600_40, Starting volume: 101.5525, Poured volume: 101.5525, Stop angle: 40.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_150_1399_26, Starting volume: 144.92, Poured volume: 155.5590084, Stop angle: 26.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_70_1799_4, Starting volume: 67.5025, Poured volume: 0.135, Stop angle: 4.0, Stop time: 1.8
+
+Sample folder: ../../output/CellFlask/Flask_130_600_22, Starting volume: 125.7825, Poured volume: 115.65599639999999, Stop angle: 22.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_90_600_50, Starting volume: 86.865, Poured volume: 86.865, Stop angle: 50.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_95_1000_22, Starting volume: 91.815, Poured volume: 81.075, Stop angle: 22.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_120_1399_6, Starting volume: 116.1075, Poured volume: 3.957, Stop angle: 6.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_145_1000_20, Starting volume: 140.1, Poured volume: 120.6570012, Stop angle: 20.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_125_1399_12, Starting volume: 120.855, Poured volume: 40.190999999999995, Stop angle: 12.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_130_200_44, Starting volume: 125.7825, Poured volume: 125.7825, Stop angle: 44.0, Stop time: 0.2
+
+Sample folder: ../../output/CellFlask/Flask_110_600_24, Starting volume: 106.2375, Poured volume: 103.0050024, Stop angle: 24.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_50_1799_26, Starting volume: 48.1775, Poured volume: 44.9400012, Stop angle: 26.0, Stop time: 1.8
+
+Sample folder: ../../output/CellFlask/Flask_20_1399_46, Starting volume: 19.5725, Poured volume: 19.5725, Stop angle: 46.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_140_1399_6, Starting volume: 135.44, Poured volume: 6.188999999999999, Stop angle: 6.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_115_200_24, Starting volume: 111.1875, Poured volume: 107.1480012, Stop angle: 24.0, Stop time: 0.2
+
+Sample folder: ../../output/CellFlask/Flask_145_1399_8, Starting volume: 140.1, Poured volume: 17.939999999999998, Stop angle: 8.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_60_600_50, Starting volume: 57.91, Poured volume: 57.91, Stop angle: 50.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_95_1399_40, Starting volume: 91.815, Poured volume: 91.815, Stop angle: 40.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_120_1399_32, Starting volume: 116.1075, Poured volume: 116.1075, Stop angle: 32.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_55_600_38, Starting volume: 53.15, Poured volume: 53.15, Stop angle: 38.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_140_1000_14, Starting volume: 135.44, Poured volume: 65.5140012, Stop angle: 14.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_135_600_6, Starting volume: 130.565, Poured volume: 4.1579999999999995, Stop angle: 6.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_75_1000_32, Starting volume: 72.375, Poured volume: 72.375, Stop angle: 32.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_65_1000_20, Starting volume: 62.72, Poured volume: 42.438002399999995, Stop angle: 20.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_120_1399_20, Starting volume: 116.1075, Poured volume: 98.3280024, Stop angle: 20.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_105_600_32, Starting volume: 101.5525, Poured volume: 101.5525, Stop angle: 32.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_95_200_26, Starting volume: 91.815, Poured volume: 92.24699759999999, Stop angle: 26.0, Stop time: 0.2
+
+Sample folder: ../../output/CellFlask/Flask_135_1799_36, Starting volume: 130.565, Poured volume: 130.565, Stop angle: 36.0, Stop time: 1.8
+
+Sample folder: ../../output/CellFlask/Flask_45_1000_30, Starting volume: 43.39, Poured volume: 43.8300024, Stop angle: 30.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_65_600_14, Starting volume: 62.72, Poured volume: 16.527, Stop angle: 14.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_100_1000_18, Starting volume: 96.6775, Poured volume: 66.05700119999999, Stop angle: 18.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_110_1000_26, Starting volume: 106.2375, Poured volume: 110.28900119999999, Stop angle: 26.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_95_1399_20, Starting volume: 91.815, Poured volume: 73.8029988, Stop angle: 20.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_40_600_30, Starting volume: 38.7675, Poured volume: 38.129999999999995, Stop angle: 30.0, Stop time: 0.6
+
+Sample folder: ../../output/CellFlask/Flask_55_1799_48, Starting volume: 53.15, Poured volume: 53.15, Stop angle: 48.0, Stop time: 1.8
+
+Sample folder: ../../output/CellFlask/Flask_35_1000_38, Starting volume: 34.0325, Poured volume: 34.0325, Stop angle: 38.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_50_1399_48, Starting volume: 48.1775, Poured volume: 48.1775, Stop angle: 48.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_95_1000_2, Starting volume: 91.815, Poured volume: 0.216, Stop angle: 2.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_60_200_10, Starting volume: 57.91, Poured volume: 3.4829999999999997, Stop angle: 10.0, Stop time: 0.2
+
+Sample folder: ../../output/CellFlask/Flask_55_1799_6, Starting volume: 53.15, Poured volume: 0.147, Stop angle: 6.0, Stop time: 1.8
+
+Sample folder: ../../output/CellFlask/Flask_120_1799_16, Starting volume: 116.1075, Poured volume: 73.16099879999999, Stop angle: 16.0, Stop time: 1.8
+
+Sample folder: ../../output/CellFlask/Flask_70_1000_4, Starting volume: 67.5025, Poured volume: 0.135, Stop angle: 4.0, Stop time: 1.0
+
+Sample folder: ../../output/CellFlask/Flask_90_1399_12, Starting volume: 86.865, Poured volume: 22.344001199999997, Stop angle: 12.0, Stop time: 1.4
+
+Sample folder: ../../output/CellFlask/Flask_70_200_4, Starting volume: 67.5025, Poured volume: 0.135, Stop angle: 4.0, Stop time: 0.2
+
+Sample folder: ../../output/CellFlask/Flask_35_1799_16, Starting volume: 34.0325, Poured volume: 8.703, Stop angle: 16.0, Stop time: 1.8
+

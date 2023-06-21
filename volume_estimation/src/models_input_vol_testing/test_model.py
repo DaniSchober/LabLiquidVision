@@ -9,6 +9,7 @@ import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib
+import sklearn.metrics as metrics
 
 # Set font and fontsize globally
 matplotlib.rcParams["font.family"] = "Arial"
@@ -21,7 +22,7 @@ dataset = VesselCaptureDataset(data_dir)
 print(f"Loaded {len(dataset)} samples")
 
 # Split the dataset into training and test data
-train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
+train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
 
 
 # Set up the data loader and training parameters for the test data
@@ -31,8 +32,8 @@ test_size = len(test_data)
 print("Size test set: ", test_size)
 
 # load model from models/model_new.py
-model = VolumeNet(dropout_rate=0.4)
-model.load_state_dict(torch.load("models/volume_model_input_vol_testing.pth"))
+model = VolumeNet(dropout_rate=0.05)
+model.load_state_dict(torch.load("models/volume_model_input_vol_log.pth"))
 model.eval()
 
 squared_error_liquid_total = 0
@@ -79,10 +80,8 @@ with torch.no_grad():
         targets = targets.squeeze(0)
         print("Sample ", i, ":", outputs, targets)
 
-        # first element of output is volume of liquid, second is volume of vessel
         predicted_vol_liquid = outputs.item()
         actual_vol_liquid = targets.item()
-        # vessel_name = vessel_name.item()
 
         # save them in a list
         predicted_vol_liquid_list.append(predicted_vol_liquid)
@@ -93,8 +92,6 @@ with torch.no_grad():
         vessel_name_list.append(vessel_name)
         # predicted_vol_vessel = outputs[1].item()
         # actual_vol_vessel = targets[1].item()
-
-        '''
 
         # open image from test set and draw volume estimation on it
         import cv2
@@ -124,8 +121,7 @@ with torch.no_grad():
         )
 
         # save image with volume estimation
-        #cv2.imwrite(output_folder + "/image_" + str(i) + ".png", img)
-        '''
+        cv2.imwrite(output_folder + "/image_" + str(i) + ".png", img)
 
         # calculate squared error for item
         squared_error_liquid = (predicted_vol_liquid - actual_vol_liquid) ** 2
@@ -142,14 +138,58 @@ with torch.no_grad():
     # calculate RMSE for test set
     rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
 
+
+
+    # calculate mean percentage error for test set
+    mean_percentage_error = (
+        sum(
+            (
+                (
+                    (np.array(predicted_vol_liquid_list) - np.array(actual_vol_liquid_list))
+                    / np.array(actual_vol_liquid_list)
+                )
+                ** 2
+            )**0.5
+        )
+    ) / len(actual_vol_liquid_list)
+
+    # calculate average of liquid amount
+    avg_liquid_total = sum(actual_vol_liquid_list) / len(actual_vol_liquid_list)
+
+    print("\n\n\n")
+    print("Mean of actual volume: ", avg_liquid_total)
+    print("RMSE liquid: ", rmse_liquid)
+    #print("RMSE liquid percentage: ", rmse_liquid / avg_liquid_total * 100, "%")
+    print("Mean percentage error test set: ", mean_percentage_error * 100, "%")
+
+    # calculate R2 score for test set
+    r2_score = metrics.r2_score(actual_vol_liquid_list, predicted_vol_liquid_list)
+    print("R2 score test set: ", r2_score)
+
+    # get maximum error
+    max_error = max(squared_error_liquid_array)
+    print("Max error: ", max_error)
+
+    # print 3 samples with maximum error
+    print("Samples with max error: ", np.argpartition(squared_error_liquid_array, -3)[-3:])
+
+    # get minimum error
+    min_error = min(squared_error_liquid_array)
+    print("Min error: ", min_error)
+
+    # print 3 samples with minimum error
+    print("Samples with min error: ", np.argpartition(squared_error_liquid_array, 3)[:3])
+
+    print("\n\n\n")
+
     # Plot histogram of root squared errors
-    plt.figure(figsize=(6.3, 5))
+    plt.figure(figsize=(6.3, 3))
     plt.hist(squared_error_liquid_array, bins=100)
     plt.xlabel("RMSE")
     plt.ylabel("Frequency")
     plt.title("Histogram of RMSE for liquid volume estimation on the test set")
     plt.tight_layout()
-    plt.savefig(output_folder_res + "/squared_error_liquid_vol_input.png", format="png", dpi=600)
+    plt.savefig(output_folder_res + "/squared_error_liquid.png", format="png", dpi=600)
     plt.show()
 
     # plot predicted volume vs actual volume in scatter plot with color depending on vessel name
@@ -186,8 +226,54 @@ with torch.no_grad():
             / len(predicted_vol_liquid_list_vessel)
         ) ** 0.5
         print("RMSE", vessel_name_list_unique[i], ":", rmse_liquid_vessel)
-        print("Average actual volume", vessel_name_list_unique[i], ": ", sum(actual_vol_liquid_list_vessel)/len(actual_vol_liquid_list_vessel))
+
+        # calculate mean liquid volume for vessel name
+        avg_liquid_vessel = (
+            sum(actual_vol_liquid_list_vessel) / len(actual_vol_liquid_list_vessel)
+        )
+        print("Mean liquid volume", vessel_name_list_unique[i], ":", avg_liquid_vessel)
+
+        # calculate R2 score for vessel name
+        r2_score = metrics.r2_score(
+            actual_vol_liquid_list_vessel, predicted_vol_liquid_list_vessel
+        )
+        print("R2 score", vessel_name_list_unique[i], ":", r2_score)
+
+        # calculate mean percentage error for vessel name
+        mean_percentage_error = (
+            sum((((np.array(predicted_vol_liquid_list_vessel)-np.array(actual_vol_liquid_list_vessel))/np.array(actual_vol_liquid_list_vessel))**2)**0.5))/len(actual_vol_liquid_list_vessel)
+        
+        print("Mean percentage error", vessel_name_list_unique[i], ":", mean_percentage_error*100, "%")
+
+        # get max error
+        max_error = max((
+            (
+                np.array(predicted_vol_liquid_list_vessel)
+                - np.array(actual_vol_liquid_list_vessel)
+            )
+            ** 2)**0.5
+        )
+
+        print("Max error", vessel_name_list_unique[i], ":", max_error)
+
+        # get min error
+        min_error = min((
+            (
+                np.array(predicted_vol_liquid_list_vessel)
+                - np.array(actual_vol_liquid_list_vessel)
+            )
+            ** 2)**0.5
+        )
+
+        print("Min error", vessel_name_list_unique[i], ":", min_error)
+        
+        avg_liquid = sum(actual_vol_liquid_list_vessel) / len(actual_vol_liquid_list_vessel)
+        # calculate percentage of error 
+        percentage_error = rmse_liquid_vessel / avg_liquid * 100
+        #print("Mean percentage error", vessel_name_list_unique[i], ":", percentage_error, "%")
         # plot scatter plot
+
+        print("\n")
 
         plt.scatter(
             actual_vol_liquid_list_vessel,
@@ -209,9 +295,8 @@ with torch.no_grad():
     plt.legend(fontsize=8)
 
     plt.tight_layout()
-    plt.savefig(output_folder_res + "/scatter_plot_vol_input.png", format="png", dpi=600)
+    plt.savefig(output_folder_res + "/scatter_plot.png", format="png", dpi=600)
     # show scatter plot
     plt.show()
 
-    print("RMSE liquid: ", rmse_liquid)
-    # print("RMSE vessel: ", rmse_vessel)
+    

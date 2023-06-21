@@ -11,8 +11,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from src.models_no_input_vol.validate_model import validate
 import math
-#import wandb
-#wandb.init(project="volume-estimation")
 
 device = (
     torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -123,8 +121,8 @@ num_epochs = 200
 #learning_rate = 0.0001
 
 learning_rates = [0.001]
-batch_sizes = [4, 8]
-dropout_rates = [0.1, 0.15, 0.2, 0.25]
+batch_sizes = [8]
+dropout_rates = [0.2]
 
 best_rmse = float('inf')
 best_params = {}
@@ -240,9 +238,9 @@ with open("results_no_input_vol_grid_search.txt", "a") as f:
     f.write("Best hyperparameters: " + str(best_params) + "\n")
     f.write("Best RMSE: " + str(best_rmse) + "\n\n")
 
-'''
+
 print("Creating figure")
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(6.3, 3.5))
 # print(losses_total)
 plt.plot((losses_total_train))
 plt.plot((losses_total_valid))
@@ -250,12 +248,13 @@ plt.title("Loss over epochs")
 plt.ylabel("Loss")
 plt.xlabel("Epoch")
 plt.legend(["Train", "Validation"], loc="upper right")
-plt.yscale("log")
-plt.show()
+#plt.yscale("log")
+
 plt.savefig(time.strftime("%d%m%Y-%H%M") + ".png")
+plt.show()
 
 
 # Save the trained model
-torch.save(model.state_dict(), "models/volume_model.pth")
+#torch.save(model.state_dict(), "models/volume_model.pth")
 
-'''
+
