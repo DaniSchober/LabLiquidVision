@@ -1,0 +1,16 @@
+rotation_speed 0.03
+stop_angle 82
+pause_time 1.8
+num_particles 104000
+start_particles 103965
+poured_particles 75997
+received_particles 71614
+spilled_particles 4383
+not_poured_particles 27968
+
+
+start_volume 259.913 mL
+poured_volume 189.993 mL
+received_volume 179.035 mL
+spilled_volume 10.9575 mL
+not_poured_volume 69.92 mL

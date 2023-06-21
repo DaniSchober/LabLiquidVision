@@ -322,7 +322,8 @@ class VolumeNet(nn.Module):
         x = F.relu(self.bn5(self.conv5(x)))
         x = F.max_pool2d(x, kernel_size=2)
 
-        x = F.dropout2d(x, p=0.3)
+        #x = F.dropout2d(x, p=0.3)
+        x = F.dropout2d(x, p=self.dropout_rate)
 
         #print(x.shape)
 

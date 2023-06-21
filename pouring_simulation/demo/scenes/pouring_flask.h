@@ -96,11 +96,7 @@ public:
 		prev_pos_x = TCP_x;
 		prev_pos_y = TCP_y;
 
-		//printf("TCP %f %f, radius: %f, emitter_size: %f\n", TCP_x, TCP_y, radius_CoR, emitterSize);
-
 		rotationSpeed = 0.03;
-
-
 
 		// set drawing options
 		g_drawPoints = false;

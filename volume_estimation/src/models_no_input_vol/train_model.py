@@ -119,12 +119,12 @@ def train(
 
 data_dir = "data/processed"
 #batch_size_train = 16
-num_epochs = 150
+num_epochs = 200
 #learning_rate = 0.0001
 
-learning_rates = [0.001, 0.0001]
-batch_sizes = [2, 4, 8]
-dropout_rates = [0.05, 0.1, 0.15, 0.2]
+learning_rates = [0.001]
+batch_sizes = [4, 8]
+dropout_rates = [0.1, 0.15, 0.2, 0.25]
 
 best_rmse = float('inf')
 best_params = {}
@@ -169,13 +169,12 @@ for learning_rate in learning_rates:
             train_loader = DataLoader(train_data, batch_size=batch_size_train, shuffle=True)
 
             # do data augmentation on training data
-
-
             train_size = len(train_data)
 
             # Set up the data loader and training parameters for the validation data
             valid_loader = DataLoader(valid_data, batch_size=1, shuffle=True)
             valid_size = len(valid_data)
+
 
             model = VolumeNet(dropout_rate=dropout_rate)
             model = model.to(device)  # Send net to GPU if available
@@ -202,16 +201,26 @@ for learning_rate in learning_rates:
 
             loss_valid, rmse_valid = validate(model, valid_loader, valid_size)
 
+            # Set up the data loader and training parameters for the test data
+            # Split the dataset into training and test data
+            train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
+            test_loader = DataLoader(test_data, batch_size=1, shuffle=False)
+            test_size = len(test_data)
+            loss_test, rmse_test = validate(model, test_loader, test_size)
+
             # Check if the current combination of hyperparameters yields the best result
-            if rmse_valid < best_rmse:
-                best_rmse = rmse_valid
+            if rmse_test < best_rmse:
+                best_rmse = rmse_test
                 best_params = {'learning_rate': learning_rate, 'batch_size': batch_size_train, 'dropout_rate': dropout_rate}
-                print("New best RMSE: ", best_rmse)
+                print("New best RMSE test: ", best_rmse)
+                print("New best hyperparameters: ", best_params)
+                print("Valid RMSE: ", rmse_valid)
+                print("Saving model")
                 # Save the trained model
-                torch.save(model.state_dict(), "models/volume_model.pth")
+                torch.save(model.state_dict(), "models/volume_model_log.pth")
 
             # save final loss and rmse for this training run to txt file
-            with open("results_no_input_vol_grid_search.txt", "a") as f:
+            with open("results_no_input_vol_grid_search_new.txt", "a") as f:
                 f.write("Training run " + str(i+1) + " of 100\n")
                 f.write("Learning rate: " + str(learning_rate) + "\n")
                 f.write("Batch size: " + str(batch_size_train) + "\n")
@@ -220,7 +229,9 @@ for learning_rate in learning_rates:
                 f.write("Average train RMSE of last 5 epochs: " + str(math.sqrt(statistics.mean(losses_total_train[-5:]))) + "\n")
                 f.write("Average valid RMSE of last 5 epochs: " + str(math.sqrt(statistics.mean(losses_total_valid[-5:]))) + "\n")
                 f.write("Final valid loss: " + str(loss_valid) + "\n")
-                f.write("Final valid RMSE: " + str(rmse_valid) + "\n\n")
+                f.write("Final valid RMSE: " + str(rmse_valid) + "\n")
+                f.write("Final test loss: " + str(loss_test) + "\n")
+                f.write("Final test RMSE: " + str(rmse_test) + "\n\n")
     
             i += 1
 
