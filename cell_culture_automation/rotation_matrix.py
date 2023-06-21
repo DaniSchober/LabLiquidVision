@@ -116,19 +116,3 @@ def PoseAdd(Pose1, Pose2):
     R = GetRotation(np.matmul(R1, R2))
     return [P[0], P[1], P[2], R[0], R[1], R[2]]
 
-
-# Define Pose From & To
-# PoseFrom = [1,1.1,1.2,0.1,0.1,0.1]
-
-# PoseTo = [0.1,0,0,0.1,0,0]
-
-# PoseFrom = [0.2,0.5,0.1,1.57,0,0]
-
-
-# PoseTo = [0.2,0.5,0.6,1.57,0,0]
-
-# Calculate And Print Pose_Add
-# print(PoseAdd(PoseFrom,PoseTo))
-
-# Calculate And Print Pose_Trans
-# print(PoseTrans(PoseFrom,PoseTo))
