@@ -124,7 +124,7 @@ num_epochs = 200
 
 learning_rates = [0.001]
 batch_sizes = [4, 8]
-dropout_rates = [0.1, 0.15, 0.2]
+dropout_rates = [0.1, 0.15, 0.2, 0.25]
 
 best_rmse = float('inf')
 best_params = {}
@@ -202,6 +202,8 @@ for learning_rate in learning_rates:
             loss_valid, rmse_valid = validate(model, valid_loader, valid_size)
 
             # Set up the data loader and training parameters for the test data
+            # Split the dataset into training and test data
+            train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
             test_loader = DataLoader(test_data, batch_size=1, shuffle=False)
             test_size = len(test_data)
             loss_test, rmse_test = validate(model, test_loader, test_size)

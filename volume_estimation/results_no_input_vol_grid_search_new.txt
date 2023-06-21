@@ -64,3 +64,91 @@ Final valid RMSE: 39.223791523754834
 Final test loss: 2158.6065348479215
 Final test RMSE: 46.460806437769904
 
+Training run 1 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.1
+Average train RMSE of last 5 epochs: 11.203856799917974
+Average valid RMSE of last 5 epochs: 37.95946286506637
+Final valid loss: 1450.428408546746
+Final valid RMSE: 38.0844903936858
+Final test loss: 1694.4805526261644
+Final test RMSE: 41.16406870835492
+
+Training run 2 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.15
+Average train RMSE of last 5 epochs: 11.293730236680528
+Average valid RMSE of last 5 epochs: 40.52258010241716
+Final valid loss: 1568.9281430216977
+Final valid RMSE: 39.609697588112155
+Final test loss: 2264.7854442710827
+Final test RMSE: 47.589761969052574
+
+Training run 3 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.2
+Average train RMSE of last 5 epochs: 12.226625913855019
+Average valid RMSE of last 5 epochs: 42.16198937527201
+Final valid loss: 1690.7724971620455
+Final valid RMSE: 41.119004087672714
+Final test loss: 2109.4992765558422
+Final test RMSE: 45.92928560902991
+
+Training run 4 of 100
+Learning rate: 0.001
+Batch size: 4
+Dropout rate: 0.25
+Average train RMSE of last 5 epochs: 13.658452263835885
+Average valid RMSE of last 5 epochs: 43.172306349238404
+Final valid loss: 1462.6230133319607
+Final valid RMSE: 38.24425464474319
+Final test loss: 2038.1465104999713
+Final test RMSE: 45.145836026149425
+
+Training run 5 of 100
+Learning rate: 0.001
+Batch size: 8
+Dropout rate: 0.1
+Average train RMSE of last 5 epochs: 13.427945980630508
+Average valid RMSE of last 5 epochs: 38.452772705009956
+Final valid loss: 1545.7785256637583
+Final valid RMSE: 39.31639003855464
+Final test loss: 2018.157032497759
+Final test RMSE: 44.92390268551652
+
+Training run 6 of 100
+Learning rate: 0.001
+Batch size: 8
+Dropout rate: 0.15
+Average train RMSE of last 5 epochs: 12.601560732454711
+Average valid RMSE of last 5 epochs: 42.35783688113199
+Final valid loss: 1839.6650332336383
+Final valid RMSE: 42.89131652483563
+Final test loss: 2394.4539910610038
+Final test RMSE: 48.93315840062854
+
+Training run 7 of 100
+Learning rate: 0.001
+Batch size: 8
+Dropout rate: 0.2
+Average train RMSE of last 5 epochs: 12.55234070866528
+Average valid RMSE of last 5 epochs: 39.531877482769865
+Final valid loss: 1497.1947436672608
+Final valid RMSE: 38.69360081030533
+Final test loss: 1642.5112495132403
+Final test RMSE: 40.5279070458029
+
+Training run 8 of 100
+Learning rate: 0.001
+Batch size: 8
+Dropout rate: 0.25
+Average train RMSE of last 5 epochs: 15.52655488113887
+Average valid RMSE of last 5 epochs: 41.910529926696746
+Final valid loss: 1468.1501508700899
+Final valid RMSE: 38.3164475241389
+Final test loss: 2061.2468179351613
+Final test RMSE: 45.40095613459216
+

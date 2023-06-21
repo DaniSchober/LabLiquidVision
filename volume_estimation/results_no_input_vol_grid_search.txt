@@ -481,3 +481,6 @@ Best RMSE: 39.54740626751764
 Best hyperparameters: {'learning_rate': 0.001, 'batch_size': 8, 'dropout_rate': 0.15}
 Best RMSE: 44.136406125939146
 
+Best hyperparameters: {'learning_rate': 0.001, 'batch_size': 8, 'dropout_rate': 0.2}
+Best RMSE: 40.5279070458029
+
