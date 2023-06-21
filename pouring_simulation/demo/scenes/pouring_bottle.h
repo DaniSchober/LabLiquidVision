@@ -313,7 +313,6 @@ public:
 					pos_x = CoR_x - radius_CoR * cos(theta - alpha_start);
 					pos_y = CoR_y + radius_CoR * sin(theta - alpha_start);
 					//printf("pos_x_cal: %f pos_y_cal: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
-
 				}
 				
 				//printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
