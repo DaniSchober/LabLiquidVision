@@ -1,0 +1,100 @@
+Sample_folder: ../../output/CellFlask/Flask_80_200_24 Starting_volume: 77.265 Poured_volume: 64.1684989 Spilled_volume: 0.3975 Received_volume: 63.7709989 Stop_angle: 24.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_40_1799_24 Starting_volume: 38.7675 Poured_volume: 28.1765 Spilled_volume: 0.105 Received_volume: 28.0715 Stop_angle: 24.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_70_1399_50 Starting_volume: 67.5025 Poured_volume: 67.5025 Spilled_volume: 1.49 Received_volume: 65.349998 Stop_angle: 50.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_55_1399_12 Starting_volume: 53.15 Poured_volume: 6.338750000000001 Spilled_volume: 0.1375 Received_volume: 6.201250000000001 Stop_angle: 12.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_15_600_2 Starting_volume: 14.6925 Poured_volume: 0.0027500000000000003 Spilled_volume: 0.0 Received_volume: 0.0027500000000000003 Stop_angle: 2.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_90_1000_46 Starting_volume: 86.865 Poured_volume: 86.865 Spilled_volume: 1.3525 Received_volume: 84.3825 Stop_angle: 46.0 Stop_time: 1.0
+
+Sample_folder: ../../output/CellFlask/Flask_90_200_14 Starting_volume: 86.865 Poured_volume: 26.699748900000003 Spilled_volume: 0.14 Received_volume: 26.559748900000002 Stop_angle: 14.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_90_1399_24 Starting_volume: 86.865 Poured_volume: 76.527 Spilled_volume: 0.6825 Received_volume: 75.8445 Stop_angle: 24.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_85_1799_10 Starting_volume: 82.1 Poured_volume: 10.46925 Spilled_volume: 0.1075 Received_volume: 10.36175 Stop_angle: 10.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_15_200_42 Starting_volume: 14.6925 Poured_volume: 14.29175 Spilled_volume: 0.1875 Received_volume: 14.10425 Stop_angle: 42.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_135_600_40 Starting_volume: 130.565 Poured_volume: 130.565 Spilled_volume: 9.245 Received_volume: 118.945 Stop_angle: 40.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_150_1799_22 Starting_volume: 144.92 Poured_volume: 129.19774890000002 Spilled_volume: 13.7475 Received_volume: 115.45024890000002 Stop_angle: 22.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_25_1799_10 Starting_volume: 24.3825 Poured_volume: 0.1925 Spilled_volume: 0.065 Received_volume: 0.1275 Stop_angle: 10.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_95_1000_30 Starting_volume: 91.815 Poured_volume: 91.815 Spilled_volume: 1.3025 Received_volume: 82.889999 Stop_angle: 30.0 Stop_time: 1.0
+
+Sample_folder: ../../output/CellFlask/Flask_80_600_12 Starting_volume: 77.265 Poured_volume: 13.95625 Spilled_volume: 0.105 Received_volume: 13.85125 Stop_angle: 12.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_140_200_30 Starting_volume: 135.44 Poured_volume: 135.44 Spilled_volume: 11.0725 Received_volume: 115.077499 Stop_angle: 30.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_120_200_40 Starting_volume: 116.1075 Poured_volume: 116.1075 Spilled_volume: 4.94 Received_volume: 108.754997 Stop_angle: 40.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_145_1399_26 Starting_volume: 140.1 Poured_volume: 137.40374780000002 Spilled_volume: 13.0725 Received_volume: 124.33124780000001 Stop_angle: 26.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_135_200_12 Starting_volume: 130.565 Poured_volume: 34.5015 Spilled_volume: 0.175 Received_volume: 34.3265 Stop_angle: 12.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_25_1399_14 Starting_volume: 24.3825 Poured_volume: 2.6675 Spilled_volume: 0.07 Received_volume: 2.5975 Stop_angle: 14.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_150_600_38 Starting_volume: 144.92 Poured_volume: 144.92 Spilled_volume: 15.4825 Received_volume: 126.404999 Stop_angle: 38.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_90_1000_36 Starting_volume: 86.865 Poured_volume: 86.865 Spilled_volume: 1.19 Received_volume: 82.169998 Stop_angle: 36.0 Stop_time: 1.0
+
+Sample_folder: ../../output/CellFlask/Flask_15_1799_8 Starting_volume: 14.6925 Poured_volume: 0.05500000000000001 Spilled_volume: 0.0225 Received_volume: 0.03250000000000001 Stop_angle: 8.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_115_1799_8 Starting_volume: 111.1875 Poured_volume: 10.752500000000001 Spilled_volume: 0.12 Received_volume: 10.632500000000002 Stop_angle: 8.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_105_1399_26 Starting_volume: 101.5525 Poured_volume: 96.9677456 Spilled_volume: 2.275 Received_volume: 94.6927456 Stop_angle: 26.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_25_1399_6 Starting_volume: 24.3825 Poured_volume: 0.07425000000000001 Spilled_volume: 0.065 Received_volume: 0.009250000000000008 Stop_angle: 6.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_85_1399_14 Starting_volume: 82.1 Poured_volume: 28.996001100000004 Spilled_volume: 0.1175 Received_volume: 28.878501100000005 Stop_angle: 14.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_20_1799_30 Starting_volume: 19.5725 Poured_volume: 15.752000000000002 Spilled_volume: 0.14 Received_volume: 15.612000000000002 Stop_angle: 30.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_105_600_32 Starting_volume: 101.5525 Poured_volume: 101.5525 Spilled_volume: 2.525 Received_volume: 92.824997 Stop_angle: 32.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_30_1799_46 Starting_volume: 29.2125 Poured_volume: 29.2125 Spilled_volume: 0.1875 Received_volume: 27.9125 Stop_angle: 46.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_80_1399_42 Starting_volume: 77.265 Poured_volume: 77.265 Spilled_volume: 1.11 Received_volume: 74.482498 Stop_angle: 42.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_150_200_4 Starting_volume: 144.92 Poured_volume: 0.27775000000000005 Spilled_volume: 0.2025 Received_volume: 0.07525000000000004 Stop_angle: 4.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_95_1799_48 Starting_volume: 91.815 Poured_volume: 91.815 Spilled_volume: 1.705 Received_volume: 89.2425 Stop_angle: 48.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_115_1799_24 Starting_volume: 111.1875 Poured_volume: 102.26975440000001 Spilled_volume: 3.2825 Received_volume: 98.98725440000001 Stop_angle: 24.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_30_1000_4 Starting_volume: 29.2125 Poured_volume: 0.060500000000000005 Spilled_volume: 0.0525 Received_volume: 0.008000000000000007 Stop_angle: 4.0 Stop_time: 1.0
+
+Sample_folder: ../../output/CellFlask/Flask_80_200_20 Starting_volume: 77.265 Poured_volume: 50.17925 Spilled_volume: 0.2125 Received_volume: 49.966750000000005 Stop_angle: 20.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_110_1000_10 Starting_volume: 106.2375 Poured_volume: 15.996750000000002 Spilled_volume: 0.1225 Received_volume: 15.874250000000002 Stop_angle: 10.0 Stop_time: 1.0
+
+Sample_folder: ../../output/CellFlask/Flask_40_1799_16 Starting_volume: 38.7675 Poured_volume: 10.00725 Spilled_volume: 0.08 Received_volume: 9.92725 Stop_angle: 16.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_80_600_24 Starting_volume: 77.265 Poured_volume: 65.08425 Spilled_volume: 0.4275 Received_volume: 64.65675 Stop_angle: 24.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_50_1399_42 Starting_volume: 48.1775 Poured_volume: 48.1775 Spilled_volume: 0.8075 Received_volume: 45.702499 Stop_angle: 42.0 Stop_time: 1.4
+
+Sample_folder: ../../output/CellFlask/Flask_90_600_26 Starting_volume: 86.865 Poured_volume: 79.9315011 Spilled_volume: 0.795 Received_volume: 79.1365011 Stop_angle: 26.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_50_200_20 Starting_volume: 48.1775 Poured_volume: 24.1945011 Spilled_volume: 0.1375 Received_volume: 24.0570011 Stop_angle: 20.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_95_600_36 Starting_volume: 91.815 Poured_volume: 91.815 Spilled_volume: 1.4825 Received_volume: 86.654999 Stop_angle: 36.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_145_1799_14 Starting_volume: 140.1 Poured_volume: 68.1257489 Spilled_volume: 0.9725 Received_volume: 67.15324890000001 Stop_angle: 14.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_70_1799_16 Starting_volume: 67.5025 Poured_volume: 29.85675 Spilled_volume: 0.1375 Received_volume: 29.719250000000002 Stop_angle: 16.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_25_600_18 Starting_volume: 24.3825 Poured_volume: 6.011500000000001 Spilled_volume: 0.09 Received_volume: 5.921500000000001 Stop_angle: 18.0 Stop_time: 0.6
+
+Sample_folder: ../../output/CellFlask/Flask_150_1799_10 Starting_volume: 144.92 Poured_volume: 32.6205011 Spilled_volume: 0.1925 Received_volume: 32.428001099999996 Stop_angle: 10.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_35_200_40 Starting_volume: 34.0325 Poured_volume: 34.0325 Spilled_volume: 0.2375 Received_volume: 31.577499 Stop_angle: 40.0 Stop_time: 0.2
+
+Sample_folder: ../../output/CellFlask/Flask_130_1799_50 Starting_volume: 125.7825 Poured_volume: 125.7825 Spilled_volume: 8.0 Received_volume: 117.102501 Stop_angle: 50.0 Stop_time: 1.8
+
+Sample_folder: ../../output/CellFlask/Flask_90_600_44 Starting_volume: 86.865 Poured_volume: 86.865 Spilled_volume: 1.3125 Received_volume: 84.120003 Stop_angle: 44.0 Stop_time: 0.6
+
