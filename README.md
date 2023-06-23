@@ -28,7 +28,7 @@ Please refer to the specific folders of the project for installation details for
 For a general setup using conda, do:
 
 ```python
-git clone https://github.com/DaniSchober/thesis
+git clone https://github.com/DaniSchober/LabLiquidVision
 ```
 ```python
 conda env create -f environment.yml
