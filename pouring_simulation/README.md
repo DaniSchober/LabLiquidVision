@@ -32,6 +32,15 @@ In the main file, the general simulation specifications are defined. Additionall
 ## Usage
 Make sure that the requirements are met. To
 
+To create a .exe file from a Visual Studio project, you need to build the project in Release mode. By default, Visual Studio generates the executable file in the project's output directory, which is typically the "bin\Release" or "bin\x64\Release" folder. Here's how you can create a .exe file:
+
+1. Open your project in Visual Studio.
+2. Ensure that the project configuration is set to "Release" and the platform is set to the appropriate target platform (e.g., x86, x64).
+3. Build the project by selecting "Build" > "Build Solution" from the menu or pressing Ctrl+Shift+B.
+4. Once the build process completes successfully, navigate to the output directory of your project. You can find this directory in the Solution Explorer under the project node or by browsing to the project's folder on your file system.
+5. Look for the generated .exe file within the output directory. The name of the .exe file will typically match the project name or the name specified in the project settings.
+6. You can now distribute and run the generated .exe file on the target machine.
+
 ## <a id="platforms"></a> Supported Platforms
 
 * Windows 32/64 bit (CUDA, DX11, DX12)
