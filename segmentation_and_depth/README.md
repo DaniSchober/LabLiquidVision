@@ -95,7 +95,7 @@ Project Organization
     │
     ├── models             <- Location where trained models are saved. Contains final model "segmentation_depth_model.torch"
     │
-    ├── notebooks          <- Notebooks for testing of segmentation on a subset of self generated dataset, and plotting the loss.
+    ├── notebooks          <- Notebooks for testing of segmentation on a subset of self generated dataset, plotting the loss, and visualizing the point clouds.
     │    
     ├── output             <- Results of model evaluation.
     │
