@@ -69,7 +69,7 @@ An exemplary output of the model can be seen here:
 
 The following presents a visualization of the point clouds created from the segmented depth maps from the model using the camera intrinsics from the Intel RealSense D415. The `pyrealsense2` library was used to get the camera intrinsics.
 
-
+![Input_RGBImage](https://github.com/DaniSchober/thesis/assets/75242605/6be3f2ac-d6e1-4cfa-ad8b-b822920e8090)
 
 https://github.com/DaniSchober/thesis/assets/75242605/a1096c6c-0e34-4347-8025-4a76970b652f
 
