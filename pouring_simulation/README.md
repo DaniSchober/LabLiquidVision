@@ -20,13 +20,13 @@ Please write description here.
 
 ## <a id="explanation"></a> Basic Explanation
 
-The simulation is done in NVIDIA Flex. NVIDIA Flex is a GPU-based particle simulation library that allows realistic and interactive simulations of flexible and deformable materials. It allows to create visually compelling effects such as fluid simulations, cloth simulation, and destruction effects in real-time. By harnessing the power of the GPU, NVIDIA Flex delivers high-performance and highly scalable simulations.
+The simulation is done in NVIDIA Flex. NVIDIA Flex is a GPU-based particle simulation library that allows realistic and interactive simulations of flexible and deformable materials. It allows to create of visually compelling effects such as fluid simulations, cloth simulations, and destruction effects in real-time. By harnessing the power of the GPU, NVIDIA Flex delivers high-performance and highly scalable simulations.
 
-The provided code is usign NVIDIA Flex to create a program that simulates the pouring of a liquid from one container to another. Two containers used in cell culture processes were simulated. 
-For each container, there is a seperate scene header file, which defines the classes named 'Pouring_Flask' and 'Pouring_Bottle', which inherit from a base class called Scene.
-These classes contain member variables and functions for simulating the pouring process. The 'Initialize' function initializes the simulation by creating the pouring and receiving containers, setting fluid parameters, and creating an emitter for the fluid particles. The 'Update' function is called every frame to update the simulation. The 'InPouringContainer' and 'InReceivingFlask' functions check if a particle is inside the pouring or receiving container, respectively. The results of each scene (TCP positions, parameters, and volume vs. theta) are saved in seperate text files.
+The provided code uses NVIDIA Flex to create a simulation of the pouring of a liquid from one container to another. Two containers used in cell culture processes were simulated. 
+For each container, there is a separate scene header file, which defines the classes named 'Pouring_Flask' and 'Pouring_Bottle', which inherit from a base class called Scene.
+These classes contain member variables and functions for simulating the pouring process. The 'Initialize' function initializes the simulation by creating the pouring and receiving containers, setting fluid parameters, and creating an emitter for the fluid particles. The 'Update' function is called every frame to update the simulation. The 'InPouringContainer' and 'InReceivingFlask' functions check if a particle is inside the pouring or receiving container, respectively. The results of each scene (TCP positions, parameters, and volume vs. theta) are saved in separate text files.
 
-In the main file, the general simulation specifications are defined. Additionally, the code generates multiple pouring scenes with different parameters for flasks and bottles, as well as a calibration scene, and stores them in the g_scenes vector. The counts of flask and bottle scenes are printed at the end. The varied parameters are the starting volume in the pouring container, the maximum angle of the pouring, and the duration of the waiting time at the maximum angle. The rotation speed stays constant. The simulation uses the object files stored in the 'data' folder (receiving and pouring containers), and stores the results of the each scene in the 'output' folder. The starting positions of the containers as well as the size of the liquid emitter can be modified in the configuration files of the 'data' folder.
+In the main file, the general simulation specifications are defined. Additionally, the code generates multiple pouring scenes with different parameters for flasks and bottles, as well as a calibration scene, and stores them in the g_scenes vector. The counts of flask and bottle scenes are printed at the end. The varied parameters are the starting volume in the pouring container, the maximum angle of the pouring, and the duration of the waiting time at the maximum angle. The rotation speed stays constant. The simulation uses the object files stored in the 'data' folder (receiving and pouring containers) and stores the results of each scene in the 'output' folder. The starting positions of the containers, as well as the size of the liquid emitter, can be modified in the configuration files of the 'data' folder.
 
 
 ## Usage
@@ -54,7 +54,7 @@ A D3D11 capable graphics card with the following driver versions:
 * AMD Radeon Software Version 16.9.1 or above
 * Intel® Graphics Version 15.33.43.4425 or above
 
-To build the demo at least one of the following is required:
+To build the demo, at least one of the following is required:
 
 * Microsoft Visual Studio 2013
 * Microsoft Visual Studio 2015
@@ -67,7 +67,11 @@ And either:
 
 ## <a id="information"></a> Further Information
 
-For further information about the installation please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
+For further information about the installation, please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
+
+
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/2282241b-7776-4f27-8715-334d02c7aebd
 
 
 
