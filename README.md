@@ -34,7 +34,7 @@ git clone https://github.com/DaniSchober/LabLiquidVision
 conda env create -f environment.yml
 ```
 ```python
-conda activate thesis
+conda activate labliquidvision
 ```
 
 ## Usage
