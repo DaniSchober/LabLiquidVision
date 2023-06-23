@@ -181,7 +181,7 @@ public:
 
 
 		////////////////////// Change location of water emitter //////////////////////////////////////////////
-		Vec3 center = Vec3(TCP_x, TCP_y + 1, 0.0f); // puts emitter in the middle of the pouring container
+		Vec3 center = Vec3(TCP_x, TCP_y + 1.2, 0.0f); // puts emitter in the middle of the pouring container
 		Emitter e; // create emitter object
 		e.mEnabled = true;
 		e.mWidth = int(emitterSize / restDistance);
@@ -199,7 +199,7 @@ public:
 		// The particles are spawned once every eight of a second.  It creates a number of
 		// particles proportional to the area of the emitter.  Five seconds is then added to
 		// let the water settle
-		startTime = g_numExtraParticles / 700 + 10; // time to emit particles and let the liquid settle
+		startTime = g_numExtraParticles / 800 + 10; // time to emit particles and let the liquid settle
 		g_emit = false;
 
 		theta_vs_volume_file.open(path + "/theta_vs_volume.txt");
@@ -245,9 +245,6 @@ public:
 		// Defaults to 60Hz
 		mTime += g_dt;
 
-
-
-		// the scene settle before moving
 		if (mTime > 0.5) {
 			g_emit = true;
 		}

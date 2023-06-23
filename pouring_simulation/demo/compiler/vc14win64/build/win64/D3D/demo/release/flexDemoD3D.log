@@ -1,0 +1,75 @@
+﻿  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\debugLineVS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\debugLinePS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\imguiPS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\imguiVS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\meshPS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\meshShadowPS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\meshVS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\pointVS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\pointGS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\pointPS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\diffuseVS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\diffuseGS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\diffusePS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\ellipsoidDepthVS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\ellipsoidDepthGS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\ellipsoidDepthPS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\passThroughVS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\blurDepthPS.hlsl.h
+  compilation header save succeeded; see C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\d3d11\shaders\compositePS.hlsl.h
+  imgui.cpp
+  main.cpp
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(74): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(183): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(194): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(195): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(199): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(277): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(282): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(453): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(454): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(455): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(69): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(196): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(202): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(281): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(287): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(482): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(483): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(484): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(81): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(88): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(177): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(194): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+..\..\main.cpp(2841): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  aabbtree.cpp
+  core.cpp
+  extrude.cpp
+  maths.cpp
+  mesh.cpp
+  perlin.cpp
+  pfm.cpp
+  platform.cpp
+  sdf.cpp
+  tga.cpp
+  voxelize.cpp
+  appD3D11Ctx.cpp
+  diffuseRender.cpp
+  fluidRender.cpp
+  imguiGraph.cpp
+  imguiGraphD3D11.cpp
+  meshRender.cpp
+  pointRender.cpp
+  Compiling...
+  renderTarget.cpp
+  shadersD3D11.cpp
+  shadowMap.cpp
+     Creating library ./../../../bin/win64\NvFlexDemoReleaseD3D_x64.lib and object ./../../../bin/win64\NvFlexDemoReleaseD3D_x64.exp
+  Generating code
+  2522 of 2539 functions (99.3%) were compiled, the rest were copied from previous compilation.
+    87 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  flexDemoD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\compiler\vc14win64\./../../../bin/win64\NvFlexDemoReleaseD3D_x64.exe
+  flexDemoD3D.vcxproj -> ./../../../bin/win64\/NvFlexDemoReleaseD3D_x64.exe.pdb (Full PDB)

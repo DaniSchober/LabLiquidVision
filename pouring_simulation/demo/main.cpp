@@ -1778,8 +1778,11 @@ int DoUI()
 
 		imguiEndScrollArea();
 
+		
+		
 		if (g_tweakPanel)
 		{
+			/*
 			static int scroll = 0;
 
 			imguiBeginScrollArea("Options", uiLeft, g_screenHeight - uiBorder - uiHeight - uiOffset - uiBorder, uiWidth, uiHeight, &scroll);
@@ -1820,9 +1823,12 @@ int DoUI()
 				g_drawContacts = !g_drawContacts;
 
 			imguiSeparatorLine();
+			*/
 
 			// scene options
 			g_scenes[g_scene]->DoGui();
+
+		
 
 		if (imguiButton("Reset Scene"))
 			g_resetScene = true;
@@ -2834,7 +2840,7 @@ int main(int argc, char* argv[])
 	}
 	*/
 
-	for (int start_vol = 220; start_vol <= 500; start_vol += 10) {
+	for (int start_vol = 370; start_vol <= 500; start_vol += 10) {
 		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) {
 			for (int stop_angle = 30; stop_angle <= 90; stop_angle += 4) {
 				count_scenes_bottle++;
