@@ -16,6 +16,7 @@ Please write description here.
 - [Requirements](#requirements)
 - [Further Information](#information)
 - [Usage](#usage)
+- [Results](#results)
 
 
 ## <a id="explanation"></a> Basic Explanation
@@ -69,7 +70,9 @@ And either:
 
 For further information about the installation, please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
 
+## Results
 
+Demonstration of the simulation-to-reality experiment procedure of pouring from the media/washing solution bottle using a UR5e:
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/2282241b-7776-4f27-8715-334d02c7aebd
 
