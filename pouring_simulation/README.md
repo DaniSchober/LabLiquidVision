@@ -44,7 +44,7 @@ run_cuda.bat
 run_dx.bat
 ```
 
-To change the simulation, mainly the 
+To change the simulation, mainly the `data` folder, the `demo/main.cpp' file and the `demo/
 
 To create a .exe file from a Visual Studio project, you need to build the project in Release mode. By default, Visual Studio generates the executable file in the project's output directory, which is typically the "bin\Release" or "bin\x64\Release" folder. Here's how you can create a .exe file:
 
