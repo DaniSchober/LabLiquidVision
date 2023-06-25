@@ -51,16 +51,14 @@ The defined TCP is always relative to the origin defined in the `.obj` file.
 
 To change the parameter space or the pouring object used in a specific scene, the scene creation in the `main.cpp` file needs to be changed.
 
-The rest of the settings can be adapted directly in the specific scene files. The calibration scene (a 500 mL container for the particle/volume calculation) is defined in the `calibration.h` file.
+The rest of the settings can be adapted directly in the specific scene files. The calibration scene (a 500 mL container for the particle/volume calculation) is defined in the `calibration.h` file. The pouring scene with the 400 mL cell culture flask is defined in `pouring_flask.h`, and the pouring with the Gibco 500 mL bottle in the `pouring_bottle.h` file. In these files, the liquid parameters, the trajectory of the pouring movement, and the particle counting can be changed.
 
-To create a .exe file from a Visual Studio project, you need to build the project in Release mode. By default, Visual Studio generates the executable file in the project's output directory, which is typically the "bin\Release" or "bin\x64\Release" folder. Here's how you can create a .exe file:
+To create a new .exe file after the changes from the Visual Studio project, you need to build the project in Release mode. Here's how you can create a .exe file:
 
-1. Open your project in Visual Studio.
-2. Ensure that the project configuration is set to "Release" and the platform is set to the appropriate target platform (e.g., x86, x64).
+1. Open the project in Visual Studio.
+2. Ensure that the project configuration is set to "Release" and the platform is set to the appropriate target platform (x64).
 3. Build the project by selecting "Build" > "Build Solution" from the menu or pressing Ctrl+Shift+B.
-4. Once the build process completes successfully, navigate to the output directory of your project. You can find this directory in the Solution Explorer under the project node or by browsing to the project's folder on your file system.
-5. Look for the generated .exe file within the output directory. The name of the .exe file will typically match the project name or the name specified in the project settings.
-6. You can now distribute and run the generated .exe file on the target machine.
+4. Once the build process completes successfully, the `.exe` file is saved in the `bin` folder and can be started using `run_cuda.bat` or `run_dx.bat`.
 
 ## <a id="platforms"></a> Supported Platforms
 
