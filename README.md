@@ -5,7 +5,7 @@
 [![NVIDIA Flex](https://img.shields.io/badge/NVIDIA-Flex-green)](https://developer.nvidia.com/flex)
 ![Python](https://img.shields.io/badge/Python-3.9-blue)
 ![C++](https://img.shields.io/badge/C++-11-orange) 
-![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
+
 
 ## Description
 
