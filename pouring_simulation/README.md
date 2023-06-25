@@ -35,7 +35,16 @@ These classes contain member variables and functions for simulating the pouring 
 In the main file, the general simulation specifications are defined. Additionally, the code generates multiple pouring scenes with different parameters for flasks and bottles, as well as a calibration scene, and stores them in the g_scenes vector. The counts of flask and bottle scenes are printed at the end. The varied parameters are the starting volume in the pouring container, the maximum angle of the pouring, and the duration of the waiting time at the maximum angle. The rotation speed stays constant. The simulation uses the object files stored in the 'data' folder (receiving and pouring containers) and stores the results of each scene in the 'output' folder. The starting positions of the containers, as well as the size of the liquid emitter, can be modified in the configuration files of the 'data' folder.
 
 ## Usage
-Make sure that the requirements are met. To start the implemented pouring simulation, just run the 
+Make sure that the requirements are met. To start the implemented pouring simulation, just run one of the following from the command line:
+
+```
+run_cuda.bat
+```
+```
+run_dx.bat
+```
+
+To change the simulation, mainly the 
 
 To create a .exe file from a Visual Studio project, you need to build the project in Release mode. By default, Visual Studio generates the executable file in the project's output directory, which is typically the "bin\Release" or "bin\x64\Release" folder. Here's how you can create a .exe file:
 
