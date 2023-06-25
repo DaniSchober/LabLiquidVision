@@ -46,7 +46,12 @@ run_dx.bat
 
 To change the simulation, mainly the `data` folder, the `demo/main.cpp' file, and the `demo/scenes/` files are important.
 
-To change the pouring and/or receiving container, add the `.obj` file of the new container and a configuration file with the same name and the `.cfg` ending into the `data` folder. 
+To change the pouring and/or receiving container, add the `.obj` file of the new container and a configuration file with the same name and the `.cfg` ending into the `data` folder. The config files contain the following information: 
+
+1. TCP_x (inches)
+2. TCP_y (inches)
+3. Distance from TCP to CoR (inches)
+4. Emitter diameter (inches) 
 
 To create a .exe file from a Visual Studio project, you need to build the project in Release mode. By default, Visual Studio generates the executable file in the project's output directory, which is typically the "bin\Release" or "bin\x64\Release" folder. Here's how you can create a .exe file:
 
