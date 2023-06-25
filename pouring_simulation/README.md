@@ -4,6 +4,11 @@
 [![NVIDIA Flex](https://img.shields.io/badge/NVIDIA-Flex-green)](https://developer.nvidia.com/flex)
 ![C++](https://img.shields.io/badge/C++-11-orange)
 
+The aim of this part of the project is to be able to use the vision-based liquid volume prediction for the pouring container to subsequently take the results from the simulation to get the required robot movement to pour a specific amount of the predicted liquid volume into the target vessel. The idea is visualized in the following picture.
+
+![Idea_Pouring](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/22f34bab-c1ff-4e21-8b93-68bc24e62e57)
+
+
 ## Description
 
 ![Screenshot 2023-05-26 143110](https://github.com/DaniSchober/thesis/assets/75242605/45cbc248-175e-48ff-95da-4e0a2bf3932f)
@@ -29,9 +34,17 @@ These classes contain member variables and functions for simulating the pouring 
 
 In the main file, the general simulation specifications are defined. Additionally, the code generates multiple pouring scenes with different parameters for flasks and bottles, as well as a calibration scene, and stores them in the g_scenes vector. The counts of flask and bottle scenes are printed at the end. The varied parameters are the starting volume in the pouring container, the maximum angle of the pouring, and the duration of the waiting time at the maximum angle. The rotation speed stays constant. The simulation uses the object files stored in the 'data' folder (receiving and pouring containers) and stores the results of each scene in the 'output' folder. The starting positions of the containers, as well as the size of the liquid emitter, can be modified in the configuration files of the 'data' folder.
 
-
 ## Usage
-Make sure that the requirements are met. To
+Make sure that the requirements are met. To start the implemented pouring simulation, just run one of the following from the command line:
+
+```
+run_cuda.bat
+```
+```
+run_dx.bat
+```
+
+To change the simulation, mainly the `data` folder, the `demo/main.cpp' file and the `demo/
 
 To create a .exe file from a Visual Studio project, you need to build the project in Release mode. By default, Visual Studio generates the executable file in the project's output directory, which is typically the "bin\Release" or "bin\x64\Release" folder. Here's how you can create a .exe file:
 
