@@ -97,9 +97,15 @@ Demonstration of the simulation-to-reality experiment procedure of pouring from 
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6e451f05-4713-47eb-9a30-be0326475e82
 
-Demonstration of the simulation-to-reality transfer (start volume: 130 mL, stop angle: 70°, stop time: 1.8s)
+Demonstration of the simulation-to-reality transfer for the media/washing solution bottle (start volume: 130 mL, stop angle: 70°, stop time: 1.8s)
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bcdc487d-3ae4-42a1-b1f2-a3ff76be1d6f
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/fdb614cc-5dbc-4781-afe1-ce0905711a20
+
+Demonstration of the simulation-to-reality transfer for the cell culture flask 400 mL (start volume: 30 mL, stop angle: 18°, stop time: 0.6s)
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/4e8628c3-f662-4428-8c60-f079eb56bbaf
+
+
 
 
 
