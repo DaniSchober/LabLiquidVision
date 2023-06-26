@@ -97,6 +97,10 @@ Demonstration of the simulation-to-reality experiment procedure of pouring from 
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/2282241b-7776-4f27-8715-334d02c7aebd
 
+Demonstration of the simulation-to-reality transfer (start volume: 130 mL, stop angle: 70°, stop time: 1.8s)
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bcdc487d-3ae4-42a1-b1f2-a3ff76be1d6f
+
 
 
 
