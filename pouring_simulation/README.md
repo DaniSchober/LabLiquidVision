@@ -95,7 +95,7 @@ For further information about the installation, please refer to the [NVIDIA Flex
 
 Demonstration of the simulation-to-reality experiment procedure of pouring from the media/washing solution bottle using a UR5e:
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/2282241b-7776-4f27-8715-334d02c7aebd
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6e451f05-4713-47eb-9a30-be0326475e82
 
 Demonstration of the simulation-to-reality transfer (start volume: 130 mL, stop angle: 70°, stop time: 1.8s)
 
