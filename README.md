@@ -4,11 +4,12 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![NVIDIA Flex](https://img.shields.io/badge/NVIDIA-Flex-green)](https://developer.nvidia.com/flex)
 ![Python](https://img.shields.io/badge/Python-3.9-blue)
-![C++](https://img.shields.io/badge/C++-11-orange)
+![C++](https://img.shields.io/badge/C++-11-orange) 
+
 
 ## Description
 
-This work explores how computer vision-based liquid detection and handling can be integrated with robotic systems to develop a comprehensive and versatile automation system for cell culture applications for low throughput. The main idea of the project is visualized in [solution](#solution). It consists of four main subprojects, that can be found in [subprojects](#subprojects).
+This work explores how computer vision-based liquid detection and handling can be integrated with robotic systems to develop a comprehensive and versatile automation system for cell culture applications for low throughput. The main idea of the project is visualized in [solution](#solution). It consists of four main subprojects that can be found in [subprojects](#subprojects).
 ## Table of Contents
 
 - [Installation](#installation)
@@ -25,7 +26,7 @@ This work explores how computer vision-based liquid detection and handling can b
 
 Please refer to the specific folders of the project for installation details for the specific use.
 
-For a general setup using conda, do:
+For a general setup using conda, do the following:
 
 ```python
 git clone https://github.com/DaniSchober/LabLiquidVision
