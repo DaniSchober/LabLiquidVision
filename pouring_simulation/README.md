@@ -11,11 +11,9 @@ The aim of this part of the project is to be able to use the vision-based liquid
 ## Table of Contents
 
 - [Basic Explanation](#explanation)
-- [Supported Platforms](#platforms)
-- [Requirements](#requirements)
-- [Further Information](#information)
 - [Usage](#usage)
-- [Results](#results)
+- [Requirements](#requirements)
+- [Results & Videos](#results)
 
 
 ## <a id="explanation"></a> Basic Explanation
@@ -30,6 +28,31 @@ In the main file, the general simulation specifications are defined. Additionall
 
 ![Pouring_Bottle](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/98932a03-626c-491b-a0c8-84631a8608ad)
 
+## Requirements
+
+Supported Platforms:
+
+* Windows 32/64 bit (CUDA, DX11, DX12)
+* Linux 64 bit (CUDA, tested with Ubuntu 16.04 LTS and Mint 17.2 Rafaela)
+
+A D3D11 capable graphics card with the following driver versions:
+
+* NVIDIA GeForce Game Ready Driver 396.45 or above
+* AMD Radeon Software Version 16.9.1 or above
+* Intel® Graphics Version 15.33.43.4425 or above
+
+To build the demo, at least one of the following is required:
+
+* Microsoft Visual Studio 2013
+* Microsoft Visual Studio 2015
+* g++ 4.6.3 or higher
+
+And either: 
+
+* CUDA 9.2.148 toolkit
+* DirectX 11/12 SDK
+
+For further information about the installation, please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
 
 ## Usage
 Make sure that the requirements are met. To start the implemented pouring simulation, just run one of the following from the command line:
@@ -63,35 +86,7 @@ To create a new .exe file after the changes from the Visual Studio project, you 
 3. Build the project by selecting "Build" > "Build Solution" from the menu or pressing Ctrl+Shift+B.
 4. Once the build process completes successfully, the `.exe` file is saved in the `bin` folder and can be started using `run_cuda.bat` or `run_dx.bat`.
 
-## <a id="platforms"></a> Supported Platforms
-
-* Windows 32/64 bit (CUDA, DX11, DX12)
-* Linux 64 bit (CUDA, tested with Ubuntu 16.04 LTS and Mint 17.2 Rafaela)
-
-## Requirements
-
-A D3D11 capable graphics card with the following driver versions:
-
-* NVIDIA GeForce Game Ready Driver 396.45 or above
-* AMD Radeon Software Version 16.9.1 or above
-* Intel® Graphics Version 15.33.43.4425 or above
-
-To build the demo, at least one of the following is required:
-
-* Microsoft Visual Studio 2013
-* Microsoft Visual Studio 2015
-* g++ 4.6.3 or higher
-
-And either: 
-
-* CUDA 9.2.148 toolkit
-* DirectX 11/12 SDK
-
-## <a id="information"></a> Further Information
-
-For further information about the installation, please refer to the [NVIDIA Flex repository](https://github.com/NVIDIAGameWorks/FleX).
-
-## Results
+## <a id="results"></a> Results & Videos
 
 Demonstration of the simulation-to-reality experiment procedure of pouring from the media/washing solution bottle using a UR5e:
 
