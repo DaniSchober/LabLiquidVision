@@ -1,2 +1,34 @@
-﻿  flexDemoD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\compiler\vc14win64\./../../../bin/win64\NvFlexDemoDebugD3D_x64.exe
+﻿  main.cpp
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(74): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(99): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(183): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(194): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(195): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(199): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(277): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(282): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(453): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(454): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_flask.h(455): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(69): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(99): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(184): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(196): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(202): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(278): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(284): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(479): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(480): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/pouring_bottle.h(481): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(81): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(88): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(177): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(194): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+..\..\main.cpp(627): warning C4305: '=': truncation from 'double' to 'float'
+..\..\main.cpp(2826): warning C4305: 'argument': truncation from 'double' to 'float'
+..\..\main.cpp(2827): warning C4305: 'argument': truncation from 'double' to 'float'
+..\..\main.cpp(2828): warning C4305: 'argument': truncation from 'double' to 'float'
+..\..\main.cpp(2829): warning C4305: 'argument': truncation from 'double' to 'float'
+  flexDemoD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\compiler\vc14win64\./../../../bin/win64\NvFlexDemoDebugD3D_x64.exe
   flexDemoD3D.vcxproj -> ./../../../bin/win64\/NvFlexDemoDebugD3D_x64.exe.pdb (Full PDB)
