@@ -2,7 +2,8 @@
 import argparse
 import src.data.make_dataset as make_dataset  # uncommented for without torch
 import tkinter as tk
-import src.models.predict_vol as predict_vol
+from src.models_no_vol.predict_full_pipeline import predict_no_vol
+from src.models_input_vol.predict_full_pipeline import predict_with_vol
 
 
 def main():
@@ -31,35 +32,7 @@ def main():
         "--image_path",
         type=str,
         default="",
-        help="Path to image",
-    )
-
-    parser.add_argument(
-        "--batch_size",
-        type=int,
-        default=6,
-        help="Batch size",
-    )
-
-    parser.add_argument(
-        "--epochs",
-        type=int,
-        default=80,
-        help="Number of epochs",
-    )
-
-    parser.add_argument(
-        "--load_model",
-        type=bool,
-        default=False,
-        help="Load model",
-    )
-
-    parser.add_argument(
-        "--use_labpics",
-        type=bool,
-        default=True,
-        help="Use lab pictures",
+        help="Path to image for prediction",
     )
 
     parser.add_argument(
@@ -98,54 +71,79 @@ def main():
         help="Path to folder containing the .npy files",
     )
 
+    parser.add_argument(
+        "--input_vol",
+        type=bool,
+        default=False,
+        help="Use input volume",
+    )
+
+    parser.add_argument(
+        "--vessel_volume",
+        type=int,
+        default=0,
+        help="Volume of vessel",
+    )
+
+
     args = parser.parse_args()
 
-    # print args with "args"
-    # print("Args: " + str(args))
+    if args.input_vol == False:
+        # if train then train else predict
+        if args.mode == "train":
+            print("Training model")
+            import src.models_no_vol.train_model
 
-    # if train then train else predict
-    if args.mode == "train":
-        print("Training model")
-        import src.models.train_model
+        elif args.mode == "predict":
+            # start src.models.predict_model.py
+            print("Predicting model")
+            predict_no_vol(args.image_path, predict_volume=True, save_segmentation=False, save_depth=False)
 
-        # train_model_epochs.train(args.batch_size, args.epochs, args.load_model, args.use_labpics)
+        elif args.mode == "test":
+            print("Testing model")
+            import src.models_no_vol.test_model
 
-    elif args.mode == "predict":
-        # start src.models.predict_model.py
-        print("Predicting model")
-        predict_vol.predict(args.folder_path)
-        # predict_model.predict(model_path=args.model_path, image_path=args.image_path)
+        elif args.mode == "convert":
+            print("Converting dataset")
+            print("This might take a while...")
+            make_dataset.create_converted_dataset(
+                path_input=args.path_input,
+                path_output=args.path_output,
+                model_path=args.model_path,
+            )
 
-    elif args.mode == "test":
-        print("Testing model")
-        import src.models.test_model
+        elif args.mode == "record":
+            # start src.data.make_dataset.py
+            from src.data.record_data import App
 
-    elif args.mode == "convert":
-        # start src.data.make_dataset.py
-        print("Converting dataset")
-        print("This might take a while...")
-        make_dataset.create_converted_dataset(
-            path_input=args.path_input,
-            path_output=args.path_output,
-            model_path=args.model_path,
-        )
+            print("Recording dataset")
+            if __name__ == "__main__":
+                root = tk.Tk()
+                app = App(root)
+                root.mainloop()
 
-    elif args.mode == "record":
-        # start src.data.make_dataset.py
-        from src.data.record_data import App
+        else:
+            print("Invalid argument")
+            print("Please enter train or predict or convert or record")
 
-        print("Recording dataset")
-        if __name__ == "__main__":
-            root = tk.Tk()
-            app = App(root)
-            root.mainloop()
+    elif args.input_vol == True:
+        # if train then train else predict
+        if args.mode == "train":
+            print("Training model")
+            import src.models_input_vol.train_model
 
-    else:
-        print("Invalid argument")
-        print("Please enter train or predict or convert or record")
+        elif args.mode == "predict":
+            # start src.models.predict_model.py
+            print("Predicting volume of liquid in vessel")
+            predict_with_vol(args.image_path, predict_volume=True, save_segmentation=False, save_depth=False, vessel_volume=args.vessel_volume)
 
-    # end main function
-    # return args
+        elif args.mode == "test":
+            print("Testing model")
+            import src.models_input_vol.test_model
+
+        else:
+            print("Invalid argument")
+            print("Please enter train or predict or test or change input_vol to False")
 
 
 if __name__ == "__main__":

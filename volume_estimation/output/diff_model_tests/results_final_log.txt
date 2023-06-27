@@ -1,5 +1,5 @@
 Mean of actual volume:  185.39743589743588
-RMSE liquid:  38.777285764272165
+RMSE liquid:  37.900161471642484
 Mean percentage error test set:  16.959163720248448 %
 R2 score test set:  0.9364674451433468
 R2 score test set:  0.9364674451433468
@@ -7,8 +7,6 @@ Max error:  323.8976745605469
 Sample with max error:  185
 Min error:  0.002643585205078125
 Sample with min error:  461
-
-
 
 
 RMSE Cell_Flask_160mL : 74.64087906914885
@@ -217,3 +215,112 @@ R2 score Tube_50mL : 0.9374000893279721
 Mean percentage error Tube_50mL : 8.723748165917417 %
 Max error Tube_50mL : 9.666515350341797
 Min error Tube_50mL : 0.13335418701171875
+
+// Input vessel volume new
+
+Mean of actual volume:  185.39743589743588
+RMSE liquid:  17.83236876544534
+Mean percentage error test set:  9.392513077912954 %
+R2 score test set:  0.9865643222468911
+Max error:  118.70365905761719
+Samples with max error:  [189  44 185]
+Min error:  0.0021724700927734375
+Samples with min error:  [345 162 364]
+
+
+
+
+RMSE Cell_Flask_160mL : 20.887233133264253
+Mean liquid volume Cell_Flask_160mL : 115.21739130434783
+R2 score Cell_Flask_160mL : 0.9045754554615271
+Mean percentage error Cell_Flask_160mL : 14.442031062762108 %
+Max error Cell_Flask_160mL : 118.70365905761719
+Min error Cell_Flask_160mL : 0.2969169616699219
+
+
+RMSE Cell_Flask_400mL : 29.87527514923282
+Mean liquid volume Cell_Flask_400mL : 277.463768115942
+R2 score Cell_Flask_400mL : 0.9620523755183804
+Mean percentage error Cell_Flask_400mL : 12.40498310085961 %
+Max error Cell_Flask_400mL : 84.45881652832031
+Min error Cell_Flask_400mL : 0.45074462890625
+
+
+RMSE Duran_100mL : 5.176695588706687
+Mean liquid volume Duran_100mL : 54.3125
+R2 score Duran_100mL : 0.967394937583623
+Mean percentage error Duran_100mL : 9.796952092415404 %
+Max error Duran_100mL : 15.403213500976562
+Min error Duran_100mL : 0.02289581298828125
+
+
+RMSE Duran_250mL : 11.295248854370882
+Mean liquid volume Duran_250mL : 142.29268292682926
+R2 score Duran_250mL : 0.9697996964186377
+Mean percentage error Duran_250mL : 8.785180623005532 %
+Max error Duran_250mL : 41.83082580566406
+Min error Duran_250mL : 0.1459503173828125
+
+
+RMSE Duran_500mL : 18.555413328102137
+Mean liquid volume Duran_500mL : 302.7076923076923
+R2 score Duran_500mL : 0.9844090865337914
+Mean percentage error Duran_500mL : 4.1110191376418515 %
+Max error Duran_500mL : 76.89007568359375
+Min error Duran_500mL : 0.28643798828125
+
+
+RMSE Gibco_125mL : 9.674502042797908
+Mean liquid volume Gibco_125mL : 85.29268292682927
+R2 score Gibco_125mL : 0.9442706962764831
+Mean percentage error Gibco_125mL : 8.629195043711928 %
+Max error Gibco_125mL : 30.476356506347656
+Min error Gibco_125mL : 0.03720855712890625
+
+
+RMSE Gibco_500mL : 27.09378069190592
+Mean liquid volume Gibco_500mL : 325.45454545454544
+R2 score Gibco_500mL : 0.9682190393403308
+Mean percentage error Gibco_500mL : 10.060265798368713 %
+Max error Gibco_500mL : 118.532958984375
+Min error Gibco_500mL : 0.179229736328125
+
+
+RMSE Pyrex_100mL : 5.366109230860049
+Mean liquid volume Pyrex_100mL : 57.294117647058826
+R2 score Pyrex_100mL : 0.959830190030811
+Mean percentage error Pyrex_100mL : 14.340026362172239 %
+Max error Pyrex_100mL : 16.17070770263672
+Min error Pyrex_100mL : 0.00273895263671875
+
+
+RMSE StorageBottle_250mL : 7.93856956970757
+Mean liquid volume StorageBottle_250mL : 175.04761904761904
+R2 score StorageBottle_250mL : 0.9855243170643362
+Mean percentage error StorageBottle_250mL : 3.5981533715633467 %
+Max error StorageBottle_250mL : 25.2822265625
+Min error StorageBottle_250mL : 0.0393524169921875
+
+
+RMSE StorageBottle_500mL : 11.879754526511547
+Mean liquid volume StorageBottle_500mL : 279.40425531914894
+R2 score StorageBottle_500mL : 0.9942485575161419
+Mean percentage error StorageBottle_500mL : 4.902159358126383 %
+Max error StorageBottle_500mL : 35.77107238769531
+Min error StorageBottle_500mL : 0.32684326171875
+
+
+RMSE Tube_15mL : 1.951216823295223
+Mean liquid volume Tube_15mL : 8.466666666666667
+R2 score Tube_15mL : 0.7731380837950694
+Mean percentage error Tube_15mL : 15.789656721624217 %
+Max error Tube_15mL : 4.346426010131836
+Min error Tube_15mL : 0.06186723709106445
+
+
+RMSE Tube_50mL : 3.6410379768350434
+Mean liquid volume Tube_50mL : 33.03225806451613
+R2 score Tube_50mL : 0.9130580307613584
+Mean percentage error Tube_50mL : 9.66577725901914 %
+Max error Tube_50mL : 8.277225494384766
+Min error Tube_50mL : 0.0021724700927734375
