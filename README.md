@@ -38,10 +38,6 @@ conda env create -f environment.yml
 conda activate labliquidvision
 ```
 
-## Usage
-
-Here you can provide examples of how to use your project, including any command line arguments, sample inputs and outputs, etc.
-
 ## Subprojects
 
 - [System Prototype for Cell Culture Automation](https://github.com/DaniSchober/thesis/tree/main/cell_culture_automation)
