@@ -10,9 +10,13 @@ Please refer to the installation paragrah of the parent repository to create the
 
 ## Dataset 
 
-A new dataset called **LabLiquidVolume**, which contains 5451 images of liquids in laboratory containers including their liquid volume, was created. The images were taken using an Intel RealSense D415 camera. The ground truth of the liquid volume was measured using a Mettler Toledo XSR2002S balance with an accuracy of ± 0.5 mL. Twelve of the most common research laboratory containers, including the consumables used in cell culture processes, were selected for the dataset. 
+A new dataset called **LabLiquidVolume**, which contains 5451 images of liquids in laboratory containers including their liquid volume, was created. The images were taken using an Intel RealSense D415 camera. The ground truth of the liquid volume was measured using a Mettler Toledo XSR2002S balance with an accuracy of ± 0.5 mL. Twelve of the most common research laboratory containers, including the consumables used in cell culture processes, were selected for the dataset. For the processed final dataset, the content of each sample is copied and extended by the output of the segmentation and depth estimation network using the RGB images as input. This includes the segmented liquid and vessel depth maps, the liquid and vessel segmentation masks (each as .png and .npy files), and the unsegmented depth maps of liquid and vessel. Additionally, a combined image is created for easier visualization of the samples, including the original RGB image, the normalized segmented liquid and vessel depth maps, and the liquid and vessel segmentation masks.
 
- To get the dataset and the trained models, run `dvc pull` in this subfolder. 
+To get initial and processed dataset and the trained models, run `dvc pull` in this subfolder. 
+
+## Usage
+
+This repository contains code for training, predicting, testing of models for volume estimation of liquids, and possibilities for new data generation, and data conversion to include the segmentation and depth maps. The main file, `main.py`, handles these operations based on the provided arguments.
 
 ## Data version control
 
