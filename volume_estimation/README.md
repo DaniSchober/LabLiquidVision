@@ -26,13 +26,12 @@ python main.py --mode <mode>  [--model_path <model_path>] [--image_path <image_p
 
 The available modes are:
 
-`train`: Trains a model. If `--use_vessel_volume` is used, a model that takes the volume of the vessel as an additional input is trained. Otherwise, only the segmented depth maps of liquid and vessel are used a input. 
-`predict`: Predicts the volume of liquid in an RGB image. The image can be changed by using `--image_path`. If `--use_vessel_volume` is used, the model including the vessel volume input is used. The vessel volume can be provided using `--vessel_volume`.  
-`test`: Tests the model. If `--use_vessel_volume` is used, the model that takes the volume of the vessel as an additional input is tested. Otherwise, only the model trained with the segmented depth maps of liquid and vessel is tested. The folder for testing can be changed using `--folder_path`.
-`record`: Records new samples for the dataset. A user interface is opened to simplify the data generation. The vessel name, liquid volume, and liquid color need to be provided by the user. Every sample gets saved in a new subfolder in `data/interim`.
-`convert`: Converts the dataset.
-
-`predict_on_depth_maps`: Predicts the volume of liquid based on depth maps.
+- `train`: Trains a model. If `--use_vessel_volume` is used, a model that takes the volume of the vessel as an additional input is trained. Otherwise, only the segmented depth maps of liquid and vessel are used a input. 
+- `predict`: Predicts the volume of liquid in an RGB image. The image can be changed by using `--image_path`. If `--use_vessel_volume` is used, the model including the vessel volume input is used. The vessel volume can be provided using `--vessel_volume`.  
+- `test`: Tests the model. If `--use_vessel_volume` is used, the model that takes the volume of the vessel as an additional input is tested. Otherwise, only the model trained with the segmented depth maps of liquid and vessel is tested. The folder for testing can be changed using `--folder_path`.
+- `record`: Records new samples for the dataset. A user interface is opened to simplify the data generation. The vessel name, liquid volume, and liquid color need to be provided by the user. Every sample gets saved in a new subfolder in `data/interim`.
+- `convert`: Converts the dataset.
+- `predict_on_depth_maps`: Predicts the volume of liquid based on depth maps.
 
 ## Data version control
 
