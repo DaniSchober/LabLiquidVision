@@ -44,6 +44,29 @@ Optional arguments:
 - `--path_input`: Path to the input dataset for conversion (default: "data/interim").
 - `--path_output`: Path to the output dataset for conversion (default: "data/processed").
 
+Please note that some modes require additional arguments. Make sure to provide the necessary arguments based on the chosen mode.
+
+### Exemplary usage
+
+**Training a model**:
+
+```python
+python main.py --mode train --folder_path data/processed --num_epochs 200
+```
+
+**Testing a model**:
+```python
+python main.py --mode test --folder_path data/processed
+```
+
+**Predicting the volume of liquid inside a transparent container in an RGB image (PNG or JPEG format)**:
+```python
+python main.py --mode predict --image_path example/image.png --no_GPU
+```
+
+```python
+
+```
 
 ## Data version control
 
