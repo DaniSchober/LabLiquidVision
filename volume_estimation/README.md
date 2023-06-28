@@ -21,7 +21,7 @@ This repository contains code for training, predicting, testing of models for vo
 The `main.py` can be used with the following command:
 
 ```python
-python main.py --mode <mode>  [--model_path <model_path>] [--image_path <image_path>] [--path_input <path_input>] [--path_output <path_output>] [--folder_path <folder_path>] [--num_epochs <num_epochs>] [--vessel_volume <vessel_volume>] [--use_vessel_volume]  [--no_GPU]
+python main.py --mode <mode> [--image_path <image_path>] [--folder_path <folder_path>] [--num_epochs <num_epochs>] [--vessel_volume <vessel_volume>] [--use_vessel_volume] [--no_GPU] [--path_input <path_input>] [--path_output <path_output>] [--model_path <model_path>]
 ```
 
 The available modes are:
@@ -30,8 +30,8 @@ The available modes are:
 - `predict`: Predicts the volume of liquid in an RGB image. The image can be changed by using `--image_path`. If `--use_vessel_volume` is used, the model including the vessel volume input is used. The vessel volume can be provided using `--vessel_volume`.  
 - `test`: Tests the model. If `--use_vessel_volume` is used, the model that takes the volume of the vessel as an additional input is tested. Otherwise, only the model trained with the segmented depth maps of liquid and vessel is tested. The folder for testing can be changed using `--folder_path`.
 - `record`: Records new samples for the dataset. A user interface is opened to simplify the data generation. The vessel name, liquid volume, and liquid color need to be provided by the user. Every sample gets saved in a new subfolder in `data/interim`.
-- `convert`: Converts the dataset.
-- `predict_on_depth_maps`: Predicts the volume of liquid based on depth maps.
+- `convert`: Converts the generated data to the processed dataset. The path for the input data can be defined using `--path_input`, the path for the processed data using `--path_output`. The segmentation and depth maps are generated using the model defined using `--model_path`
+- `predict_on_depth_maps`: Predicts the volume of liquid based on already generated segmented depth maps of liquid and vessel. A random sample from `data/processed` will be selected for the prediction.
 
 ## Data version control
 
