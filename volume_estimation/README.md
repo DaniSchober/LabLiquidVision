@@ -4,6 +4,15 @@ Volume Estimation of Liquids in Transparent Vessels in Research Laboratory Envir
 
 The aim is to **predict the volume of liquids inside transparent vessels** present in research laboratories based on a single RGB image. For the input of the volume estimation model, the described [segmentation and depth estimation network](https://github.com/DaniSchober/thesis/tree/main/segmentation_and_depth) is used first to create the segmented depth maps of vessels and liquids. A vision-based volume estimation can be used for various robotic tasks in- and outside of research laboratories. Exemplary use cases for research laboratories are the autonomous pouring of liquids based on a known starting volume or the control of liquid materials in a self-driving laboratory. Almost empty vessels could be detected and automatically replaced using a mobile robot. To the author's knowledge, no similar two-step approach for the vision-based estimation of liquid volume has been used.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Dataset](#dataset)
+- [Usage](#usage)
+- [Exemplary Output](#output)
+- [Results](#results)
+- [Project Organisation](#orga)
+
 ## Installation
 
 Please refer to the installation paragraph of the parent repository to create the required conda environment.
@@ -18,7 +27,7 @@ An overview of the content of the **LabLiquidVolume** dataset can be seen here:
 
 ![Samples_LabLiquidVolume](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/fd755746-a141-4903-8db5-0e50177b0714)
 
-Further examples of the recorded RGB images that demonstrate the diversity of the dataset, can be seen here:
+Further examples of the recorded RGB images that demonstrate the diversity of the dataset can be seen here:
 
 ![Overview_LabLiquidVolume](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/0eb59423-b0f0-4e4f-a261-faf5465663ee)
 
@@ -92,7 +101,8 @@ python main.py --mode record
 python main.py --mode convert --path_input data/interim --path_output data/processed --model_path ../segmentation_and_depth/models/segmentation_and_depth.torch
 ```
 
-## Exemplary output
+## <a id="output"></a> Exemplary output
+
 An exemplary output of the model for the prediction based on a single RGB image  is visualized here. 
 
 ![RGBImagevisualize](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/365fa1a4-873e-46a9-8d4e-363c79715c71)
@@ -124,14 +134,15 @@ To get the data:
 * git pull
 * dvc pull
 
-Project Organization
+## <a id="orga"></a> Project Organization
+
 ------------
 
     ├── LICENSE
     ├── README.md                  <- The top-level README for developers using this project.
     ├── data
     │   ├── interim                <- Intermediate data recorded with the camera.
-    │   └── processed              <- The final, canonical data set for modeling. Includes the segmented depth maps.
+    │   └── processed              <- The final canonical data set for modeling. Includes the segmented depth maps.
     │    
     ├── models                     <- Location of the saved models. Contains two models: (1) volume_model_no_vol.pth (2) volume_model_with_vol.pth
     │
