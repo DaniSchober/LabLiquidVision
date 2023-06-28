@@ -129,23 +129,22 @@ Project Organization
     │
     ├── notebooks                  <- Jupyter notebooks for plotting and data analysis.
     │
-    │
     ├── requirements.txt           <- The requirements file for reproducing the analysis environment.
     │
-    ├── setup.py                   <- makes project pip installable (pip install -e .) so src can be imported
+    ├── setup.py                   <- makes project pip installable (pip install -e .) so src can be imported.
     ├── src                        <- Source code for use in this project.
     │   ├── __init__.py            <- Makes src a Python module
     │   │
-    │   ├── data                   <- Scripts to generate, convert and load data
-    │   │   ├── dataloader.py   
-    │   │   ├── make_dataset.py    
-    │   │   └── record_data.py
+    │   ├── data                   <- Scripts to generate, convert and load data.
+    │   │   ├── dataloader.py      <- Dataloader for training and testing.
+    │   │   ├── make_dataset.py    <- Script for converting the data using the segmentation and depth estimation model.
+    │   │   └── record_data.py     <- Script for recording new data including a simple user interface.
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
+    │   ├── models_1_no_vol        <- Scripts to train models without vessel volume input and then use trained models to make predictions 
+    │   │   ├── predict_model.py
+    │   │   ├── predict_model.py
+    │   │   ├── predict_model.py
+    │   │   ├── predict_model.py
     │   │   ├── predict_model.py
     │   │   └── train_model.py
     │   │
