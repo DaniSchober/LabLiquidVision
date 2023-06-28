@@ -84,8 +84,10 @@ python main.py --mode record
 python main.py --mode convert --path_input data/interim --path_output data/processed --model_path ../segmentation_and_depth/models/segmentation_and_depth.torch
 ```
 
+## Exemplary output
+An exemplary output of the model for the prediction based on a single RGB image  is visualized here. 
 
-
+![RGBImagevisualize](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/322fa16f-d5a4-456d-8679-1b2caf0dc4e7)
 
 ## Data version control
 
