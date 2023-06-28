@@ -37,7 +37,7 @@ Optional arguments:
 - `--no_GPU`: Disables GPU usage for prediction.
 - `--image_path`: Path to the image for prediction (default: "example/image.png").
 - `--folder_path`: Path to the folder containing the converted LabLiquidVolume dataset (default: "data/processed/").
-- `--use_vessel_volume`: If that is selected, the training, testing, and predictions are done using the volume of the vessel as an additional input.
+- `--use_vessel_volume`: If that is selected, the training, testing, and predictions are done using the volume of the vessel (in mL) as an additional input.
 - `--vessel_volume`: Volume of the vessel as input for the prediction when `--use_vessel_volume` is used (default: 0).
 - `--num_epochs`: Number of epochs to train for (default: 200).
 - `--model_path`: Path to the model for dataset conversion (default: "../segmentation_and_depth/models/segmentation_and_depth.torch").
@@ -59,14 +59,33 @@ python main.py --mode train --folder_path data/processed --num_epochs 200
 python main.py --mode test --folder_path data/processed
 ```
 
-**Predicting the volume of liquid inside a transparent container in an RGB image (PNG or JPEG format)**:
+**Predicting the volume of liquid inside a transparent container in an RGB image without providing the vessel volume (PNG or JPEG format)**:
 ```python
 python main.py --mode predict --image_path example/image.png --no_GPU
 ```
 
+**Predicting the volume of liquid inside a transparent container in an RGB image WITH providing the vessel volume (PNG or JPEG format)**:
 ```python
-
+python main.py --mode predict --image_path example/image.png --vessel_volume 100 --no_GPU --use_vessel_volume
 ```
+
+**Predicting the volume of liquid inside a transparent container based on segmented depth maps of liquid and vessel**:
+```python
+python main.py --mode predict_on_depth_maps --folder_path data/processed
+```
+
+**Recording new data for the dataset (requires a connected Intel RealSense D415)**
+```python
+python main.py --mode record
+```
+
+**Converting the dataset to include the segmented depth maps of liquids and vessels**
+```python
+python main.py --mode convert --path_input data/interim --path_output data/processed --model_path ../segmentation_and_depth/models/segmentation_and_depth.torch
+```
+
+
+
 
 ## Data version control
 
