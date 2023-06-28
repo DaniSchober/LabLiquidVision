@@ -1,8 +1,18 @@
-Volume Estimation
+Volume Estimation of Liquids in Transparent Vessels in Research Laboratory Environments
 ==============================
 ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
 
-Estimate the amount of liquid based on an RGB image
+The aim is to **predict the volume of liquids inside transparent vessels** present in research laboratories based on a single RGB image. For the input of the volume estimation model, the described [segmentation and depth estimation network](https://github.com/DaniSchober/thesis/tree/main/segmentation_and_depth) is used first to create the segmented depth maps of vessels and liquids. A vision-based volume estimation can be used for various robotic tasks in- and outside of research laboratories. Exemplary use cases for research laboratories are the autonomous pouring of liquids based on a known starting volume or the control of liquid materials in a self-driving laboratory. Almost empty vessels could be detected and automatically replaced using a mobile robot. To the author's knowledge, no similar two-step approach for the vision-based estimation of liquid volume has been used.
+
+## Installation
+
+Please refer to the installation paragrah of the parent repository to create the required conda environment.
+
+## Dataset 
+
+A new dataset called **LabLiquidVolume**, which contains 5451 images of liquids in laboratory containers including their liquid volume, was created. The images were taken using an Intel RealSense D415 camera. The ground truth of the liquid volume was measured using a Mettler Toledo XSR2002S balance with an accuracy of ± 0.5 mL. Twelve of the most common research laboratory containers, including the consumables used in cell culture processes, were selected for the dataset. 
+
+ To get the dataset and the trained models, run `dvc pull` in this subfolder. 
 
 ## Data version control
 
