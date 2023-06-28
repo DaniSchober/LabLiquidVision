@@ -33,6 +33,18 @@ The available modes are:
 - `convert`: Converts the generated data to the processed dataset. The path for the input data can be defined using `--path_input`, the path for the processed data using `--path_output`. The segmentation and depth maps are generated using the model defined using `--model_path`
 - `predict_on_depth_maps`: Predicts the volume of liquid based on already generated segmented depth maps of liquid and vessel. A random sample from `data/processed` will be selected for the prediction.
 
+Optional arguments:
+-`--no_GPU`: Disables GPU usage for prediction.
+-`--image_path`: Path to the image for prediction (default: "example/image.png").
+-`--folder_path`: Path to the folder containing the converted LabLiquidVolume dataset (default: "data/processed/").
+-`--use_vessel_volume`: If that is selected, the training, testing, and predictions are done using the volume of the vessel as an additional input.
+-`--vessel_volume`: Volume of the vessel as input for the prediction when `--use_vessel_volume` is used (default: 0).
+-`--num_epochs`: Number of epochs to train for (default: 200).
+-`--model_path`: Path to the model for dataset conversion (default: "../segmentation_and_depth/models/segmentation_and_depth.torch").
+-`--path_input`: Path to the input dataset for conversion (default: "data/interim").
+-`--path_output`: Path to the output dataset for conversion (default: "data/processed").
+
+
 ## Data version control
 
 To upload new data:
