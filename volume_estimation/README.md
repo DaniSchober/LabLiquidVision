@@ -6,17 +6,22 @@ The aim is to **predict the volume of liquids inside transparent vessels** prese
 
 ## Installation
 
-Please refer to the installation paragrah of the parent repository to create the required conda environment.
+Please refer to the installation paragraph of the parent repository to create the required conda environment.
 
 ## Dataset 
 
-A new dataset called **LabLiquidVolume**, which contains 5451 images of liquids in laboratory containers including their liquid volume, was created. The images were taken using an Intel RealSense D415 camera. The ground truth of the liquid volume was measured using a Mettler Toledo XSR2002S balance with an accuracy of ± 0.5 mL. Twelve of the most common research laboratory containers, including the consumables used in cell culture processes, were selected for the dataset. For the processed final dataset, the content of each sample is copied and extended by the output of the segmentation and depth estimation network using the RGB images as input. This includes the segmented liquid and vessel depth maps, the liquid and vessel segmentation masks (each as .png and .npy files), and the unsegmented depth maps of liquid and vessel. Additionally, a combined image is created for easier visualization of the samples, including the original RGB image, the normalized segmented liquid and vessel depth maps, and the liquid and vessel segmentation masks.
+A new dataset called **LabLiquidVolume**, which contains 5451 images of liquids in laboratory containers, including their liquid volume, was created. The images were taken using an Intel RealSense D415 camera. The ground truth of the liquid volume was measured using a Mettler Toledo XSR2002S balance with an accuracy of ± 0.5 mL. Twelve of the most common research laboratory containers, including the consumables used in cell culture processes, were selected for the dataset. For the processed final dataset, the content of each sample is copied and extended by the output of the segmentation and depth estimation network using the RGB images as input. This includes the segmented liquid and vessel depth maps, the liquid and vessel segmentation masks (each as .png and .npy files), and the unsegmented depth maps of liquid and vessel. Additionally, a combined image is created for easier visualization of the samples, including the original RGB image, the normalized segmented liquid and vessel depth maps, and the liquid and vessel segmentation masks.
 
-To get initial and processed dataset and the trained models, run `dvc pull` in this subfolder. 
+To get the initial and processed dataset and the trained models, run `dvc pull` in this subfolder. 
+
+An overview of the content of the **LabLiquidVolume** dataset can be seen here:
+
+![Samples_LabLiquidVolume](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/fd755746-a141-4903-8db5-0e50177b0714)
+
 
 ## Usage
 
-This repository contains code for training, predicting, testing of models for volume estimation of liquids, and possibilities for new data generation, and data conversion to include the segmentation and depth maps. The main file, `main.py`, handles these operations based on the provided arguments.
+This repository contains code for training, predicting, and testing models for volume estimation of liquids and possibilities for new data generation and data conversion to include the segmentation and depth maps. The main file, `main.py`, handles these operations based on the provided arguments.
 
 The `main.py` can be used with the following command:
 
@@ -26,8 +31,8 @@ python main.py --mode <mode> [--image_path <image_path>] [--folder_path <folder_
 
 The available modes are:
 
-- `train`: Trains a model. If `--use_vessel_volume` is used, a model that takes the volume of the vessel as an additional input is trained. Otherwise, only the segmented depth maps of liquid and vessel are used a input. 
-- `predict`: Predicts the volume of liquid in an RGB image. The image can be changed by using `--image_path`. If `--use_vessel_volume` is used, the model including the vessel volume input is used. The vessel volume can be provided using `--vessel_volume`.  
+- `train`: Trains a model. If `--use_vessel_volume` is used, a model that takes the volume of the vessel as an additional input is trained. Otherwise, only the segmented depth maps of liquid and vessel are used as input. 
+- `predict`: Predicts the volume of liquid in an RGB image. The image can be changed by using `--image_path`. If `--use_vessel_volume` is used, the model, which includes the vessel volume input, is used. The vessel volume can be provided using `--vessel_volume`.  
 - `test`: Tests the model. If `--use_vessel_volume` is used, the model that takes the volume of the vessel as an additional input is tested. Otherwise, only the model trained with the segmented depth maps of liquid and vessel is tested. The folder for testing can be changed using `--folder_path`.
 - `record`: Records new samples for the dataset. A user interface is opened to simplify the data generation. The vessel name, liquid volume, and liquid color need to be provided by the user. Every sample gets saved in a new subfolder in `data/interim`.
 - `convert`: Converts the generated data to the processed dataset. The path for the input data can be defined using `--path_input`, the path for the processed data using `--path_output`. The segmentation and depth maps are generated using the model defined using `--model_path`
@@ -37,7 +42,7 @@ Optional arguments:
 - `--no_GPU`: Disables GPU usage for prediction.
 - `--image_path`: Path to the image for prediction (default: "example/image.png").
 - `--folder_path`: Path to the folder containing the converted LabLiquidVolume dataset (default: "data/processed/").
-- `--use_vessel_volume`: If that is selected, the training, testing, and predictions are done using the volume of the vessel (in mL) as an additional input.
+- `--use_vessel_volume`: If that is selected, the training, testing, and predictions are made using the volume of the vessel (in mL) as an additional input.
 - `--vessel_volume`: Volume of the vessel as input for the prediction when `--use_vessel_volume` is used (default: 0).
 - `--num_epochs`: Number of epochs to train for (default: 200).
 - `--model_path`: Path to the model for dataset conversion (default: "../segmentation_and_depth/models/segmentation_and_depth.torch").
@@ -135,10 +140,10 @@ Project Organization
     ├── src                        <- Source code for use in this project.
     │   ├── __init__.py            <- Makes src a Python module
     │   │
-    │   ├── data                   <- Scripts to generate, convert and load data.
+    │   ├── data                   <- Scripts to generate, convert, and load data.
     │   │   ├── dataloader.py      <- Dataloader for training and testing.
     │   │   ├── make_dataset.py    <- Script for converting the data using the segmentation and depth estimation model.
-    │   │   └── record_data.py     <- Script for recording new data including a simple user interface.
+    │   │   └── record_data.py     <- Script for recording new data, including a simple user interface.
     │   │
     │   ├── models_1_no_vol        <- Scripts to train models without vessel volume input and then use trained models to make predictions 
     │   │   ├── predict_model.py
@@ -148,7 +153,7 @@ Project Organization
     │   │   ├── predict_model.py
     │   │   └── train_model.py
     │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
+    │   └── visualization  <- Scripts to create exploratory and results-oriented visualizations
     │       └── visualize.py
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
