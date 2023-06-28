@@ -89,6 +89,20 @@ An exemplary output of the model for the prediction based on a single RGB image 
 
 ![RGBImagevisualize](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/365fa1a4-873e-46a9-8d4e-363c79715c71)
 
+## Results
+The training processes for the liquid volume estimation were performed on a Tesla V100 GPU, which is available in the DTU HPC clusters. The final model was trained for 200 epochs using 90% of the **LabLiquidVolume** 
+dataset. 10% of the training data is used for validation.  All testing results are based on the remaining 10% of the data (545 samples). The input images undergo a downsampling process as part of the preprocessing stage. 
+The final models were trained for 200 epochs with a learning rate of 0.001, a batch size of 8, and a dropout rate of 0.2.
+
+The results of the testing with the model without vessel volume input can be seen here:
+
+![scatter_plot_no_vol_input](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/5c832a16-74ae-4dac-989a-7b6a1539a754)
+
+The results of the testing with the model WITH vessel volume input can be seen here:
+
+![scatter_plot_input_vol](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/95e6af0c-cf07-4d19-aa67-ff88c975c366)
+
+
 ## Data version control
 
 To upload new data:
