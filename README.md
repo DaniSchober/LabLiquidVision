@@ -56,8 +56,8 @@ https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-
 
 The proposed solution consists of three main contributions, each taking a significant step towards building a fully autonomous cell culture system for low throughput. 
 - **System prototype for full robotic automation:** The proposed system includes a UR5e collaborative industrial robot with an Intel RealSense D415 camera, a standard incubator that is adapted for automated opening and closing, a microscope, a unit for heating and cooling of liquids, and a capping and decapping unit. All the additional parts are 3D-printed or custom-built. The entire system is made to fit on one table. The robot arm executes the tasks usually done by human labor. The laboratory technician is only responsible for providing empty input flasks and refilling the required liquids. 
-- **Vision-based transparent object detection and liquid volume estimation:** A vision-based system is developed to detect transparent objects for process monitoring (e.g. how many flasks are present), and to estimate the volume of liquid in the different transparent containers. The first step to achieve this is a deep-learning approach based on the [TransProteus dataset](https://www.cs.toronto.edu/matterlab/TransProteus/). The result of this model is a segmentation and depth estimation of transparent vessels and the liquid inside of them. This model is used to generate a new dataset of images of laboratory containers with liquid content, including their segmentation and depth estimation, and the object and liquid volumes. A new model trained on this dataset estimates the volume of liquid given in a transparent container. This estimation builds the base for autonomous robotic pouring from the given containers. 
-- **Adaptable robotic pouring using fluid simulation:** Instead of pipetting, the autonomous solution is based on robotic pouring. The robot arm movement to pour a desired amount of liquid from a container with varying starting volumes is based on the vision-based estimation of the liquid volume, and the results of a simulation of the pouring movements with the particle-based simulator NVIDIA Flex. This pouring simulation can be adapted to different scenarios and objects also outside of chemical environments.
+- **Vision-based transparent object detection and liquid volume estimation:** A vision-based system is developed to detect transparent objects for process monitoring (e.g. how many flasks are present), and to estimate the volume of liquid in the different transparent containers. The first step to achieve this is a deep-learning approach based on the [TransProteus dataset](https://www.cs.toronto.edu/matterlab/TransProteus/). The result of this model is a segmentation and depth estimation of transparent vessels and the liquid inside of them. This model is used to generate a new dataset of images of laboratory containers with liquid content, including their segmentation and depth estimation and the object and liquid volumes. A new model trained on this dataset estimates the volume of liquid given in a transparent container. This estimation builds the base for autonomous robotic pouring from the given containers. 
+- **Adaptable robotic pouring using fluid simulation:** Instead of pipetting, the autonomous solution is based on robotic pouring. The robot arm movement to pour a desired amount of liquid from a container with varying starting volumes is based on the vision-based estimation of the liquid volume and the results of a simulation of the pouring movements with the particle-based simulator NVIDIA Flex. This pouring simulation can be adapted to different scenarios and objects also outside of chemical environments.
 
 <img src="https://user-images.githubusercontent.com/75242605/236624972-99bd9f4b-c346-44b6-8f89-11d8068a09f8.png" width="700">
 
@@ -72,9 +72,9 @@ The proposed solution consists of three main contributions, each taking a signif
     │  
     ├── report                    <- Contains figures and results presented in the report.
     │   
-    ├── segmentation_and_depth    <- Subproject for training, evaluating and using a CNN for segmentation and depth estimation for liquids and transparent containers from an RGB image.
+    ├── segmentation_and_depth    <- Subproject for training, evaluating, and using a CNN for segmentation and depth estimation for liquids and transparent containers from an RGB image.
     │
-    ├── volume_estimation         <- Subproject for training, evaluating and using a CNN for liquid volume estimation based on an RGB image.
+    ├── volume_estimation         <- Subproject for training, evaluating, and using a CNN for liquid volume estimation based on an RGB image.
     │
     └── environment.yml           <- File for creating a conda environment with all required dependencies.
 --------
@@ -85,7 +85,7 @@ This project is licensed under the terms of the MIT license.
 
 ## Credits
 
-This project was developed in collaboration with [Novo Nordisk](https://www.novonordisk.com/), a global healthcare company that is dedicated to improving the lives of people with diabetes and other chronic diseases. Novo Nordisk provided support and resources for this project, including expert guidance, and access to equipment and facilities.
+This project was developed in collaboration with [Novo Nordisk](https://www.novonordisk.com/), a global healthcare company that is dedicated to improving the lives of people with diabetes and other chronic diseases. Novo Nordisk provided support and resources for this project, including expert guidance and access to equipment and facilities.
 
 ## Contact
 
