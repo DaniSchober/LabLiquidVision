@@ -87,7 +87,7 @@ python main.py --mode convert --path_input data/interim --path_output data/proce
 ## Exemplary output
 An exemplary output of the model for the prediction based on a single RGB image  is visualized here. 
 
-![RGBImagevisualize](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/322fa16f-d5a4-456d-8679-1b2caf0dc4e7)
+![RGBImagevisualize](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/365fa1a4-873e-46a9-8d4e-363c79715c71)
 
 ## Data version control
 
