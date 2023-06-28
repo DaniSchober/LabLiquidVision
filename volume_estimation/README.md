@@ -18,6 +18,11 @@ To get initial and processed dataset and the trained models, run `dvc pull` in t
 
 This repository contains code for training, predicting, testing of models for volume estimation of liquids, and possibilities for new data generation, and data conversion to include the segmentation and depth maps. The main file, `main.py`, handles these operations based on the provided arguments.
 
+The `main.py` can be used with the following command:
+
+```python
+python main.py --mode <mode>  [--model_path <model_path>] [--image_path <image_path>] [--path_input <path_input>] [--path_output <path_output>] [--folder_path <folder_path>] [--num_epochs <num_epochs>] [--vessel_volume <vessel_volume>] [--use_vessel_volume]  [--no_GPU]
+```
 ## Data version control
 
 To upload new data:
