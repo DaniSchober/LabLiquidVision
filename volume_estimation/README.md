@@ -18,6 +18,9 @@ An overview of the content of the **LabLiquidVolume** dataset can be seen here:
 
 ![Samples_LabLiquidVolume](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/fd755746-a141-4903-8db5-0e50177b0714)
 
+Further examples of the recorded RGB images that demonstrate the diversity of the dataset, can be seen here:
+
+![Overview_LabLiquidVolume](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/0eb59423-b0f0-4e4f-a261-faf5465663ee)
 
 ## Usage
 
