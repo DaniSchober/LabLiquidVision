@@ -18,7 +18,7 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 import segmentation_and_depth.src.visualization.visualize as vis
 import segmentation_and_depth.src.models.model as NET_FCN  # The net Class
-from src.models_2_input_vol.model import VolumeNet
+from volume_estimation.src.models_2_input_vol.model import VolumeNet
 
 
 def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, save_depth=False, vessel_volume=0, no_GPU=False):
@@ -119,10 +119,10 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
 
             if nm == "ContentDepth":
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
-                liquid_depth = tmIm
+                liquid_depth = tmIm.copy()
             elif nm == "EmptyVessel_Depth":
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
-                vessel_depth = tmIm
+                vessel_depth = tmIm.copy()
 
             if save_depth == True:
                 if nm in depth2Mask:

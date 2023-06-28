@@ -1,7 +1,6 @@
 import torch
-from src.models_input_vol_testing.model_new import VolumeNet
+from src.models_input_vol_OLD.model_new import VolumeNet
 import numpy as np
-import sys
 import os
 import warnings
 import cv2
@@ -15,7 +14,6 @@ def predict(folder_path):
     model.eval()
 
     # take random folder from data/processed
-
     folder_path = "data/processed"  # Replace with the path to your folder
     subfolders = [
         os.path.join(folder_path, f)

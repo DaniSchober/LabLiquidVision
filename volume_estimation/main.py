@@ -48,7 +48,7 @@ def main():
     parser.add_argument(
         "--image_path",
         type=str,
-        default="example/RGBImage.png",
+        default="example/image.png",
         help="Path to image for prediction",
     )
 

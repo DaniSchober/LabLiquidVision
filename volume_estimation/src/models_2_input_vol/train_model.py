@@ -4,9 +4,9 @@ from sklearn.model_selection import train_test_split
 from src.data.dataloader import VesselCaptureDataset
 from torch.utils.data import DataLoader
 import torch.nn as nn
-from src.models_input_vol_testing.model_new import VolumeNet
+from src.models_2_input_vol.model import VolumeNet
 import statistics
-from src.models_input_vol_testing.validate_model import validate
+from src.models_2_input_vol.validate_model import validate
 import math
 
 '''

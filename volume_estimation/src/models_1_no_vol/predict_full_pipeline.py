@@ -138,10 +138,10 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
 
             if nm == "ContentDepth":
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
-                liquid_depth = tmIm
+                liquid_depth = tmIm.copy()
             elif nm == "EmptyVessel_Depth":
                 tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
-                vessel_depth = tmIm
+                vessel_depth = tmIm.copy()
 
             if save_depth == True:
                 if nm in depth2Mask:
@@ -179,7 +179,6 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
     
     if predict_volume == True:
         liquid_depth = torch.from_numpy(liquid_depth).float()
-
         #convert from log to linear space
         liquid_depth = torch.exp(liquid_depth)
 
@@ -190,7 +189,7 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
             align_corners=False,
         )
         liquid_depth = liquid_depth.squeeze(0)
-        # print(liquid_depth.shape)
+
 
         vessel_depth = torch.from_numpy(vessel_depth).float()
         # convert from log to linear space
@@ -202,12 +201,10 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
             align_corners=False,
         )
         vessel_depth = vessel_depth.squeeze(0)
-        # print(vessel_depth.shape)
+
 
         model = VolumeNet(dropout_rate=0.2)
 
-        # print current location
-        print(os.getcwd())
 
         model_path_volume = (
             r"../volume_estimation/models/volume_model_no_vol.pth"  # Trained model path

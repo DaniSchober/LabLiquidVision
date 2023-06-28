@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 import segmentation_and_depth.src.visualization.visualize as vis
 import segmentation_and_depth.src.models.model as NET_FCN  # The net Class
-from volume_estimation.src.models_no_input_vol.model_new import VolumeNet
+from volume_estimation.src.models_no_input_vol_OLD.model_new import VolumeNet
 
 
 def predict(image_path, predict_volume=False, save_segmentation=False, save_depth=False):
