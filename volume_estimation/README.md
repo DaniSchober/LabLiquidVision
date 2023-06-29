@@ -21,7 +21,7 @@ Please refer to the installation paragraph of the parent repository to create th
 
 A new dataset called **LabLiquidVolume**, which contains 5451 images of liquids in laboratory containers, including their liquid volume, was created. The images were taken using an Intel RealSense D415 camera. The ground truth of the liquid volume was measured using a Mettler Toledo XSR2002S balance with an accuracy of ± 0.5 mL. Twelve of the most common research laboratory containers, including the consumables used in cell culture processes, were selected for the dataset. For the processed final dataset, the content of each sample is copied and extended by the output of the segmentation and depth estimation network using the RGB images as input. This includes the segmented liquid and vessel depth maps, the liquid and vessel segmentation masks (each as .png and .npy files), and the unsegmented depth maps of liquid and vessel. Additionally, a combined image is created for easier visualization of the samples, including the original RGB image, the normalized segmented liquid and vessel depth maps, and the liquid and vessel segmentation masks.
 
-To get the initial and processed dataset and the trained models, run `dvc pull` in this subfolder. 
+To get the initial and processed dataset and the trained models, run `dvc pull data` in this subfolder. 
 
 An overview of the content of the **LabLiquidVolume** dataset can be seen here:
 
@@ -32,6 +32,8 @@ Further examples of the recorded RGB images that demonstrate the diversity of th
 ![Overview_LabLiquidVolume](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/0eb59423-b0f0-4e4f-a261-faf5465663ee)
 
 ## Usage
+
+To get the two main models (`volume_model_no_vol.pth`, `volume_model_with_vol.pth`), run `dvc pull models` inside this subproject. The models get saved in `volume_estimation/models`.  
 
 This repository contains code for training, predicting, and testing models for volume estimation of liquids and possibilities for new data generation and data conversion to include the segmentation and depth maps. The main file, `main.py`, handles these operations based on the provided arguments.
 
