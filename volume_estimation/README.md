@@ -33,7 +33,7 @@ Further examples of the recorded RGB images that demonstrate the diversity of th
 
 ## Usage
 
-To get the two main models (`volume_model_no_vol.pth`, `volume_model_with_vol.pth`), run `dvc pull models` inside this subproject. The models get saved in `volume_estimation\models`.  
+To get the two main models (`volume_model_no_vol.pth`, `volume_model_with_vol.pth`), run `dvc pull models` inside this subproject. The models get saved in `volume_estimation/models`.  
 
 This repository contains code for training, predicting, and testing models for volume estimation of liquids and possibilities for new data generation and data conversion to include the segmentation and depth maps. The main file, `main.py`, handles these operations based on the provided arguments.
 
