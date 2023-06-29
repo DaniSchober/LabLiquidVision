@@ -122,6 +122,62 @@ The results of the testing with the model WITH vessel volume input can be seen h
 
 ![scatter_plot_input_vol](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/95e6af0c-cf07-4d19-aa67-ff88c975c366)
 
+## <a id="orga"></a> Project Organization
+
+------------
+
+    ├── LICENSE
+    ├── README.md                  <- The top-level README for developers using this project.
+    ├── data
+    │   ├── interim                <- Intermediate data recorded with the camera.
+    │   └── processed              <- The final canonical data set for modeling. Includes the segmented depth maps.
+    │
+    ├── example                    <- Exemplary RGB images to run predictions on.
+    │
+    ├── main.py                    <- Main entry point to execute tasks.
+    │    
+    ├── models                     <- Location of the saved models. Contains two models: (1) volume_model_no_vol.pth (2) volume_model_with_vol.pth
+    │
+    ├── notebooks                  <- Jupyter notebooks for plotting and data analysis.
+    │
+    ├── output                     <- Visualizations and results of training and testing.
+    │
+    ├── requirements.txt           <- The requirements file for reproducing the analysis environment.
+    │
+    ├── setup.py                   <- makes project pip installable (pip install -e .) so src can be imported.
+    ├── src                        <- Source code for use in this project.
+    │   ├── __init__.py            <- Makes src a Python module
+    │   │
+    │   ├── data                   <- Scripts to generate, convert, and load data.
+    │   │   ├── dataloader.py      <- Dataloader for training and testing.
+    │   │   ├── make_dataset.py    <- Script for converting the data using the segmentation and depth estimation model.
+    │   │   └── record_data.py     <- Script for recording new data, including a simple user interface.
+    │   │
+    │   ├── models_1_no_vol        <- Scripts to train models without vessel volume input and then use trained models to make predictions. 
+    │   │   ├── model.py           <- Definition of the model architecture.
+    │   │   ├── predict_full_pipeline.py <- Running the liquid volume prediction from an RGB image.
+    │   │   ├── predict_vol.py     <- Running the liquid volume prediction from two segmented depth maps.
+    │   │   ├── test_model.py      <- Test the model performance on part of the dataset.
+    │   │   ├── train_model.py     <- Definition of the training loop.
+    │   │   └── validate_model.py  <- Validate the model during training.
+    │   │
+    │   └── models_2_input_vol     <- Scripts to train models with vessel volume input and then use trained models to make predictions. 
+    │       ├── model.py           <- Definition of the model architecture.
+    │       ├── predict_full_pipeline.py <- Running the liquid volume prediction from an RGB image.
+    │       ├── predict_vol.py     <- Running the liquid volume prediction from two segmented depth maps.
+    │       ├── test_model.py      <- Test the model performance on part of the dataset.
+    │       ├── train_model.py     <- Definition of the training loop.
+    │       └── validate_model.py  <- Validate the model during training.
+    │
+    ├── tox.ini                    <- tox file with settings for running tox; see tox.readthedocs.io 
+    │
+    └── Vessel_Selection.csv       <- Specifications of the objects in the dataset.
+
+
+--------
+
+<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
 
 ## Data version control
 
@@ -135,46 +191,3 @@ To upload new data:
 To get the data:
 * git pull
 * dvc pull
-
-## <a id="orga"></a> Project Organization
-
-------------
-
-    ├── LICENSE
-    ├── README.md                  <- The top-level README for developers using this project.
-    ├── data
-    │   ├── interim                <- Intermediate data recorded with the camera.
-    │   └── processed              <- The final canonical data set for modeling. Includes the segmented depth maps.
-    │    
-    ├── models                     <- Location of the saved models. Contains two models: (1) volume_model_no_vol.pth (2) volume_model_with_vol.pth
-    │
-    ├── notebooks                  <- Jupyter notebooks for plotting and data analysis.
-    │
-    ├── requirements.txt           <- The requirements file for reproducing the analysis environment.
-    │
-    ├── setup.py                   <- makes project pip installable (pip install -e .) so src can be imported.
-    ├── src                        <- Source code for use in this project.
-    │   ├── __init__.py            <- Makes src a Python module
-    │   │
-    │   ├── data                   <- Scripts to generate, convert, and load data.
-    │   │   ├── dataloader.py      <- Dataloader for training and testing.
-    │   │   ├── make_dataset.py    <- Script for converting the data using the segmentation and depth estimation model.
-    │   │   └── record_data.py     <- Script for recording new data, including a simple user interface.
-    │   │
-    │   ├── models_1_no_vol        <- Scripts to train models without vessel volume input and then use trained models to make predictions 
-    │   │   ├── predict_model.py
-    │   │   ├── predict_model.py
-    │   │   ├── predict_model.py
-    │   │   ├── predict_model.py
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results-oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
-
---------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>

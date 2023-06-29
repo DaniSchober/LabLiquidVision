@@ -14,6 +14,7 @@ The aim of this part of the project is to be able to use the vision-based liquid
 - [Usage](#usage)
 - [Requirements](#requirements)
 - [Results & Videos](#results)
+- [Project Organization](#orga)
 
 
 ## <a id="explanation"></a> Basic Explanation
@@ -100,7 +101,39 @@ Demonstration of the simulation-to-reality experiment procedure of pouring from 
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6e451f05-4713-47eb-9a30-be0326475e82
 
+## <a id="orga"></a> Project Organization
 
+------------
+
+    ├── LICENSE
+    ├── README.md                  <- The top-level README for developers using this project.
+    │
+    ├── data                       <- Object files and configuration files for object import.
+    │
+    ├── demo                       <- Main code for the simulation.
+    │   ├── main.cpp               <- Definition of the parameter space, and creation of the required scenes.
+    │   │
+    │   ├── scenes                 <- Header files of the scenes.
+    │   │   ├── calibration.h      <- Calibration scene using a 500 mL bucket.
+    │   │   ├── pouring_bottle.h   <- Scene for pouring from a Gibco 500 mL bottle.
+    │   │   └── pouring_flaks.h    <- Scene for pouring from a 400 mL cell culture flask.
+    │   │   
+    │   └── scenes.h               <- Includes the selected scenes.
+    │
+    ├── output                     <- Results of the simulation scenes.
+    │   ├── CellFlask              <- Detailed results of the cell culture flask pouring scenes.
+    │   │
+    │   ├── MediumBottle           <- Detailed results of the media bottle pouring scenes.
+    │   │
+    │   └── Plots                  <- Plots of the analysis of the parameter space.
+    │      
+    ├── simulation_to_reality      <- Testing scripts and results of the simulation-to-reality transfer to the UR5e.
+    │    
+    ├── run_cuda.bat               <- Running the simulation using cuda.  
+    │
+    └── run_dx.bat                 <- Running the simulation using DX.  
+
+--------
 
 
 
