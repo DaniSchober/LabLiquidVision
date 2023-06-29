@@ -24,6 +24,8 @@ The TransProteus dataset can be downloaded from [here](https://e.pcloud.link/pub
 
 ## Usage
 
+To get the trained model, run `dcv pull` inside this folder. The model called `segmentation_and_depth_model.torch` will be saved in the `models` folder.
+
 The main function takes the following arguments:
 
 - `--mode`: Specify the mode (train, predict, or evaluate).
