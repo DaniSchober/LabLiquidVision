@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from src.data.dataloader import VesselCaptureDataset
 from torch.utils.data import DataLoader
 import torch.nn as nn
-from src.models_no_input_vol.model_new import VolumeNet
+from src.models_no_input_vol_OLD.model_new import VolumeNet
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
