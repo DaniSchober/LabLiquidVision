@@ -2813,7 +2813,7 @@ int main(int argc, char* argv[])
 	}
 	*/
 	
-	for (int start_vol = 380; start_vol <= 500; start_vol += 10) {
+	for (int start_vol = 440; start_vol <= 500; start_vol += 10) {
 		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) {
 			for (int stop_angle = 30; stop_angle <= 90; stop_angle += 4) {
 				count_scenes_bottle++;
