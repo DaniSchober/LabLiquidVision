@@ -3,9 +3,6 @@ import cv2
 from datetime import datetime
 import os
 import numpy as np
-import sys
-import warnings
-
 
 def capture_image():
     pipeline = rs.pipeline()
