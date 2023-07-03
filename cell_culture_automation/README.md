@@ -38,3 +38,97 @@ The functional interconnection of hard- and software is visualized in here:
 
 ![Connection_Setup](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/258beef8-be43-4a33-b67d-bf682ef82842)
 
+## Process and Autonomous Workflow Description
+
+# Autonomous Cell Culture System
+
+The autonomous process of the cell culture system is split into three high-level workflows:
+
+- Workflow A: Analyzing cell growth.
+- Workflow B: Changing media.
+- Workflow C: Passaging.
+
+The system is designed to execute these workflows independently, based on user input or a pre-scheduled plan. To enhance reusability and simplicity, the completion steps for each workflow are structured into modular components.
+
+## Workflow Modules
+
+The following provides a mid-level overview of the purpose of each process module, along with summarized descriptions of the substeps.
+
+1. **Module 1: Get a cell culture flask from the incubator**
+   - Open clamps and door.
+   - Grip the flask.
+   - Move the flask outside.
+   - Close door and clamps.
+
+2. **Module 2: Analyze cells**
+   - Move the flask to the regripping station.
+   - Regrip the flask.
+   - Place the flask on the microscope.
+   - Take images at different positions.
+   - Move back to the start position.
+
+3. **Module 3: Place a flask in a flask holder**
+   - Move to the flask holder.
+   - Place the flask inside.
+   - Move back to the start position.
+
+4. **Module 4: Decap flask(s)**
+   - Move to the flask.
+   - Grip the lid.
+   - Take off the lid.
+   - Place the lid on a lid holder.
+   - Move back to the start position.
+
+5. **Module 5: Remove liquid from a flask**
+   - Take the open flask from a flask holder.
+   - Move to the waste container.
+   - Pour out all the liquid.
+   - Place the flask back into the flask holder.
+
+6. **Module 6: Add liquid to a flask**
+   - Heat up media or washing solution.
+   - Take the bottle.
+   - Decap the bottle.
+   - Regrip the bottle.
+   - Pour a specific amount into the flask.
+   - Regrip the bottle.
+   - Cap the bottle.
+   - Place it back into the bottle holder.
+
+7. **Module 7: Add trypsin to a flask**
+   - Move to the trypsin unit.
+   - Move up the bottle dispenser.
+   - Push it down.
+   - Move back to the start position.
+
+8. **Module 8: Get three empty flasks and place them into the flask holders**
+   - Move to flask storage.
+   - Grip an empty flask.
+   - Move to the flask holder.
+   - Place the flask inside.
+   - Move back to the start position (3 times).
+
+9. **Module 9: Split cells into empty flasks**
+   - Take the full flask from the flask holder.
+   - Move to the empty flasks.
+   - Pour liquid three times.
+   - Place the empty flask into the flask storage.
+
+10. **Module 10: Cap flask(s)**
+    - Get a lid from the lid holder.
+    - Place the lid on a flask.
+    - Cap the flask.
+    - Move back to the start position.
+
+11. **Module 11: Place a flask in the incubator**
+    - Open clamps and door.
+    - Move the flask inside.
+    - Place the flask on the flask storage.
+    - Close door and clamps.
+
+Throughout the implementation of the modules, careful consideration was given to the selection of start and end positions, ensuring the flexibility to arrange them in any order, thus enabling diverse workflows to be executed. The following shows the process diagram for the three primary workflows:
+
+![Workflow_Diagram_Autonomous](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/816a31f1-3683-42bc-9062-77fc7763a962)
+
+
+
