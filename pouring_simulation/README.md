@@ -89,22 +89,25 @@ To create a new .exe file after the changes from the Visual Studio project, you 
 
 ## <a id="results"></a> Results & Videos
 
-Demonstration of the simulation-to-reality transfer for the media/washing solution bottle (start volume: 130 mL, stop angle: 70°, stop time: 1.8s)
+#### Demonstration of the simulation-to-reality transfer for the media/washing solution bottle (start volume: 130 mL, stop angle: 70°, stop time: 1.8s)
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/fdb614cc-5dbc-4781-afe1-ce0905711a20
 
-Demonstration of the simulation-to-reality transfer for the cell culture flask 400 mL (start volume: 30 mL, stop angle: 18°, stop time: 0.6s)
+#### Demonstration of the simulation-to-reality transfer for the cell culture flask 400 mL (start volume: 30 mL, stop angle: 18°, stop time: 0.6s)
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/4e8628c3-f662-4428-8c60-f079eb56bbaf
 
-Demonstration of the simulation-to-reality experiment procedure of pouring from the media/washing solution bottle using a UR5e:
+#### Demonstration of the simulation-to-reality experiment procedure of pouring from the media/washing solution bottle using a UR5e
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6e451f05-4713-47eb-9a30-be0326475e82
 
-Simulations of the pouring with the cell culture flask from different camera angles:
+#### Simulations of the pouring with the cell culture flask from different camera angles
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/a2dd9ad1-54f2-40df-bba2-8e331427c311
 
+#### Simulations of the pouring with the media/washing solution bottle from different camera angles
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/81c2f8df-38dc-482b-856b-fb01ad717b06
 
 ## <a id="orga"></a> Project Organization
 
@@ -116,7 +119,7 @@ https://github.com/DaniSchober/LabLiquidVision/assets/75242605/a2dd9ad1-54f2-40d
     ├── data                       <- Object files and configuration files for object import.
     │
     ├── demo                       <- Main code for the simulation.
-    │   ├── main.cpp               <- Definition of the parameter space, and creation of the required scenes.
+    │   ├── main.cpp               <- Definition of the parameter space and creation of the required scenes.
     │   │
     │   ├── scenes                 <- Header files of the scenes.
     │   │   ├── calibration.h      <- Calibration scene using a 500 mL bucket.
