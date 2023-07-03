@@ -40,8 +40,6 @@ The functional interconnection of hard- and software is visualized in here:
 
 ## Process and Autonomous Workflow Description
 
-# Autonomous Cell Culture System
-
 The autonomous process of the cell culture system is split into three high-level workflows:
 
 - Workflow A: Analyzing cell growth.
@@ -50,7 +48,7 @@ The autonomous process of the cell culture system is split into three high-level
 
 The system is designed to execute these workflows independently, based on user input or a pre-scheduled plan. To enhance reusability and simplicity, the completion steps for each workflow are structured into modular components.
 
-## Workflow Modules
+### Workflow Modules
 
 The following provides a mid-level overview of the purpose of each process module, along with summarized descriptions of the substeps.
 
@@ -125,6 +123,8 @@ The following provides a mid-level overview of the purpose of each process modul
     - Move the flask inside.
     - Place the flask on the flask storage.
     - Close door and clamps.
+
+### Process diagram
 
 Throughout the implementation of the modules, careful consideration was given to the selection of start and end positions, ensuring the flexibility to arrange them in any order, thus enabling diverse workflows to be executed. The following shows the process diagram for the three primary workflows:
 
