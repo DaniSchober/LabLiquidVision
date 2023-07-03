@@ -101,6 +101,11 @@ Demonstration of the simulation-to-reality experiment procedure of pouring from 
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6e451f05-4713-47eb-9a30-be0326475e82
 
+Simulations of the pouring with the cell culture flask from different camera angles:
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/a2dd9ad1-54f2-40df-bba2-8e331427c311
+
+
 ## <a id="orga"></a> Project Organization
 
 ------------
