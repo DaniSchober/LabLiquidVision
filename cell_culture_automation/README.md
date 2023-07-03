@@ -30,4 +30,11 @@ The following external equipment is needed. The rest of the elements can be 3D p
 |     1     | Festo Basic valve LR-D-MINI (546430)          |
 |     1     | Robotiq Hand-E Adaptive Gripper               |
 
+## Connection and Configuration
+
+All the devices are either connected to the UR control box or directly to the PC (Dell Precision 3630 Tower). The connection between the UR5e and its control box and the PC is established by using the UR-RTDE library developed by SDU \cite{SDU2023UniversalInterface}. It provides a real-time interface to exchange I/O data and control the robot arm from an external application or program. The library works by establishing a communication link between the computer and the UR robot arm using an Ethernet connection. It utilizes the Real-Time Data Exchange (RTDE) protocol, which is a proprietary protocol developed by Universal Robots for real-time communication. The pneumatic clamps and the cylinder are controlled by using electrically actuated 5/2-way control valves. These are both connected to two digital output connectors of the UR control box. Each output can control the airflow in one output 6 mm tube of the valve, which is responsible for extending or compressing the clamps and the cylinder. The Robotiq Hand-E gripper is connected to the robot arm by a power and communication cable with a USB adapter. The microscope, camera, and rotary electric gripper are all connected by a USB cable (type 3.0 output) to the PC. While the camera and the gripper can be controlled by using specific Python libraries (pyrealsense2, minimalmodbus), the microscope needs the CytoSMART driver installed on the PC. The entire system is controlled by an application written in Python.
+
+The functional interconnection of hard- and software is visualized in here:
+
+![Connection_Setup](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/258beef8-be43-4a33-b67d-bf682ef82842)
 
