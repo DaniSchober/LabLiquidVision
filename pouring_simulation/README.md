@@ -8,6 +8,8 @@ The aim of this part of the project is to be able to use the vision-based liquid
 
 ![Idea_Pouring](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/22f34bab-c1ff-4e21-8b93-68bc24e62e57)
 
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/1cf20920-f227-4b0d-9103-fe11943135d1
+
 ## Table of Contents
 
 - [Basic Explanation](#explanation)
