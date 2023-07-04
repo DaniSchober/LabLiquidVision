@@ -23,6 +23,7 @@ from volume_estimation.src.models_2_input_vol.model import VolumeNet
 
 def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, save_depth=False, vessel_volume=0, no_GPU=False):
 
+    pred_vol = 0
     model_path = r"../segmentation_and_depth/models/segmentation_depth_model.torch"  # Trained model path
     UseGPU = True  # Use GPU or not
     if no_GPU == True:
@@ -205,6 +206,8 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
         with open(image_path.replace(".png", "volume.txt"), "w") as f:
             print(f"Predicted liquid volume: {round(outputs[0].item())} mL", file=f)
 
+        pred_vol = round(outputs[0].item())
+
         """
         Visualize results    
         """
@@ -303,3 +306,5 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
         plt.savefig(image_path.replace(".png", "visualize.png"))
 
         plt.show()
+        
+    return pred_vol
