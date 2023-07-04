@@ -191,7 +191,10 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
         model_path_volume = (
             r"../volume_estimation/models/volume_model_with_vol.pth"  # Trained model path
         )
-        model.load_state_dict(torch.load(model_path_volume))
+        if UseGPU == True:
+            model.load_state_dict(torch.load(model_path_volume))
+        else:
+            model.load_state_dict(torch.load(model_path_volume, map_location=torch.device("cpu")))
 
         vessel_volume_torch = torch.tensor(int(vessel_volume))
         vessel_volume_torch = vessel_volume_torch.unsqueeze(0)

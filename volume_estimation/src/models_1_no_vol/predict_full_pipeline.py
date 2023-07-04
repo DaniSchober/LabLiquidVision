@@ -209,8 +209,11 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
         model_path_volume = (
             r"../volume_estimation/models/volume_model_no_vol.pth"  # Trained model path
         )
-        model.load_state_dict(torch.load(model_path_volume))
-
+        if UseGPU == True:
+            model.load_state_dict(torch.load(model_path_volume))
+        else:
+            model.load_state_dict(torch.load(model_path_volume, map_location=torch.device("cpu")))
+            
         with torch.no_grad():
             model.eval()
             outputs = model(vessel_depth, liquid_depth)

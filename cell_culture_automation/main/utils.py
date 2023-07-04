@@ -9,6 +9,8 @@ import rtde_receive
 from rtde_control import Path, PathEntry
 import rtde_io
 import os
+import rotation_matrix as rm
+import numpy as np
 
 def connect_robot(ip = "192.168.2.1"):
     rtde_c = rtde_control.RTDEControlInterface(ip) #IP address found on robot
@@ -26,7 +28,7 @@ def pour_flask(start_pos, stop_angle, stop_time, rtde_c, vel_L = 0.007, acc_L = 
     print("To find: ", to_find)
 
     # iterate through all folders in folder_path
-    folder_path = r"../pouring_simulation/output/CellFlask_diff"
+    folder_path = r"../../pouring_simulation/output/CellFlask_diff"
 
     # iterate through all folders in folder_path
     for filename in os.listdir(folder_path):
@@ -98,6 +100,6 @@ def pour_flask(start_pos, stop_angle, stop_time, rtde_c, vel_L = 0.007, acc_L = 
 
     rtde_c.moveL(path_2)
 
-    rtde_c.stopScript()
+    #rtde_c.stopScript()
             
 
