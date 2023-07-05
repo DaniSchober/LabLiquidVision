@@ -13,7 +13,7 @@ def capture_image():
     pipeline.start(config)
 
     # Wait for a coherent color frame
-    for i in range(30):
+    for i in range(10):
         frames = pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
 
