@@ -29,6 +29,7 @@ The function takes the following arguments:
     save_depth: boolean, whether to save depth maps or not
     vessel_volume: integer, volume of vessel
     no_GPU: boolean, whether to use GPU or not
+    show_visualization: boolean, whether to show visualization or not
 
 The function returns the predicted volume of liquid in the vessel.
 
@@ -41,6 +42,7 @@ def predict_with_vol(
     save_depth=False,
     vessel_volume=0,
     no_GPU=False,
+    show_visualization=False,
 ):
     pred_vol = 0
     model_path = r"../segmentation_and_depth/models/segmentation_depth_model.torch"  # Trained model path
@@ -295,7 +297,7 @@ def predict_with_vol(
         # show image
 
         plt.savefig(image_path.replace(".png", "visualize.png"))
-
-        plt.show()
+        if show_visualization == True:
+            plt.show()
 
     return pred_vol
