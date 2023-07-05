@@ -20,9 +20,28 @@ import segmentation_and_depth.src.visualization.visualize as vis
 import segmentation_and_depth.src.models.model as NET_FCN  # The net Class
 from volume_estimation.src.models_2_input_vol.model import VolumeNet
 
+'''
+This function predicts the volume of liquid in a vessel from an image of the vessel.
+The function takes the following arguments:
+    image_path: path to image of vessel
+    predict_volume: boolean, whether to predict volume or not
+    save_segmentation: boolean, whether to save segmentation masks or not
+    save_depth: boolean, whether to save depth maps or not
+    vessel_volume: integer, volume of vessel
+    no_GPU: boolean, whether to use GPU or not
 
-def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, save_depth=False, vessel_volume=0, no_GPU=False):
+The function returns the predicted volume of liquid in the vessel.
 
+'''
+
+def predict_with_vol(
+    image_path,
+    predict_volume=False,
+    save_segmentation=False,
+    save_depth=False,
+    vessel_volume=0,
+    no_GPU=False,
+):
     pred_vol = 0
     model_path = r"../segmentation_and_depth/models/segmentation_depth_model.torch"  # Trained model path
     UseGPU = True  # Use GPU or not
@@ -97,18 +116,13 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
                         tmIm = tmIm - tmIm.min()
                         tmIm = tmIm / tmIm.max() * 255
                     if np.ndim(tmIm) == 2:
-                        tmIm = cv2.cvtColor(
-                            tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR
-                        )
+                        tmIm = cv2.cvtColor(tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR)
 
                 image = Prd[nm].squeeze()
                 image = image / image.max()
                 image = image * 255
                 image = image.astype(np.uint8)
-                cv2.imwrite(
-                    image_path.replace(".png", nm + ".png"), image
-                )
-        
+                cv2.imwrite(image_path.replace(".png", nm + ".png"), image)
 
         if nm in DepthList:
             # copy depth map for visualization
@@ -130,9 +144,7 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
                     # Remove region out side of the object mask from the depth mask
                     tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
                     np.save(
-                        image_path.replace(
-                            ".png", nm + "_segmented.npy"
-                        ),
+                        image_path.replace(".png", nm + "_segmented.npy"),
                         tmIm,
                     )
 
@@ -153,12 +165,10 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
                         image = image.astype(np.uint8)
                         # save image
                         cv2.imwrite(
-                            image_path.replace(
-                                ".png", nm + "_segmented.png"
-                            ),
+                            image_path.replace(".png", nm + "_segmented.png"),
                             image,
                         )
-    
+
     if predict_volume == True:
         liquid_depth = torch.from_numpy(liquid_depth).float()
 
@@ -188,13 +198,13 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
 
         model = VolumeNet(dropout_rate=0.2)
 
-        model_path_volume = (
-            r"../volume_estimation/models/volume_model_with_vol.pth"  # Trained model path
-        )
+        model_path_volume = r"../volume_estimation/models/volume_model_with_vol.pth"  # Trained model path
         if UseGPU == True:
             model.load_state_dict(torch.load(model_path_volume))
         else:
-            model.load_state_dict(torch.load(model_path_volume, map_location=torch.device("cpu")))
+            model.load_state_dict(
+                torch.load(model_path_volume, map_location=torch.device("cpu"))
+            )
 
         vessel_volume_torch = torch.tensor(int(vessel_volume))
         vessel_volume_torch = vessel_volume_torch.unsqueeze(0)
@@ -240,28 +250,6 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
         plt.axis("off")
         # loop over all masks and depth maps
         for nm in Prd:
-            """
-            if nm in MaskList:
-                #count_vis += 1
-                # copy mask for visualization
-                tmIm = Prd[nm][0].copy()
-                # normalize mask to values between 0-255
-                if (
-                    Prd[nm][0].max() > 255
-                    or Prd[nm][0].min() < 0
-                    or np.ndim(Prd[nm][0]) == 2
-                ):
-                    if tmIm.max() > tmIm.min():  #
-                        tmIm[tmIm > 1000] = 0
-                        tmIm = tmIm - tmIm.min()
-                        tmIm = tmIm / tmIm.max() * 255
-                    if np.ndim(tmIm) == 2:
-                        tmIm = cv2.cvtColor(tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR)
-                #plt.subplot(3, 2, count_vis)
-                #plt.imshow(tmIm)
-                #plt.axis("off")
-                #plt.title(nm)
-            """
             if nm in DepthList:
                 count_vis += 1
                 # copy depth map for visualization
@@ -309,5 +297,5 @@ def predict_with_vol(image_path, predict_volume=False, save_segmentation=False, 
         plt.savefig(image_path.replace(".png", "visualize.png"))
 
         plt.show()
-        
+
     return pred_vol

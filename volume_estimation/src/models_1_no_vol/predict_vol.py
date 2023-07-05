@@ -10,8 +10,7 @@ import torch.nn.functional as F
 
 
 def predict(folder_path):
-
-    '''
+    """
 
     Predict the volume of liquid in a vessel from a random folder of depth maps
 
@@ -26,7 +25,7 @@ def predict(folder_path):
     Shows:
         Image with predicted and true volume of liquid
 
-    '''
+    """
 
     # load model
     model = VolumeNet()
@@ -131,4 +130,3 @@ def predict(folder_path):
     mng.window.state("zoomed")
 
     plt.show()
-

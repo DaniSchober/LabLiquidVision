@@ -10,10 +10,11 @@ scale_test_folder = "../data/scale_test"
 def get_distance_selection():
     while True:
         selection = input("Select distance (close, medium, far): ").lower()
-        if selection in ['close', 'medium', 'far']:
+        if selection in ["close", "medium", "far"]:
             return selection
         else:
             print("Invalid selection. Please try again.")
+
 
 # Iterate through all subfolders
 for subfolder in os.listdir(scale_test_folder):
@@ -40,7 +41,7 @@ for subfolder in os.listdir(scale_test_folder):
         # Load and display the image
         image = imread(image_path)
         plt.imshow(image)
-        plt.axis('off')
+        plt.axis("off")
         plt.show()
 
         # Get distance selection from the user

@@ -94,7 +94,6 @@ class VesselCaptureDataset(Dataset):
         segmentation_vessel = np.load(segmentation_vessel_path).astype(np.float32)
         depth_map = np.load(depth_map_path).astype(np.float32)
 
-
         # convert vessel depth map from log to linear
         vessel_depth = np.exp(vessel_depth)
 
@@ -130,7 +129,6 @@ class VesselCaptureDataset(Dataset):
         # scale the depth maps to the ground truth depth
         vessel_depth_scaled = vessel_depth_normalized * ground_truth_depth_vessel
         liquid_depth_scaled = liquid_depth_normalized * ground_truth_depth_liquid
-
 
         # vessel_depth_masked = depth_map * segmentation_vessel
         # ground_truth_depth = vessel_depth_masked[vessel_depth_masked != 0].mean()
@@ -222,7 +220,6 @@ class VesselCaptureDataset(Dataset):
                 align_corners=False,
             )
             liquid_depth_scaled = liquid_depth_scaled.squeeze(0).squeeze(0)
-
 
         # convert from numpy matrix to tensor
         # liquid_depth = torch.from_numpy(liquid_depth)

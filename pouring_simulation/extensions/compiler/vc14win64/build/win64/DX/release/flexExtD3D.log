@@ -1,11 +1,2 @@
-﻿  flexExt.cpp
-     Creating library ./../../../lib/win64/NvFlexExtReleaseD3D_x64.lib and object ./../../../lib/win64/NvFlexExtReleaseD3D_x64.exp
-  Generating code
-  64 of 1869 functions ( 3.4%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    12 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-LINK : warning LNK4199: /DELAYLOAD:d3d11.dll ignored; no imports found from d3d11.dll
-LINK : warning LNK4199: /DELAYLOAD:d3d12.dll ignored; no imports found from d3d12.dll
-  flexExtD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\extensions\compiler\vc14win64\./../../../bin/win64\NvFlexExtReleaseD3D_x64.dll
+﻿  flexExtD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\extensions\compiler\vc14win64\./../../../bin/win64\NvFlexExtReleaseD3D_x64.dll
   flexExtD3D.vcxproj -> ./../../../bin/win64\/NvFlexExtReleaseD3D_x64.dll.pdb (Full PDB)

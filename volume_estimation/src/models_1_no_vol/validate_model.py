@@ -1,22 +1,22 @@
 import torch
 import numpy as np
 
+
 def validate(model, valid_loader, valid_size):
+    """
 
-    '''
-    
-        Validate the model
+    Validate the model
 
-        Args:
-            model (VolumeNet): model to validate
-            valid_loader (DataLoader): data loader for validation data
-            valid_size (int): size of validation set
+    Args:
+        model (VolumeNet): model to validate
+        valid_loader (DataLoader): data loader for validation data
+        valid_size (int): size of validation set
 
-        Returns:
-            loss_liquid (float): loss for liquid volume
-            rmse_liquid (float): RMSE for liquid volume
+    Returns:
+        loss_liquid (float): loss for liquid volume
+        rmse_liquid (float): RMSE for liquid volume
 
-    '''
+    """
     model.eval()
 
     squared_error_liquid_total = 0

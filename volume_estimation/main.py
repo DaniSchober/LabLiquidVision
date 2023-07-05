@@ -7,23 +7,25 @@ from src.models_1_no_vol.test_model import test as test_no_vol
 from src.models_1_no_vol.predict_vol import predict as predict_no_vol_from_depth_maps
 import src.models_1_no_vol.train_model as train_no_vol
 from src.models_2_input_vol.test_model import test as test_with_vol
-from src.models_2_input_vol.predict_vol import predict as predict_with_vol_from_depth_maps
+from src.models_2_input_vol.predict_vol import (
+    predict as predict_with_vol_from_depth_maps,
+)
 import src.models_2_input_vol.train_model as train_with_vol
 
 
-'''
+"""
 
     Main file, starts training, prediction, testing, data recording or data conversion depending on the arguments
     
-'''
+"""
+
 
 def main():
+    """
 
-    '''
+    Main function
 
-        Main function
-
-    '''
+    """
 
     # if input arg is train then train else predict
     parser = argparse.ArgumentParser(description="Volume Estimation")
@@ -101,11 +103,19 @@ def main():
 
         if args.mode == "train":
             print("Training model.")
-            train_no_vol.run_training(data_dir=args.folder_path, num_epochs=args.num_epochs)
+            train_no_vol.run_training(
+                data_dir=args.folder_path, num_epochs=args.num_epochs
+            )
 
         elif args.mode == "predict":
             print("Predicting volume of liquid in image.")
-            predict_no_vol(args.image_path, predict_volume=True, save_segmentation=False, save_depth=False, no_GPU=args.no_GPU)
+            predict_no_vol(
+                args.image_path,
+                predict_volume=True,
+                save_segmentation=False,
+                save_depth=False,
+                no_GPU=args.no_GPU,
+            )
 
         elif args.mode == "test":
             print("Testing model.")
@@ -126,6 +136,7 @@ def main():
 
         elif args.mode == "record":
             from src.data.record_data import App
+
             print("Recording dataset.")
             if __name__ == "__main__":
                 root = tk.Tk()
@@ -141,11 +152,20 @@ def main():
         # if train then train else predict
         if args.mode == "train":
             print("Training model.")
-            train_with_vol.run_training(data_dir=args.folder_path, num_epochs=args.num_epochs)
+            train_with_vol.run_training(
+                data_dir=args.folder_path, num_epochs=args.num_epochs
+            )
 
         elif args.mode == "predict":
             print("Predicting volume of liquid in vessel.")
-            predict_with_vol(args.image_path, predict_volume=True, save_segmentation=False, save_depth=False, vessel_volume=args.vessel_volume, no_GPU=args.no_GPU)
+            predict_with_vol(
+                args.image_path,
+                predict_volume=True,
+                save_segmentation=False,
+                save_depth=False,
+                vessel_volume=args.vessel_volume,
+                no_GPU=args.no_GPU,
+            )
 
         elif args.mode == "test":
             print("Testing model.")
@@ -157,7 +177,9 @@ def main():
 
         else:
             print("Invalid argument!")
-            print("Please enter train or predict or test or do not use --use_vessel_volume.")
+            print(
+                "Please enter train or predict or test or do not use --use_vessel_volume."
+            )
 
 
 if __name__ == "__main__":

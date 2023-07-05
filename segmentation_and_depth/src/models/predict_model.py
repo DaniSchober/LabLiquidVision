@@ -64,7 +64,7 @@ def predict(model_path, image_path):
     model.eval()
 
     # print model architecture
-    #print(model)
+    # print(model)
     # save model architecture to file
     with open("output/model.txt", "w") as f:
         print(model, file=f)
@@ -88,13 +88,12 @@ def predict(model_path, image_path):
 
         # convert depth map from log space to linear space
         Prd[nm] = np.exp(Prd[nm])
-        
+
     for nm in PrdMask:
         # convert to numpy
         Prd[nm] = (PrdMask[nm]).data.cpu().numpy()
 
     print("Predicted Masks and Depth Maps: ", Prd.keys())
-
 
     # create folder to save results
     os.makedirs("example/results/" + time.strftime("%d%m%Y-%H%M%S"), exist_ok=True)
@@ -165,9 +164,7 @@ def predict(model_path, image_path):
             plt.title(nm)
             # save image
 
-    plt.savefig(
-        save_path + "Summary" + ".png", dpi=300
-    )
+    plt.savefig(save_path + "Summary" + ".png", dpi=300)
     plt.show()
 
     # save single results as images
@@ -236,5 +233,3 @@ def predict(model_path, image_path):
             )
 
     print("Results saved in: ", save_path)
-
-

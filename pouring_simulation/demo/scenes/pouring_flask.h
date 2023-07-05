@@ -9,7 +9,7 @@
 #include <math.h>
 #include <direct.h>
 
-
+// This scene creates a pouring simulation with a cell culture flask. The bottle rotates around the CoR, stops at a certain angle, and then returns to its initial position.
 
 class Pouring_Flask : public Scene
 {
@@ -23,7 +23,6 @@ public:
 	ofstream theta_vs_volume_file;
 	ofstream TCP_file;
 	ofstream summary_file;
-
 	NvFlexTriangleMeshId mesh_receiver, pouring_mesh;
 	Vec3 receive_pos;
 	Quat receive_rot;
@@ -50,8 +49,6 @@ public:
 	int not_poured_count;
 	int received_count;
 	int scene_number;
-
-
 	float pause_time = 0.0;
 	bool pause_complete = false;
 	bool pause_started = false;
@@ -82,20 +79,15 @@ public:
 		// get data from config_file of pouring container if it exists --> maybe save there the TCP and center of rotation positions
 		ifstream config_file(pouring_container_path + ".cfg");
 		if (config_file.is_open()) {
-			//printf("Config file found\n");
-			// read in the data from the config file
-
 		}
 		config_file >> TCP_x;
 		config_file >> TCP_y;
 		config_file >> radius_CoR;
 		config_file >> emitterSize;
-
 		pos_x = TCP_x;
 		pos_y = TCP_y;
 		prev_pos_x = TCP_x;
 		prev_pos_y = TCP_y;
-
 		rotationSpeed = 0.03;
 
 		// set drawing options
@@ -113,14 +105,12 @@ public:
 		mesh_receiver = CreateTriangleMesh(receiver);
 
 		receive_pos = Vec3(0.0f, 0.1f, 0.0f); // x, y, z (y is up)! Changing position of the receiving container
-		//receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), -0.244f); // turn around z-axis around 14 degrees (in radians 0.244f)
 		receive_rot = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 0.0f); // turn around z-axis around 14 degrees (in radians 0.244f)
 		AddTriangleMesh(mesh_receiver, receive_pos, receive_rot, 1.0f); // change scale of the receiving container
 
 		//////////////////////////////////////////////////////// Add pouring container ////////////////////////////////////////////////////////////////////////////////
 		// Import mesh of pouring container 
 		Mesh* pourer = ImportMesh(GetFilePathByPlatform((pouring_container_path+".obj").c_str()).c_str());
-
 		// rotate the coordinate system of the pouring container around 90 degrees (so it's horizontal)
 		float angle = -1.5708f; 
 		// Define the axis of rotation
@@ -129,17 +119,13 @@ public:
 		Quat rot = QuatFromAxisAngle(axis, angle);
 		// Rotate the mesh
 		pourer->Transform(RotationMatrix(rot));
-
 		// create triangle mesh of pouring container
 		pouring_mesh = CreateTriangleMesh(pourer);
-
 		// set the initial pouring container position and orientation (TCP_y is the height of the TCP of the container compared to the ground plane)
 		Vec3 pos = Vec3(TCP_x, TCP_y, 0.0f);
 		Quat rot1 = QuatFromAxisAngle(Vec3(0.0f, 0.0f, 1.0f), 1.0f - cosf(0));
-
 		// add initial triangle mesh to the scene
 		AddTriangleMesh(pouring_mesh, pos, rot1, 1.0f);
-		
 		// delete receiver and pourer object 
 		delete receiver;
 		delete pourer;
@@ -148,14 +134,9 @@ public:
 		float radius = 0.1f; // radius of particles
 		float restDistance = radius*0.6f;
 		Vec3 lower = (0.0f, 10.0f, 0.0f);
-		//int x_count = (int)(1.0f / restDistance); //not sure if needed
-		//int y_count = (int)(1.0f / restDistance);
-		//int z_count = (int)(1.0f / restDistance);
-		//int water_phase = NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid);
 		
 		g_numSubsteps = 10;
 		g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f); // blue
-		//g_fluidColor = Vec4(0.9f, 0.5f, 0.5f, 0.5f); // red
 		g_params.radius = radius;
 		g_params.dynamicFriction = 0.0f;
 		g_params.dissipation = 0.0f;
@@ -169,15 +150,11 @@ public:
 		g_params.smoothing = 0.5f;
 		g_params.collisionDistance = g_params.radius*.25f;
 		g_params.shapeCollisionMargin = g_params.collisionDistance*0.05f;
-	
-		// parameters from paper PourNet
 		g_params.viscosity = 0.01f;
 		g_params.cohesion = 0.001f;
 		g_params.vorticityConfinement = 80.0f;
 		g_params.surfaceTension = 0.005f;
 		g_params.adhesion = 0.0001f;
-		// parameters from paper PourNet end
-
 
 		////////////////////// Change location of water emitter //////////////////////////////////////////////
 		Vec3 center = Vec3(TCP_x-0.7, TCP_y + 0.5 , 0.0f); // puts emitter in the middle of the pouring container
@@ -191,42 +168,39 @@ public:
 		g_sceneUpper.z = 5.0f;
 		g_emitters.push_back(e);
 
-		g_numExtraParticles = start_volume*400; // number of particles in the emitter
+		g_numExtraParticles = start_volume*400; // number of particles
 		numStartParticles = g_numExtraParticles;
-		//printf("Num particles %d \n", g_numExtraParticles);
 
-		// The particles are spawned once every eight of a second. 10 seconds is added to let the water settle
 		startTime = g_numExtraParticles / 1500 + 10; // time to emit particles and let the liquid settle
 		g_emit = false;
 
 		theta_vs_volume_file.open(path + "/theta_vs_volume.txt");
 		theta_vs_volume_file << "inside_count" << "\t" << "theta (degrees)" << "\t" << "time (s)" << "\n";
-
 		TCP_file.open(path + "/TCP.txt");
 		TCP_file << "pos_x, " << "pos_y, " << "theta (rad)" << std::endl;
 
 		for (int i = 0; i < g_numExtraParticles; i++) {
 			particle_never_left.push_back(true);
 		}
-
-		//printf("Initialized \n");
 	}
 
 
-
+	// Checking location of particles
 	bool InPouringContainer(Vec4 position, float theta) {
-		return position.y > TCP_y - 1.5; // only checks if the particle is above a certain height
+		return position.y > TCP_y - 1.5; // returns true if particle is in the pouring container
 	}
 
 	bool InReceivingFlask(Vec4 position){
-		return position.y > 0.22188 && position.y < 7;
+		return position.y > 0.22188 && position.y < 7; // returns true if particle is in the receiving flask
 	}
 
+	// Checking if CSV file is empty
 	bool isCSVFileEmpty(const string& filename) {
 		ifstream file(filename);
 		return file.peek() == ifstream::traits_type::eof();
 	}
 
+	// Appending data to CSV file
 	void appendToCSVFile(const std::string& filename, const std::string& data) {
 		std::ofstream file(filename, std::ios_base::app);
 		if (file.is_open()) {
@@ -239,10 +213,8 @@ public:
 
 	void Update()
 	{
-		// Defaults to 60Hz
 		mTime += g_dt;
 
-		// the scene settle before moving
 		if (mTime > 0.5) {
 			g_emit = true;
 		}
@@ -277,7 +249,7 @@ public:
 		float endTime = 3.14 / rotationSpeed;
 		float theta = 0;
 
-		// If true, the cup will stop every stop_angle degrees and wait for the water level to stop changing
+		// If true, the container will stop every stop_angle degrees and wait for the water level to stop changing
 		bool continous = false;
 		float stop_distance = stop_angle*3.14/180;
 		float real_prev_theta = prev_theta;
@@ -300,10 +272,7 @@ public:
 				pos_x = TCP_x + radius_CoR * (1 - cos(theta));
 				pos_y = TCP_y + radius_CoR * sin(theta);
 				
-				//printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
-
 				if (theta > next_stop_threshold) {
-					//printf("Stopped activated: theta: %f\n", theta);
 					pause_start_time = time;
 					next_stop_threshold += stop_distance;
 					stopped = true;
@@ -315,7 +284,6 @@ public:
 		}
 		else if (return_activated && prev_theta > 0) {
 			if (!pause_complete) {
-				//printf("Pausing at max angle: %f for %.2f time\n", prev_theta, pause_time);
 				if (time - pause_start > pause_time) {
 					pause_complete = true;
 					theta = prev_theta;
@@ -339,10 +307,7 @@ public:
 					pos_x = TCP_x + radius_CoR * (1 - cos(theta));
 					pos_y = TCP_y + radius_CoR * sin(theta);
 
-					//printf("pos_x: %f pos_y: %f theta: %f\n", pos_x, pos_y, theta*57.2957795);
-
 					if (theta < next_stop_threshold) {
-						//printf("Stopped activated: theta: %f\n", theta);
 						pause_start_time = time;
 						next_stop_threshold -= stop_distance;
 						stopped = true;
@@ -355,7 +320,6 @@ public:
 		}
 
 		else if (return_activated && prev_theta <= 0) {
-			//printf("Return finished\n");
 			// wait for 1 second before closing the scene
 			if (pause_started == false){
 				pause_start = time;
@@ -383,8 +347,6 @@ public:
 				dataString += to_string(spilled_volume);
 
 				appendToCSVFile(filename, dataString);
-				
-				//printf("Writing to file\n");
 				printf("Scene %i finished\n", scene_number);
 
 				g_scene_finished = true;
@@ -408,7 +370,7 @@ public:
 			else if (InReceivingFlask(g_buffers->positions[i])) {
 				received_count++;
 			}	
-			else if (time > 0.0) {  // Only flag particles once everything has been inited
+			else if (time > 0.0) {
 				particle_never_left[i] = false;
 				numStartParticles--;
 			}
@@ -424,7 +386,6 @@ public:
 		
 		// if stop angle is reached, start pause time and activate the return
 		if (theta > (stop_angle-0.05) * 3.14 / 180 && !return_activated) {
-					//printf("Activated return\n");
 					pause_start = time;
 					return_activated = true;
 				}

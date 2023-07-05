@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <stdio.h>
 
+// This scene is used to calibrate the particle to volume ratio for the pouring simulations. The calibration container has a volume of 500 mL.
 
 class Calibration : public Scene
 {
@@ -36,7 +37,6 @@ public:
 	float prev_pos_y;
 	float emitterSize;
 	int row = 1;
-
 	float pause_time = 1.0;
 	bool pause_complete = false;
 	float stop_angle;
@@ -49,7 +49,7 @@ public:
 
 	Calibration(const char* name, string object_path) : 
 		Scene(name), 
-		container_path(object_path) 	// path to the pouring container (.obj type)
+		container_path(object_path) // path to the pouring container (.obj type)
 		{}
 
 	virtual void Initialize()
@@ -60,11 +60,8 @@ public:
 		ifstream config_file(container_path + ".cfg");
 		if (config_file.is_open()) {
 			printf("Config file found\n");
-			// read in the data from the config file
-
 		}
 		printf("Path %s", container_path.c_str());
-		//float TCP_x, TCP_y, radius;
 		config_file >> TCP_x;
 		config_file >> TCP_y;
 		config_file >> radius_CoR;
@@ -82,7 +79,6 @@ public:
 		std::uniform_real_distribution<float> distribution(sqrt(0.005), sqrt(0.1));
 		rotationSpeed = distribution(generator);
 		rotationSpeed *= rotationSpeed;
-		//rotationSpeed = 0.05;
 
 		// create generator for random stop angle betweem 45 and 135 degrees
 		std::default_random_engine generator2(chrono::steady_clock::now().time_since_epoch().count());
@@ -112,7 +108,7 @@ public:
 		mTime = 0.0f;
 
 
-		//////////////////////////////////////////////////////// Add pouring container ////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////// Add container ////////////////////////////////////////////////////////////////////////////////
 		// Import mesh of pouring container 
 		Mesh* container = ImportMesh(GetFilePathByPlatform((container_path+".obj").c_str()).c_str());
 
@@ -142,10 +138,6 @@ public:
 		float radius = 0.1f; // radius of particles
 		float restDistance = radius*0.6f;
 		Vec3 lower = (0.0f, 10.0f, 0.0f);
-		//int x_count = (int)(1.0f / restDistance); //not sure if needed
-		//int y_count = (int)(1.0f / restDistance);
-		//int z_count = (int)(1.0f / restDistance);
-		//int water_phase = NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid);
 		
 		g_numSubsteps = 10;
 		g_fluidColor = Vec4(0.2f, 0.6f, 0.9f, 1.0f); // blue
@@ -225,20 +217,6 @@ public:
 			return;
 		}
 		
-
-		/////////////////////////////////////////////////////////////////////////////////// End Movements /////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		/*
-		ofstream frame_particle_locations, frame_container_orientation;
-		bool output_render_data = false;
-		if (frame_count % 3 == 0 && output_render_data) {
-			frame_particle_locations.open(output_path + "_particles_" + std::to_string(frame_count) + ".obj");
-			frame_container_orientation.open(output_path + "_container_" + std::to_string(frame_count) + ".obj");
-			double theta_degree = theta / M_PI * 180;
-			frame_container_orientation << "v 0 0 " << theta_degree << std::endl;
-			frame_container_orientation << "v 0 " << TCP_y << " 0" << std::endl;
-		}
-		*/
 		
 		stopped = false;
 

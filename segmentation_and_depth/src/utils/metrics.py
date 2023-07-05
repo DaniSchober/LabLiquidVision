@@ -3,7 +3,7 @@
 
 import torch
 
-'''
+"""
 This file contains the evaluation metrics for the depth prediction model
 
 The evaluation function takes in the following arguments:
@@ -13,7 +13,7 @@ The evaluation function takes in the following arguments:
 Output:
     Dictionary of metrics
     
-'''
+"""
 
 
 def eval_depth(pred, target):

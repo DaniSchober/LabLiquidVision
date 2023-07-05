@@ -9,14 +9,15 @@ import statistics
 from src.models_2_input_vol.validate_model import validate
 import math
 
-'''
+"""
     File to train the volume estimation model with input vessel volume
 
     Functions:
         train: train the model
         run_training: run the training loop for a range of hyperparameters
 
-'''
+"""
+
 
 def train(
     model,
@@ -30,8 +31,7 @@ def train(
     batch_size_train,
     device,
 ):
-    
-    '''
+    """
 
     Train the model
 
@@ -50,9 +50,9 @@ def train(
     Returns:
         losses_train (list): list of losses for training set
         losses_valid (list): list of losses for validation set
-        
-    '''
-    
+
+    """
+
     model.train()
 
     # Wrap train_loader with tqdm for a progress bar
@@ -65,7 +65,6 @@ def train(
     losses_valid = []
 
     for i, data in enumerate(progress_bar):
-
         input1 = data["vessel_depth"].to(device)
         input2 = data["liquid_depth"].to(device)
         input3 = data["vol_vessel"].to(device)
@@ -111,20 +110,20 @@ def train(
 
     return statistics.mean(losses_train), statistics.mean(losses_valid)
 
+
 def run_training(data_dir, num_epochs):
+    """
 
-    '''
+    Run the training loop for a range of hyperparameters
 
-        Run the training loop for a range of hyperparameters
+    Args:
+        data_dir (str): path to data directory
+        num_epochs (int): number of epochs to train for
 
-        Args:
-            data_dir (str): path to data directory
-            num_epochs (int): number of epochs to train for
-
-    '''
+    """
 
     device = (
-    torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     )  # Use GPU if available
 
     print("Device used: ", device)
@@ -133,91 +132,109 @@ def run_training(data_dir, num_epochs):
     batch_sizes = [8]
     dropout_rates = [0.2]
 
-    best_rmse = float('inf')
+    best_rmse = float("inf")
     best_params = {}
     i = 0
 
     for learning_rate in learning_rates:
-            for batch_size_train in batch_sizes:
-                for dropout_rate in dropout_rates:
-                    # Initialize the model with the current hyperparameters
-                    print("Starting training run.")
+        for batch_size_train in batch_sizes:
+            for dropout_rate in dropout_rates:
+                # Initialize the model with the current hyperparameters
+                print("Starting training run.")
 
-                    print("Learning rate: ", learning_rate)
+                print("Learning rate: ", learning_rate)
 
-                    print("Batch size: ", batch_size_train)
+                print("Batch size: ", batch_size_train)
 
-                    print("Dropout rate: ", dropout_rate)
+                print("Dropout rate: ", dropout_rate)
 
-                    # Load the dataset
-                    dataset = VesselCaptureDataset(data_dir)
-                    print(f"Loaded {len(dataset)} samples.")
+                # Load the dataset
+                dataset = VesselCaptureDataset(data_dir)
+                print(f"Loaded {len(dataset)} samples.")
 
-                    # Split the dataset into training and test data
-                    train_data, test_data = train_test_split(dataset, test_size=0.1, random_state=42)
+                # Split the dataset into training and test data
+                train_data, test_data = train_test_split(
+                    dataset, test_size=0.1, random_state=42
+                )
 
-                    train_data, valid_data = train_test_split(train_data, test_size=0.1, random_state=42)
+                train_data, valid_data = train_test_split(
+                    train_data, test_size=0.1, random_state=42
+                )
 
-                    print(f"Training on {len(train_data)} samples.")
-                    # print(f"Validating on {len(valid_data)} samples.")
-                    print(f"Testing on {len(test_data)} samples.")
+                print(f"Training on {len(train_data)} samples.")
+                # print(f"Validating on {len(valid_data)} samples.")
+                print(f"Testing on {len(test_data)} samples.")
 
-                    # Set up the data loader and training parameters for the training data
-                    train_loader = DataLoader(train_data, batch_size=batch_size_train, shuffle=True)
-                    train_size = len(train_data)
+                # Set up the data loader and training parameters for the training data
+                train_loader = DataLoader(
+                    train_data, batch_size=batch_size_train, shuffle=True
+                )
+                train_size = len(train_data)
 
-                    # Set up the data loader and training parameters for the validation data
-                    valid_loader = DataLoader(valid_data, batch_size=1, shuffle=True)
-                    valid_size = len(valid_data)
+                # Set up the data loader and training parameters for the validation data
+                valid_loader = DataLoader(valid_data, batch_size=1, shuffle=True)
+                valid_size = len(valid_data)
 
-                    model = VolumeNet(dropout_rate=dropout_rate)
-                    model = model.to(device)  # Send net to GPU if available
-                    criterion = nn.MSELoss().to(device)
-                    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+                model = VolumeNet(dropout_rate=dropout_rate)
+                model = model.to(device)  # Send net to GPU if available
+                criterion = nn.MSELoss().to(device)
+                optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-                    # Train the model
-                    losses_total_train = []
-                    losses_total_valid = []
-                    for epoch in range(num_epochs):
-                        epoch_str = "Epoch " + str(epoch + 1)
-                        losses_train, losses_valid = train(
-                            model,
-                            criterion,
-                            optimizer,
-                            train_loader,
-                            valid_loader,
-                            epoch_str,
-                            train_size,
-                            valid_size,
-                            batch_size_train,
-                            device,
-                        )
-                        losses_total_train.append(losses_train)
-                        losses_total_valid.append(losses_valid)
+                # Train the model
+                losses_total_train = []
+                losses_total_valid = []
+                for epoch in range(num_epochs):
+                    epoch_str = "Epoch " + str(epoch + 1)
+                    losses_train, losses_valid = train(
+                        model,
+                        criterion,
+                        optimizer,
+                        train_loader,
+                        valid_loader,
+                        epoch_str,
+                        train_size,
+                        valid_size,
+                        batch_size_train,
+                        device,
+                    )
+                    losses_total_train.append(losses_train)
+                    losses_total_valid.append(losses_valid)
 
-                loss_valid, rmse_valid = validate(model, valid_loader, valid_size)
+            loss_valid, rmse_valid = validate(model, valid_loader, valid_size)
 
-                # Check if the current combination of hyperparameters yields the best result
-                if rmse_valid < best_rmse:
-                    best_rmse = rmse_valid
-                    best_params = {'learning_rate': learning_rate, 'batch_size': batch_size_train, 'dropout_rate': dropout_rate}
-                    print("New best RMSE: ", best_rmse)
-                    # Save the trained model
-                    torch.save(model.state_dict(), "models/volume_model_input_vol_log.pth")
+            # Check if the current combination of hyperparameters yields the best result
+            if rmse_valid < best_rmse:
+                best_rmse = rmse_valid
+                best_params = {
+                    "learning_rate": learning_rate,
+                    "batch_size": batch_size_train,
+                    "dropout_rate": dropout_rate,
+                }
+                print("New best RMSE: ", best_rmse)
+                # Save the trained model
+                torch.save(model.state_dict(), "models/volume_model_input_vol_log.pth")
 
-                # save final loss and rmse for this training run to txt file
-                with open("results_input_vol_testing.txt", "a") as f:
-                    f.write("Training run " + str(i+1) + " of 100\n")
-                    f.write("Learning rate: " + str(learning_rate) + "\n")
-                    f.write("Batch size: " + str(batch_size_train) + "\n")
-                    f.write("Dropout rate: " + str(dropout_rate) + "\n")
-                    # write averag loss of the last 5 epochs
-                    f.write("Average train RMSE of last 5 epochs: " + str(math.sqrt(statistics.mean(losses_total_train[-5:]))) + "\n")
-                    f.write("Average valid RMSE of last 5 epochs: " + str(math.sqrt(statistics.mean(losses_total_valid[-5:]))) + "\n")
-                    f.write("Final valid loss: " + str(loss_valid) + "\n")
-                    f.write("Final valid RMSE: " + str(rmse_valid) + "\n\n")
-        
-                i += 1
+            # save final loss and rmse for this training run to txt file
+            with open("results_input_vol_testing.txt", "a") as f:
+                f.write("Training run " + str(i + 1) + " of 100\n")
+                f.write("Learning rate: " + str(learning_rate) + "\n")
+                f.write("Batch size: " + str(batch_size_train) + "\n")
+                f.write("Dropout rate: " + str(dropout_rate) + "\n")
+                # write averag loss of the last 5 epochs
+                f.write(
+                    "Average train RMSE of last 5 epochs: "
+                    + str(math.sqrt(statistics.mean(losses_total_train[-5:])))
+                    + "\n"
+                )
+                f.write(
+                    "Average valid RMSE of last 5 epochs: "
+                    + str(math.sqrt(statistics.mean(losses_total_valid[-5:])))
+                    + "\n"
+                )
+                f.write("Final valid loss: " + str(loss_valid) + "\n")
+                f.write("Final valid RMSE: " + str(rmse_valid) + "\n\n")
+
+            i += 1
 
     # write best hyperparameters to txt file
     with open("results_input_vol_testing.txt", "a") as f:
@@ -228,4 +245,3 @@ def run_training(data_dir, num_epochs):
     with open("losses_input_vol_testing.txt", "a") as f:
         f.write("Losses train: " + str(losses_total_train) + "\n")
         f.write("Losses valid: " + str(losses_total_valid) + "\n\n")
-        

@@ -1,5 +1,0 @@
-scene_number,path,rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume
-0,../../output/MediumBottle/Medium_200_1799_55,0.030000,55.000000,1.800000,199.945000,1.117500,1.107500,0.010000
-0,../../output/MediumBottle/Medium_200_1799_65,0.030000,65.000000,1.800000,199.945000,33.182499,33.020000,0.162500
-0,../../output/MediumBottle/Medium_200_1799_70,0.030000,70.000000,1.800000,199.945000,60.062500,59.305000,0.757500
-0,../../output/MediumBottle/Medium_200_1799_55,0.030000,55.000000,1.800000,199.945000,1.117500,1.107500,0.010000

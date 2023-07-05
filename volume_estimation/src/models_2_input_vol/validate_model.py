@@ -1,6 +1,25 @@
 import torch
 import numpy as np
 
+'''
+
+    Function to validate model on validation set
+
+    Parameters
+    ----------
+    model : torch.nn.Module
+    valid_loader : torch.utils.data.DataLoader
+    valid_size : int
+
+    Returns
+    -------
+    loss_liquid : float
+        RMSE of liquid volume
+    rmse_liquid : float
+        RMSE of liquid volume
+    
+'''
+
 
 def validate(model, valid_loader, valid_size):
     model.eval()

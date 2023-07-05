@@ -1,11 +1,11 @@
 import src.data.load_data as DepthReader
 
-'''
+"""
 This file contains the function to create the readers for the training and testing data
 
 The paths to the training and testing data and the max and min image size are defined here
 
-'''
+"""
 
 TransProteusFolder = {}
 TransProteusFolder["Liquid1"] = r"data/interim/TranProteus1/Training/LiquidContent"
@@ -23,13 +23,11 @@ LabPicsFolder["LabPics"] = r"data/interim/LabPics Chemistry/Train"
 
 MinSize = 270  # Min image dimension (height or width)
 MaxSize = 1000  # Max image dimension (height or width)
-MaxPixels = (
-    800 * 800 * 2
-)  
+MaxPixels = 800 * 800 * 2
 
 
 def create_reader(MaxBatchSize):
-    '''
+    """
     This function creates the readers for the training data
 
     Input:
@@ -38,7 +36,7 @@ def create_reader(MaxBatchSize):
     Output:
         --Readers: dictionary of readers for each training folder
 
-    '''
+    """
     Readers = {}  # Transproteus readers
     for nm in TransProteusFolder:
         print("Folder used:", nm)
@@ -55,7 +53,7 @@ def create_reader(MaxBatchSize):
 
 
 def get_num_samples(Readers):
-    '''
+    """
     This function returns the number of samples in a dictionary of readers
 
     Input:
@@ -64,8 +62,8 @@ def get_num_samples(Readers):
     Output:
         --num_samples: number of samples in the training data
 
-    '''
-    
+    """
+
     num_samples = 0
     for nm in Readers:
         num_samples += Readers[nm].GetNumSamples()
@@ -73,16 +71,16 @@ def get_num_samples(Readers):
 
 
 def create_reader_LabPics(MaxBatchSize):
-    '''
+    """
     This function creates the readers for the LabPics training data
-    
+
     Input:
         --MaxBatchSize: maximum batch size
 
     Output:
         --Readers: dictionary of readers for each training folder
 
-    '''
+    """
 
     Readers = {}
     for nm in LabPicsFolder:
@@ -98,7 +96,7 @@ def create_reader_LabPics(MaxBatchSize):
 
 
 def get_num_samples_LabPics(LabPics_Readers):
-    '''
+    """
     This function returns the number of samples in a dictionary of LabPics readers
 
     Input:
@@ -107,7 +105,7 @@ def get_num_samples_LabPics(LabPics_Readers):
     Output:
         --num_samples: number of samples in the training data
 
-    '''
+    """
     num_samples = 0
     for nm in LabPics_Readers:
         num_samples += LabPics_Readers[nm].GetNumSamples()
@@ -115,7 +113,7 @@ def get_num_samples_LabPics(LabPics_Readers):
 
 
 def create_reader_Test(MaxBatchSize, TestFolder):
-    '''
+    """
     This function creates the readers for the testing data
 
     Input:
@@ -125,8 +123,8 @@ def create_reader_Test(MaxBatchSize, TestFolder):
     Output:
         --Readers: dictionary of readers for each testing folder
 
-    '''
-    Readers = {} 
+    """
+    Readers = {}
     TestFolder_1 = {}
     TestFolder_1["Liquid1"] = TestFolder
     for nm in TestFolder_1:

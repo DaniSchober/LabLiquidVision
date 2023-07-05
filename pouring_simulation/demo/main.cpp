@@ -49,8 +49,6 @@
 #include "shaders.h"
 #include "imgui.h"
 
-//////////////////////////////////////
-//#include "shadersDemoContext.h"
 
 #if FLEX_DX
 #include "d3d\appGraphCtx.h"
@@ -390,11 +388,7 @@ void DestroyBuffers(SimBuffers* buffers)
 	delete buffers;
 }
 
-//Vec3 g_camPos(-0.02, 3.85, 3.77); //(6.0f, 8.0f, 18.0f);
-// change camera position //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Vec3 g_camPos(8.0f, 19.0f, 13.0f); //(6.0f, 8.0f, 18.0f);
-//Vec3 g_camPos(-250.0f, 200.0f, 500.0f); //(6.0f, 8.0f, 18.0f);
-
+Vec3 g_camPos(8.0f, 19.0f, 13.0f); 
 
 Vec3 g_camAngle(DegToRad(30.0f), -DegToRad(35.0f), -DegToRad(90.0f)); //(0.0f, -DegToRad(20.0f), 0.0f);
 
@@ -897,9 +891,6 @@ void Init(int scene, bool centerCamera = true)
 
 	// unmap so we can start transferring data to GPU
 	UnmapBuffers(g_buffers);
-
-	//-----------------------------
-	// Send data to Flex
 
 	NvFlexSetParams(g_flex, &g_params);
 	NvFlexSetParticles(g_flex, g_buffers->positions.buffer, numParticles);
@@ -2797,46 +2788,35 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	// create pouring scenes
 
-	int count_scenes_flaks = 0;
-	int count_scenes_bottle = 0;
-	//g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle/Medium", 5, 5, 5, count_scenes_bottle)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
+	int count_scenes_flaks = 0; // scene counter flask
+	int count_scenes_bottle = 0; // scene counter bottle
 
-	/*
-	for (int start_vol = 35; start_vol <= 150; start_vol += 5) {
-		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) {
-			for (int stop_angle = 2; stop_angle <= 50; stop_angle += 2) {
+	// Pouring Flask depending on parameter space
+	for (int start_vol = 35; start_vol <= 150; start_vol += 5) { // start volume
+		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) { // stop time
+			for (int stop_angle = 2; stop_angle <= 50; stop_angle += 2) { // stop angle
 				count_scenes_flaks++;
 				g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask/Flask", start_vol, pause_time, stop_angle, count_scenes_flaks)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
 			}
 		}
 	}
-	*/
 	
-	/*
-	for (int start_vol = 440; start_vol <= 500; start_vol += 10) {
-		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) {
-			for (int stop_angle = 30; stop_angle <= 90; stop_angle += 4) {
+	// Pouring Bottle depending on parameter space
+	for (int start_vol = 50; start_vol <= 500; start_vol += 10) { // start volume
+		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) { // stop time
+			for (int stop_angle = 30; stop_angle <= 90; stop_angle += 4) { // stop angle
 				count_scenes_bottle++;
 				g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle/Medium", start_vol, pause_time, stop_angle, count_scenes_bottle)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
 			}
 		}
 	}
-	*/
-	
-	//g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle/Medium", 200, 1.8, 70, 0)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
-	//g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle/Medium", 200, 1.8, 55, 0)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
-
-	g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask/Flask", 15, 1.8, 75, 1)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
-	//g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask/Flask", 50, 0.6, 24, 1)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
-	//g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask/Flask", 20, 0.6, 40, 1)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
-
-	//g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask/Flask", 24, 0.6, 18, 1)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
-	//g_scenes.push_back(new Pouring_Flask("Pouring Flask", "../../data/Assembly_Flask_TCP_y58_x18575", "../../output/CellFlask/Flask", 24, 0.6, 18, 1)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
 
 	printf("Number of scenes flask: %d\n", count_scenes_flaks);
 	printf("Number of scenes bottle: %d\n", count_scenes_bottle);
 
+	// Calibration scene
 	g_scenes.push_back(new Calibration("Calibration Scene", "../../data/Cylinder_500ml")); // Scene name, input path
 
 #ifndef ANDROID

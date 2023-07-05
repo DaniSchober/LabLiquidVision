@@ -15,37 +15,38 @@ import os
 matplotlib.rcParams["font.family"] = "Arial"
 matplotlib.rcParams["font.size"] = 11
 
-'''
+"""
 
 Script to test the model with vessel volume input on the test set
 
 
-'''
+"""
+
+
 def test(data_dir):
+    """
 
-    '''
-    
-        Test the model with vessel volume input on the test set
+    Test the model with vessel volume input on the test set
 
-        Args:
-            data_dir (str): path to data directory
+    Args:
+        data_dir (str): path to data directory
 
-        Prints:
-            Size of test set
-            RMSE for test set
-            Mean percentage error for test set
-            R2 score for test set
-            Max error
-            Min error
-            Samples with max error
-            Samples with min error
-            Results for each vessel in test set
+    Prints:
+        Size of test set
+        RMSE for test set
+        Mean percentage error for test set
+        R2 score for test set
+        Max error
+        Min error
+        Samples with max error
+        Samples with min error
+        Results for each vessel in test set
 
-        Shows:
-            Histogram of RMSE for test set
-            Scatter plot of predicted volume vs actual volume for test set
-    
-    '''
+    Shows:
+        Histogram of RMSE for test set
+        Scatter plot of predicted volume vs actual volume for test set
+
+    """
 
     # Load the dataset
     dataset = VesselCaptureDataset(data_dir)
@@ -89,7 +90,7 @@ def test(data_dir):
             targets = data["vol_liquid"]
             targets = targets.float()
 
-            #print("Liquid_depth shape: ", liquid_depth.shape)
+            # print("Liquid_depth shape: ", liquid_depth.shape)
             outputs = model(input1, input2, input3)
 
             outputs = outputs.squeeze(0)
@@ -104,7 +105,6 @@ def test(data_dir):
             actual_vol_liquid_list.append(actual_vol_liquid)
             vessel_name = vessel_name[0]
             vessel_name_list.append(vessel_name)
-
 
             # open image from test set and draw volume estimation on it
             print("Image path: ", data["image_path"][0])
@@ -150,11 +150,15 @@ def test(data_dir):
             sum(
                 (
                     (
-                        (np.array(predicted_vol_liquid_list) - np.array(actual_vol_liquid_list))
+                        (
+                            np.array(predicted_vol_liquid_list)
+                            - np.array(actual_vol_liquid_list)
+                        )
                         / np.array(actual_vol_liquid_list)
                     )
                     ** 2
-                )**0.5
+                )
+                ** 0.5
             )
         ) / len(actual_vol_liquid_list)
 
@@ -178,9 +182,15 @@ def test(data_dir):
         print("MAPE: ", mean_percentage_error * 100, "%")
         print("R2 score: ", r2_score)
         print("Max error: ", max_error)
-        print("Samples with max error: ", np.argpartition(squared_error_liquid_array, -3)[-3:]) # print 3 samples with maximum error
+        print(
+            "Samples with max error: ",
+            np.argpartition(squared_error_liquid_array, -3)[-3:],
+        )  # print 3 samples with maximum error
         print("Min error: ", min_error)
-        print("Samples with min error: ", np.argpartition(squared_error_liquid_array, 3)[:3]) # print 3 samples with minimum error
+        print(
+            "Samples with min error: ",
+            np.argpartition(squared_error_liquid_array, 3)[:3],
+        )  # print 3 samples with minimum error
         print("\n\n\n")
 
         print("RESULTS FOR EACH VESSEL:")
@@ -193,7 +203,11 @@ def test(data_dir):
         plt.ylabel("Frequency")
         plt.title("RMSE for Volume Estimation on Test Set (with Vessel Volume Input)")
         plt.tight_layout()
-        plt.savefig(output_folder_res + "/squared_error_liquid_vol_input.png", format="png", dpi=300)
+        plt.savefig(
+            output_folder_res + "/squared_error_liquid_vol_input.png",
+            format="png",
+            dpi=300,
+        )
         plt.show()
 
         # plot predicted volume vs actual volume in scatter plot with color depending on vessel name
@@ -202,18 +216,20 @@ def test(data_dir):
         cmap = cm.get_cmap("Paired", len(vessel_name_list_unique))
 
         for i in range(len(vessel_name_list_unique)):
-            # get indices of vessel 
+            # get indices of vessel
             indices = [
-                j for j, x in enumerate(vessel_name_list) if x == vessel_name_list_unique[i]
+                j
+                for j, x in enumerate(vessel_name_list)
+                if x == vessel_name_list_unique[i]
             ]
 
-            # get predicted and actual volume for vessel 
+            # get predicted and actual volume for vessel
             predicted_vol_liquid_list_vessel = [
                 predicted_vol_liquid_list[j] for j in indices
             ]
             actual_vol_liquid_list_vessel = [actual_vol_liquid_list[j] for j in indices]
 
-            # calculate RMSE for vessel 
+            # calculate RMSE for vessel
             rmse_liquid_vessel = (
                 sum(
                     (
@@ -225,41 +241,68 @@ def test(data_dir):
                 / len(predicted_vol_liquid_list_vessel)
             ) ** 0.5
 
-            # calculate mean liquid volume for vessel 
-            avg_liquid_vessel = (
-                sum(actual_vol_liquid_list_vessel) / len(actual_vol_liquid_list_vessel)
+            # calculate mean liquid volume for vessel
+            avg_liquid_vessel = sum(actual_vol_liquid_list_vessel) / len(
+                actual_vol_liquid_list_vessel
             )
 
-            # calculate R2 score for vessel 
+            # calculate R2 score for vessel
             r2_score = metrics.r2_score(
                 actual_vol_liquid_list_vessel, predicted_vol_liquid_list_vessel
             )
 
             # calculate mean percentage error for vessel
             mean_percentage_error = (
-                sum((((np.array(predicted_vol_liquid_list_vessel)-np.array(actual_vol_liquid_list_vessel))/np.array(actual_vol_liquid_list_vessel))**2)**0.5))/len(actual_vol_liquid_list_vessel)
-            
-            # get max error
-            max_error = max((
-                (
-                    np.array(predicted_vol_liquid_list_vessel)
-                    - np.array(actual_vol_liquid_list_vessel)
+                sum(
+                    (
+                        (
+                            (
+                                np.array(predicted_vol_liquid_list_vessel)
+                                - np.array(actual_vol_liquid_list_vessel)
+                            )
+                            / np.array(actual_vol_liquid_list_vessel)
+                        )
+                        ** 2
+                    )
+                    ** 0.5
                 )
-                ** 2)**0.5
+            ) / len(actual_vol_liquid_list_vessel)
+
+            # get max error
+            max_error = max(
+                (
+                    (
+                        np.array(predicted_vol_liquid_list_vessel)
+                        - np.array(actual_vol_liquid_list_vessel)
+                    )
+                    ** 2
+                )
+                ** 0.5
             )
 
             # get min error
-            min_error = min((
+            min_error = min(
                 (
-                    np.array(predicted_vol_liquid_list_vessel)
-                    - np.array(actual_vol_liquid_list_vessel)
+                    (
+                        np.array(predicted_vol_liquid_list_vessel)
+                        - np.array(actual_vol_liquid_list_vessel)
+                    )
+                    ** 2
                 )
-                ** 2)**0.5
+                ** 0.5
             )
 
-            print("Mean liquid volume", vessel_name_list_unique[i], ":", avg_liquid_vessel)
+            print(
+                "Mean liquid volume", vessel_name_list_unique[i], ":", avg_liquid_vessel
+            )
             print("RMSE", vessel_name_list_unique[i], ":", rmse_liquid_vessel)
-            print("MAPE", vessel_name_list_unique[i], ":", mean_percentage_error*100, "%")
+            print(
+                "MAPE",
+                vessel_name_list_unique[i],
+                ":",
+                mean_percentage_error * 100,
+                "%",
+            )
             print("R2 score", vessel_name_list_unique[i], ":", r2_score)
             print("Max error", vessel_name_list_unique[i], ":", max_error)
             print("Min error", vessel_name_list_unique[i], ":", min_error)
@@ -285,8 +328,8 @@ def test(data_dir):
         plt.legend(fontsize=8)
 
         plt.tight_layout()
-        plt.savefig(output_folder_res + "/scatter_plot_input_vol.png", format="png", dpi=600)
+        plt.savefig(
+            output_folder_res + "/scatter_plot_input_vol.png", format="png", dpi=600
+        )
         # show scatter plot
         plt.show()
-
-        

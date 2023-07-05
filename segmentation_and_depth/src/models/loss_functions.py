@@ -1,18 +1,19 @@
 import torch
 
-'''
+"""
 This file contains the loss functions used to train the model for depth estimation
-'''
+"""
+
 
 def DepthLoss(output, target, ROI):
-    '''
+    """
     output: [B, 1, H, W]
     target: [B, 1, H, W]
     ROI: [B, 1, H, W]
 
     return: depth loss
 
-    '''
+    """
     # https://proceedings.neurips.cc/paper/2014/file/7bccfde7714a1ebadf06c5f4cea752c1-Paper.pdf
     n = torch.sum(ROI, (1, 2, 3)) + 0.01  # Number of pixel in image
     di = (target - output) * ROI

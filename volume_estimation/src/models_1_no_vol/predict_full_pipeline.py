@@ -22,10 +22,15 @@ import segmentation_and_depth.src.models.model as NET_FCN  # The net Class
 from volume_estimation.src.models_1_no_vol.model import VolumeNet
 
 
-def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, save_depth=False, no_GPU=False):
+def predict_no_vol(
+    image_path,
+    predict_volume=False,
+    save_segmentation=False,
+    save_depth=False,
+    no_GPU=False,
+):
+    """
 
-    '''
-    
     Predict the volume of liquid in a vessel from an image. It first predicts the segmentation masks and depth maps, then uses these to predict the volume of liquid in the vessel.
 
     Args:
@@ -41,7 +46,7 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
     Shows:
         Image with predicted and true volume of liquid
 
-    '''
+    """
     model_path = r"../segmentation_and_depth/models/segmentation_depth_model.torch"  # Trained model path
     UseGPU = True  # Use GPU or not
     if no_GPU == True:
@@ -115,18 +120,13 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
                         tmIm = tmIm - tmIm.min()
                         tmIm = tmIm / tmIm.max() * 255
                     if np.ndim(tmIm) == 2:
-                        tmIm = cv2.cvtColor(
-                            tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR
-                        )
+                        tmIm = cv2.cvtColor(tmIm.astype(np.uint8), cv2.COLOR_GRAY2BGR)
 
                 image = Prd[nm].squeeze()
                 image = image / image.max()
                 image = image * 255
                 image = image.astype(np.uint8)
-                cv2.imwrite(
-                    image_path.replace(".png", nm + ".png"), image
-                )
-        
+                cv2.imwrite(image_path.replace(".png", nm + ".png"), image)
 
         if nm in DepthList:
             # copy depth map for visualization
@@ -148,9 +148,7 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
                     # Remove region out side of the object mask from the depth mask
                     tmIm[Prd[depth2Mask[nm]][0] == 0] = 0
                     np.save(
-                        image_path.replace(
-                            ".png", nm + "_segmented.npy"
-                        ),
+                        image_path.replace(".png", nm + "_segmented.npy"),
                         tmIm,
                     )
 
@@ -171,15 +169,13 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
                         image = image.astype(np.uint8)
                         # save image
                         cv2.imwrite(
-                            image_path.replace(
-                                ".png", nm + "_segmented.png"
-                            ),
+                            image_path.replace(".png", nm + "_segmented.png"),
                             image,
                         )
-    
+
     if predict_volume == True:
         liquid_depth = torch.from_numpy(liquid_depth).float()
-        #convert from log to linear space
+        # convert from log to linear space
         liquid_depth = torch.exp(liquid_depth)
 
         liquid_depth = F.interpolate(
@@ -189,7 +185,6 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
             align_corners=False,
         )
         liquid_depth = liquid_depth.squeeze(0)
-
 
         vessel_depth = torch.from_numpy(vessel_depth).float()
         # convert from log to linear space
@@ -202,9 +197,7 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
         )
         vessel_depth = vessel_depth.squeeze(0)
 
-
         model = VolumeNet(dropout_rate=0.2)
-
 
         model_path_volume = (
             r"../volume_estimation/models/volume_model_no_vol.pth"  # Trained model path
@@ -212,8 +205,10 @@ def predict_no_vol(image_path, predict_volume=False, save_segmentation=False, sa
         if UseGPU == True:
             model.load_state_dict(torch.load(model_path_volume))
         else:
-            model.load_state_dict(torch.load(model_path_volume, map_location=torch.device("cpu")))
-            
+            model.load_state_dict(
+                torch.load(model_path_volume, map_location=torch.device("cpu"))
+            )
+
         with torch.no_grad():
             model.eval()
             outputs = model(vessel_depth, liquid_depth)

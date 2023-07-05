@@ -115,4 +115,3 @@ def PoseAdd(Pose1, Pose2):
     P = np.add(P1, P2)
     R = GetRotation(np.matmul(R1, R2))
     return [P[0], P[1], P[2], R[0], R[1], R[2]]
-

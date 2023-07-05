@@ -126,8 +126,7 @@ class Net(nn.Module):
         PredictMasks=True,
         FreezeBatchNorm_EvalON=False,
     ):
-        
-        '''
+        """
         This function runs the forward pass of the model
 
         Input:
@@ -142,8 +141,8 @@ class Net(nn.Module):
             OutDepth: dictionary of predicted depth maps
             OutProbMask: dictionary of predicted segmentation masks probabilities
             OutMask: dictionary of predicted segmentation masks
-            
-        '''
+
+        """
         # Convert image to pytorch and normalize values
         RGBMean = [123.68, 116.779, 103.939]
         RGBStd = [65, 65, 65]

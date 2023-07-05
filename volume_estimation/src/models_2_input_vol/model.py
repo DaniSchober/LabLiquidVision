@@ -2,6 +2,7 @@ import torch.nn as nn
 import torch
 import torch.nn.functional as F
 
+
 # Define the neural network architecture
 class VolumeNet(nn.Module):
     def __init__(self, dropout_rate=0.2):
@@ -28,7 +29,9 @@ class VolumeNet(nn.Module):
         self.bn4 = nn.BatchNorm2d(128)
         self.bn5 = nn.BatchNorm2d(64)
 
-        self.fc1 = nn.Linear(in_features=64 * 30, out_features=1024) # 520 = 20*26, otherwise 4800
+        self.fc1 = nn.Linear(
+            in_features=64 * 30, out_features=1024
+        )  # 520 = 20*26, otherwise 4800
         self.fc2 = nn.Linear(in_features=1024, out_features=512)
         self.fc3 = nn.Linear(in_features=512, out_features=256)
         self.fc4 = nn.Linear(in_features=256, out_features=1)
@@ -38,7 +41,9 @@ class VolumeNet(nn.Module):
         self.fc_combined = nn.Linear(in_features=512, out_features=256)
 
     def forward(self, input1, input2, input3):
-        x = torch.stack([input1, input2], dim=1) # stack the two input tensors along the channel dimension
+        x = torch.stack(
+            [input1, input2], dim=1
+        )  # stack the two input tensors along the channel dimension
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.max_pool2d(x, kernel_size=2)
         x = F.dropout2d(x, p=self.dropout_rate)
@@ -69,6 +74,5 @@ class VolumeNet(nn.Module):
         x = torch.cat((x, vessel_volume), dim=1)
         x = F.relu(self.fc_combined(x))
         x = self.fc4(x)
-
 
         return x

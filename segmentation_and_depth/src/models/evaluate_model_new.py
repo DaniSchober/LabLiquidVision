@@ -22,8 +22,6 @@ def evaluate(
     folder_path=r"data/interim/TranProteus1/Testing/LiquidContent",
     UseGPU=True,
 ):
-    
-    
     TestFolder = folder_path  # input folder
 
     batch_size = 1  # Batch size
@@ -188,10 +186,13 @@ def evaluate(
                     ROI > 0.9
                 ] = 1  # Resize have led to some intirmidiate values ignore them
 
-                
                 # print(dic)
 
-                if Pdepth[Pdepth != 0] is not None and Gdepth[Gdepth != 0] is not None and  Pdepth[Pdepth != 0].shape ==  Gdepth[Gdepth != 0].shape:
+                if (
+                    Pdepth[Pdepth != 0] is not None
+                    and Gdepth[Gdepth != 0] is not None
+                    and Pdepth[Pdepth != 0].shape == Gdepth[Gdepth != 0].shape
+                ):
                     # calculate metrics
                     dic = metrics.eval_depth(Pdepth, Gdepth)
                     # add results to dictionary

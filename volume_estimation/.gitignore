@@ -2,3 +2,5 @@ models/*
 data/interim/*
 data/processed/*
 /data
+output_no_vol_input/*
+output_with_vol_input/*

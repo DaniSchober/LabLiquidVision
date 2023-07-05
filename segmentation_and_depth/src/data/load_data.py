@@ -1,17 +1,18 @@
 import json
 import os
 import threading
+
 os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "1"
 import cv2
 import numpy as np
 
-'''
+"""
 This file contains the data reader classes for the segmentation and depth estimation project
 
 The reader reads the data from the dataset and prepares it for training and testing
 
 
-'''
+"""
 
 
 MapsAndDepths = {  # List of maps to use and their depths (layers)
@@ -120,25 +121,25 @@ class Reader:
         self.AnnData = False
 
     def GetNumSamples(self):
-        '''
+        """
         This function returns the number of samples in the dataset
-        '''
+        """
         return len(self.AnnList)
 
     # Crop and resize image and mask and ROI to fit batch size
     def CropResize(self, Maps, Hb, Wb):
-        '''
+        """
         This function crops and resizes the image and mask and ROI to fit the batch size
 
         Input:
             --Maps: dictionary of maps
             --Hb: height of batch
             --Wb: width of batch
-        
+
         Output:
             --Maps: dictionary of maps
 
-        '''
+        """
         # resize image if it too small to the batch size
 
         h, w = Maps["ROI"].shape
@@ -183,7 +184,7 @@ class Reader:
         return Maps
 
     def Augment(self, Maps):
-        '''
+        """
         This function augments the image and mask
 
         It applies the following augmentations for 10% of the images:
@@ -197,7 +198,7 @@ class Reader:
         Output:
             --Maps: dictionary of augmented maps
 
-        '''
+        """
         for nm in Maps:
             if "RGB" in nm:
                 if np.random.rand() < 0.1:  # Gaussian blur (10% of the time)
@@ -218,8 +219,7 @@ class Reader:
         return Maps
 
     def LoadNext(self, pos, Hb, Wb):
-
-        '''
+        """
         This function reads the next image annotation and data
 
         Input:
@@ -230,7 +230,7 @@ class Reader:
         Output:
             --Maps: dictionary of maps
 
-        '''
+        """
         # Select random example from the batch
         AnnInd = np.random.randint(len(self.AnnList))
         Ann = self.AnnList[AnnInd]
@@ -296,11 +296,10 @@ class Reader:
 
     # Start load batch of images
     def StartLoadBatch(self):
-
-        '''
+        """
         This function starts loading the next batch of images
 
-        '''
+        """
         # Initiate batch
         while True:
             Hb = np.random.randint(low=self.MinSize, high=self.MaxSize)
@@ -330,21 +329,21 @@ class Reader:
 
     # Wait until the data batch loading started at StartLoadBatch is finished
     def WaitLoadBatch(self):
-        '''
+        """
         This function waits until the data batch loading started at StartLoadBatch is finished
 
-        '''
+        """
         for th in self.thread_list:
             th.join()
 
     def LoadBatch(self):
-        '''
+        """
         This function loads the next batch of images
 
         Output:
             --Maps: dictionary of maps
 
-        '''
+        """
         self.WaitLoadBatch()
         Maps = self.Maps
 
@@ -353,8 +352,7 @@ class Reader:
 
     # Read single image annotation and data with no augmentation for testing
     def LoadSingle(self, MaxSize=1000):
-
-        '''
+        """
         This function reads a single image annotation and data with no augmentation for testing
 
         Input:
@@ -363,7 +361,7 @@ class Reader:
         Output:
             --Maps: dictionary of maps
 
-        '''
+        """
         if self.itr >= len(self.AnnList):
             self.itr = 0
             self.epoch += 1
@@ -449,7 +447,6 @@ class Reader:
         return Maps
 
 
-
 MapsAndDepths_LabPics = {
     "VesselMask": 1,  # Depth/Layers
     "VesselWithContentRGB": 3,
@@ -491,7 +488,6 @@ class LabPics_Reader:
         for AnnDir in os.listdir(MainDir):  # List of all example
             self.AnnList.append(MainDir + "/" + AnnDir)
 
-
         print(
             "Done making file list.\nTotal number of samples = "
             + str(len(self.AnnList))
@@ -501,14 +497,14 @@ class LabPics_Reader:
         self.AnnData = False
 
     def GetNumSamples(self):
-        '''
+        """
         This function returns the number of samples in the dataset
-        '''
+        """
 
         return len(self.AnnList)
 
     def CropResize(self, Maps, Hb, Wb):
-        '''
+        """
         This function crops and resizes the image and maps and ROI to fit the batch size
 
         Input:
@@ -519,7 +515,7 @@ class LabPics_Reader:
         Output:
             --Maps: dictionary of maps
 
-        '''
+        """
         h, w = Maps["ROI"].shape
         Bs = np.min((h / Hb, w / Wb))
         if (
@@ -539,11 +535,11 @@ class LabPics_Reader:
                         )
 
         if w > Wb:
-            X0 = np.random.randint(w - Wb) 
+            X0 = np.random.randint(w - Wb)
         else:
             X0 = 0
         if h > Hb:
-            Y0 = np.random.randint(h - Hb)  
+            Y0 = np.random.randint(h - Hb)
         else:
             Y0 = 0
 
@@ -561,7 +557,7 @@ class LabPics_Reader:
         return Maps
 
     def Augment(self, Maps):
-        '''
+        """
         This function augments the image and mask
 
         It applies the following augmentations for 50% of the images:
@@ -576,7 +572,7 @@ class LabPics_Reader:
         Output:
             --Maps: dictionary of augmented maps
 
-        '''
+        """
 
         if np.random.rand() < 0.5:  # flip left right
             for nm in Maps:
@@ -602,7 +598,7 @@ class LabPics_Reader:
         return Maps
 
     def LoadNext(self, pos, Hb, Wb):
-        '''
+        """
         This function reads the next image annotation and data
 
         Input:
@@ -613,7 +609,7 @@ class LabPics_Reader:
         Output:
             --Maps: dictionary of maps
 
-        '''
+        """
         AnnInd = np.random.randint(len(self.AnnList))
 
         InPath = self.AnnList[AnnInd]
@@ -664,11 +660,11 @@ class LabPics_Reader:
                 self.Maps[nm][pos] = Maps[nm]
 
     def StartLoadBatch(self):
-        '''
+        """
         This function starts loading the next batch of images
-            
-        '''
-        
+
+        """
+
         while True:
             Hb = np.random.randint(
                 low=self.MinSize, high=self.MaxSize
@@ -698,21 +694,21 @@ class LabPics_Reader:
             th.start()
 
     def WaitLoadBatch(self):
-        '''
+        """
         This function waits until the data batch loading started at StartLoadBatch is finished
-            
-        '''
+
+        """
         for th in self.thread_list:
             th.join()
 
     def LoadBatch(self):
-        '''
+        """
         This function loads the next batch of images
 
         Output:
             --Maps: dictionary of maps
 
-        '''
+        """
         self.WaitLoadBatch()
         Maps = self.Maps
         self.StartLoadBatch()

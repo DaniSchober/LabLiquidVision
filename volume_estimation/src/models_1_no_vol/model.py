@@ -2,7 +2,8 @@ import torch.nn as nn
 import torch
 import torch.nn.functional as F
 
-# Define the neural network architecture 
+
+# Define the neural network architecture
 class VolumeNet(nn.Module):
     def __init__(self, dropout_rate=0.2):
         super(VolumeNet, self).__init__()
@@ -35,7 +36,9 @@ class VolumeNet(nn.Module):
         self.fc4 = nn.Linear(in_features=256, out_features=1)
 
     def forward(self, vessel_depth, liquid_depth):
-        x = torch.stack([vessel_depth, liquid_depth], dim=1) # stack the two input tensors along the channel dimension
+        x = torch.stack(
+            [vessel_depth, liquid_depth], dim=1
+        )  # stack the two input tensors along the channel dimension
 
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.max_pool2d(x, kernel_size=2)
