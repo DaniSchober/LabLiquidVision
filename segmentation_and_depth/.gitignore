@@ -94,3 +94,5 @@ logs/*
 
 logs1/*
 /models
+
+notebooks/testing_real_data/*
