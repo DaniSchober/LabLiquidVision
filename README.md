@@ -61,6 +61,8 @@ The proposed solution consists of three main contributions, each taking a signif
 
 <img src="https://user-images.githubusercontent.com/75242605/236624972-99bd9f4b-c346-44b6-8f89-11d8068a09f8.png" width="700">
 
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8316b6fb-8025-4420-ac19-7d6d97ab2d42
+
 ## Project Organization
 ------------
 
