@@ -9,6 +9,7 @@ The proposed system includes a UR5e collaborative industrial robot with an Intel
 - [Hardware Setup](#hardwaresetup)
 - [Connection and Configuration](#connection)
 - [Process and Autonomous Workflow Description](#process)
+- [Videos of the Modules](#videosmodules)
 - [Usage](#usage)
 
 
@@ -139,6 +140,7 @@ Throughout the implementation of the modules, careful consideration was given to
 <img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/4768f479-717a-4efb-a50c-4f3e59655297" width="800">
 
 ## Videos of the modules
+## <a id="videosmodules"></a> Videos of the modules
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8ba1a7e2-e1f4-48b2-a36e-5c0b5226792f
 
