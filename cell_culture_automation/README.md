@@ -2,7 +2,7 @@
 
 The aim was to integrate existing laboratory hardware for a **proof-of-concept prototype of an autonomous cell culture system**.
 
-The proposed system includes a UR5e collaborative industrial robot with an Intel RealSense D415 camera, a standard incubator that is adapted for automated opening and closing, a microscope, a unit for heating and cooling of liquids, and a capping and decapping unit. All the additional parts are 3D-printed or custom-built. The entire system is made to fit on one table. The robot arm executes the tasks usually done by human labor. The laboratory technician is only responsible for providing empty input flasks and refilling the required liquids. 
+The proposed system includes a UR5e collaborative industrial robot with an Intel RealSense D415 camera, a standard incubator that is adapted for automated opening and closing, a microscope, a unit for heating and cooling liquids, and a capping and decapping unit. All the additional parts are 3D-printed or custom-built. The entire system is made to fit on one table. The robot arm executes the tasks usually done by human labor. The laboratory technician is only responsible for providing empty input flasks and refilling the required liquids. 
 
 ## Table of Contents
 
@@ -139,6 +139,8 @@ Throughout the implementation of the modules, careful consideration was given to
 <img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/4768f479-717a-4efb-a50c-4f3e59655297" width="800">
 
 ## Videos of the modules
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8ba1a7e2-e1f4-48b2-a36e-5c0b5226792f
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/da994fc4-18d3-4022-9db4-272dc1d39821
 
