@@ -46,7 +46,7 @@ The functional interconnection of hard- and software is visualized in here:
 
 ![Connection_Setup](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/258beef8-be43-4a33-b67d-bf682ef82842)
 
-<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/258beef8-be43-4a33-b67d-bf682ef82842" width="100" height="100">
+<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/258beef8-be43-4a33-b67d-bf682ef82842" width="700">
 
 ## <a id="process"></a>  Process and Autonomous Workflow Description
 
