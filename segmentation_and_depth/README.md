@@ -20,7 +20,7 @@ Please refer to the installation paragraph of the parent repository to create th
 
 ## Dataset 
 
-The TransProteus dataset can be downloaded from [here](https://e.pcloud.link/publink/show?code=kZfx55Zx1GOrl4aUwXDrifAHUPSt7QUAIfV). To train the model, save the data in `data/interim`, or change the paths to the training folders in `src/data/make_dataset.py`. The LabPics data can be downloaded [here](https://zenodo.org/record/4736111). To get only the folders with liquid content and the required LabPics data, run `dvc pull` in this subfolder. 
+The TransProteus dataset can be downloaded from [here](https://icedrive.net/s/6cZbP5dkNG). To train the model, save the data in `data/interim`, or change the paths to the training folders in `src/data/make_dataset.py`. The LabPics data can be downloaded [here](https://zenodo.org/record/4736111). To get only the folders with liquid content and the required LabPics data, run `dvc pull` in this subfolder. 
 
 ## Usage
 
