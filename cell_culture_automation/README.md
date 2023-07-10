@@ -130,13 +130,17 @@ The following provides a mid-level overview of the purpose of each process modul
     - Open clamps and door.
     - Move the flask inside.
     - Place the flask on the flask storage.
-    - Close door and clamps.
+    - Close the door and clamps.
 
-### Process diagram
+### Process Diagram
 
 Throughout the implementation of the modules, careful consideration was given to the selection of start and end positions, ensuring the flexibility to arrange them in any order, thus enabling diverse workflows to be executed. The following shows the process diagram for the three primary workflows:
 
 ![Workflow_Diagram_Autonomous](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/816a31f1-3683-42bc-9062-77fc7763a962)
+
+## Videos of the modules
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/9720021c-af43-4bbe-b184-715e31a4d5f7
 
 ## Usage
 
