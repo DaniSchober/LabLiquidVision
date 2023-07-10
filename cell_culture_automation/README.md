@@ -142,6 +142,11 @@ Throughout the implementation of the modules, careful consideration was given to
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/da994fc4-18d3-4022-9db4-272dc1d39821
 
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/3c8aa1a7-f140-4d4f-b89e-7994704447a6
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/db8c39dd-f67e-4e6d-a76c-f8cda058b10c
+
+
 ## Usage
 
 
