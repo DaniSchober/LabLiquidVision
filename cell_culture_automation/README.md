@@ -136,7 +136,7 @@ The following provides a mid-level overview of the purpose of each process modul
 
 Throughout the implementation of the modules, careful consideration was given to the selection of start and end positions, ensuring the flexibility to arrange them in any order, thus enabling diverse workflows to be executed. The following shows the process diagram for the three primary workflows:
 
-<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/4768f479-717a-4efb-a50c-4f3e59655297" width="700">
+<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/4768f479-717a-4efb-a50c-4f3e59655297" width="800">
 
 ## Videos of the modules
 
