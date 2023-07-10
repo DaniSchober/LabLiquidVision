@@ -146,6 +146,7 @@ https://github.com/DaniSchober/LabLiquidVision/assets/75242605/3c8aa1a7-f140-4d4
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/db8c39dd-f67e-4e6d-a76c-f8cda058b10c
 
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf03fc5d-229b-4272-8fcf-577293d30aec
 
 ## Usage
 
