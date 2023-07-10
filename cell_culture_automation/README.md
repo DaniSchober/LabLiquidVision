@@ -140,7 +140,7 @@ Throughout the implementation of the modules, careful consideration was given to
 
 ## Videos of the modules
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/9720021c-af43-4bbe-b184-715e31a4d5f7
+Uploading Module_2.mp4…
 
 ## Usage
 
