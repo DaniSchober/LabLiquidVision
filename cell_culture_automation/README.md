@@ -16,7 +16,7 @@ The proposed system includes a UR5e collaborative industrial robot with an Intel
 
 An overview of the hardware setup can be seen here:
 
-![System_Overview](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/455447e8-535a-40fa-aa36-86aaea8002ff | width=60)
+![System_Overview](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/455447e8-535a-40fa-aa36-86aaea8002ff)
 
 (1) Automated incubator. (2) Microscope. (3) Trypsin unit. (4) Capper/Decapper. (5) Lid holders. (6) Flask storage. (7) Flask holder for pouring. (8) UR5e with 3D-printed gripper fingers. (9) Heating and Cooling of Liquids Unit.
 
@@ -45,6 +45,8 @@ All the devices are either connected to the UR control box or directly to the PC
 The functional interconnection of hard- and software is visualized in here:
 
 ![Connection_Setup](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/258beef8-be43-4a33-b67d-bf682ef82842)
+
+<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/258beef8-be43-4a33-b67d-bf682ef82842" width="100" height="100">
 
 ## <a id="process"></a>  Process and Autonomous Workflow Description
 
