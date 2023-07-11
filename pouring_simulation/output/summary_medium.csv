@@ -1,0 +1,4 @@
+scene_number,path,rotationSpeed,stop_angle,pause_time,volume_start,volume_poured,volume_received,spilled_volume
+1,../../output/MediumBottle/Medium_300_1800_50,0.030000,50.000000,1.800000,299.900000,24.492500,24.442499,0.050000
+1,../../output/MediumBottle/Medium_300_1800_50,0.030000,50.000000,1.800000,299.900000,24.492500,24.442499,0.050000
+1,../../output/MediumBottle/Medium_300_1800_50,0.030000,50.000000,1.800000,299.900000,24.492500,24.442499,0.050000

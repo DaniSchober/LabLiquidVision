@@ -182,6 +182,8 @@ def predict(model_path, image_path):
         if nm in MaskList:
             # copy mask for visualization
             tmIm = Prd[nm][0].copy()
+            # save as .npy file
+            np.save(save_path + nm + ".npy", tmIm)
             # normalize mask to values between 0-255
             if (
                 Prd[nm][0].max() > 255
@@ -202,6 +204,9 @@ def predict(model_path, image_path):
         else:
             # copy depth map for visualization
             tmIm = Prd[nm].copy()
+
+            # save as .npy file
+            np.save(save_path + nm + ".npy", tmIm)
 
             # squeeze depth map
             tmIm = tmIm.squeeze()

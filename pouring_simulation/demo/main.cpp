@@ -2793,6 +2793,8 @@ int main(int argc, char* argv[])
 	int count_scenes_flaks = 0; // scene counter flask
 	int count_scenes_bottle = 0; // scene counter bottle
 
+	g_scenes.push_back(new Pouring_Bottle("Pouring Bottle", "../../data/Assembly_MediumBottle_TCP_65y_50x", "../../output/MediumBottle/Medium", 300, 1.8, 50, 1)); // Scene name, input path, output path, start volume, stopping duration, stopping angle
+
 	// Pouring Flask depending on parameter space
 	for (int start_vol = 35; start_vol <= 150; start_vol += 5) { // start volume
 		for (float pause_time = 0.2; pause_time <= 1.8; pause_time += 0.4) { // stop time

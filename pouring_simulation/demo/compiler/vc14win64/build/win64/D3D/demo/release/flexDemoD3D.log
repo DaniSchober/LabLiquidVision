@@ -23,13 +23,13 @@ c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibratio
 c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(84): warning C4244: 'argument': conversion from '__int64' to 'unsigned int', possible loss of data
 c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(169): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\apo_n\documents\github\thesis\pouring_simulation\demo\scenes/calibration.h(186): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-..\..\main.cpp(2801): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-..\..\main.cpp(2811): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+..\..\main.cpp(2803): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+..\..\main.cpp(2813): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
      Creating library ./../../../bin/win64\NvFlexDemoReleaseD3D_x64.lib and object ./../../../bin/win64\NvFlexDemoReleaseD3D_x64.exp
   Generating code
-  166 of 2542 functions ( 6.5%) were compiled, the rest were copied from previous compilation.
-    7 functions were new in current compilation
-    68 functions had inline decision re-evaluated but remain unchanged
+  207 of 2542 functions ( 8.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    22 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   flexDemoD3D.vcxproj -> C:\Users\apo_n\Documents\GitHub\thesis\pouring_simulation\demo\compiler\vc14win64\./../../../bin/win64\NvFlexDemoReleaseD3D_x64.exe
   flexDemoD3D.vcxproj -> ./../../../bin/win64\/NvFlexDemoReleaseD3D_x64.exe.pdb (Full PDB)
