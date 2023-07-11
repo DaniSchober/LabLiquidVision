@@ -34,7 +34,6 @@ def capture_image():
     # Save the color image
     image_path = os.path.join(save_dir, f"image.png")
     cv2.imwrite(image_path, color_image)
-    print("Image saved")
 
     # Stop the pipeline
     pipeline.stop()
