@@ -44,7 +44,7 @@ The main function takes the following arguments:
  
  Example usage:
  ```
- python main.py --mode train --cuda True --batch_size 6 --epochs 75 --load_model False --use_labpics True
+ python main.py --mode train --cuda --batch_size 6 --epochs 75 --load_model False --use_labpics True
  ```
  
  The saved model gets saved in `models`, and the parameters of the training in `logs`.
@@ -52,7 +52,7 @@ The main function takes the following arguments:
  ### Evaluating a model
  Example usage:
  ```
- python main.py --mode evaluate --cuda True --model_path models/segmentation_depth_model.torch --folder_path data/interim/TranProteus1/Testing/LiquidContent
+ python main.py --mode evaluate --cuda --model_path models/segmentation_depth_model.torch --folder_path data/interim/TranProteus1/Testing/LiquidContent
  ```
  
  The results of the testing get saved in `output/results.txt`.
@@ -60,7 +60,7 @@ The main function takes the following arguments:
  ### Predict segmentation and depth maps on an image using a trained model
  Example usage:
  ```
- python main.py --mode predict --cuda True --model_path models/segmentation_depth_model.torch --image_path example/RGBImage.png
+ python main.py --mode predict --cuda --model_path models/segmentation_depth_model.torch --image_path example/RGBImage.png
  ```
  
  The results of the prediction get saved in a subfolder in `example/results`. The output contains 8 images:
