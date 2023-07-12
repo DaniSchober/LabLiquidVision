@@ -9,6 +9,7 @@ The proposed system includes a UR5e collaborative industrial robot with an Intel
 - [Hardware Setup](#hardwaresetup)
 - [Connection and Configuration](#connection)
 - [Process and Autonomous Workflow Description](#process)
+- [Vision-based process monitoring](#processmonitoring)
 - [Videos of the Modules](#videosmodules)
 - [Usage](#usage)
 
@@ -138,6 +139,10 @@ The following provides a mid-level overview of the purpose of each process modul
 Throughout the implementation of the modules, careful consideration was given to the selection of start and end positions, ensuring the flexibility to arrange them in any order, thus enabling diverse workflows to be executed. The following shows the process diagram for the three primary workflows:
 
 <img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/4768f479-717a-4efb-a50c-4f3e59655297" width="800">
+
+## <a id="processmonitoring"></a>  Deep learning-based process monitoring using the segmentation and depth estimation model
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf3ef8c3-5f38-4ae6-9ae6-ac36a6f2f1ba
 
 ## <a id="videosmodules"></a> Videos of the modules
 
