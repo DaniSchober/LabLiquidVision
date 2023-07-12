@@ -116,11 +116,12 @@ The final models were trained for 200 epochs with a learning rate of 0.001, a ba
 
 The results of the testing with the model without vessel volume input can be seen here:
 
-![scatter_plot_no_vol_input](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/5c832a16-74ae-4dac-989a-7b6a1539a754)
+<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/5c832a16-74ae-4dac-989a-7b6a1539a754" width="700">
 
 The results of the testing with the model WITH vessel volume input can be seen here:
 
-![scatter_plot_input_vol](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/95e6af0c-cf07-4d19-aa67-ff88c975c366)
+<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/95e6af0c-cf07-4d19-aa67-ff88c975c366" width="700">
+
 
 ## <a id="orga"></a> Project Organization
 
