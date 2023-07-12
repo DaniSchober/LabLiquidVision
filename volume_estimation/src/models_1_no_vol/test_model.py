@@ -68,6 +68,8 @@ def test(data_dir):
 
     squared_error_liquid_total = 0
     squared_error_liquid_array = []
+    absolute_error_liquid_total = 0
+
     predicted_vol_liquid_list = []
     actual_vol_liquid_list = []
     vessel_name_list = []
@@ -134,10 +136,17 @@ def test(data_dir):
             squared_error_liquid_total += squared_error_liquid
             squared_error_liquid_array = np.append(
                 squared_error_liquid_array, squared_error_liquid**0.5
+
+            
             )
+            absolute_error_liquid = abs(predicted_vol_liquid - actual_vol_liquid)
+            absolute_error_liquid_total += absolute_error_liquid
 
         # calculate RMSE for test set
         rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
+
+        # calculate mean absolute error for test set
+        mean_absolute_error = absolute_error_liquid_total / test_size
 
         # calculate mean percentage error for test set
         mean_percentage_error = (
@@ -173,6 +182,7 @@ def test(data_dir):
         print("TOTAL RESULTS:")
         print("Mean of real volume: ", avg_liquid_total)
         print("RMSE: ", rmse_liquid)
+        print("MAE: ", mean_absolute_error)
         print("MAPE: ", mean_percentage_error * 100, "%")
         print("R2 score: ", r2_score)
         print("Max error: ", max_error)

@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 
 # load all folders in data/interim/initial
 def create_converted_dataset(
-    path_input, path_output, model_path, MaxSize=3000, UseGPU=True
+    path_input, path_output, model_path, MaxSize=1000, UseGPU=True
 ):
     """
     Load all folders in path and return a list of numpy arrays

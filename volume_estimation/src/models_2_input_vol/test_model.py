@@ -66,6 +66,7 @@ def test(data_dir):
 
     squared_error_liquid_total = 0
     squared_error_liquid_array = []
+    abs_error_liquid_total = 0
     predicted_vol_liquid_list = []
     actual_vol_liquid_list = []
     vessel_name_list = []
@@ -142,6 +143,9 @@ def test(data_dir):
                 squared_error_liquid_array, squared_error_liquid**0.5
             )
 
+            abs_error_liquid = abs(predicted_vol_liquid - actual_vol_liquid)
+            abs_error_liquid_total += abs_error_liquid
+
         # calculate RMSE for test set
         rmse_liquid = (squared_error_liquid_total / test_size) ** 0.5
 
@@ -165,6 +169,9 @@ def test(data_dir):
         # calculate average of liquid amount
         avg_liquid_total = sum(actual_vol_liquid_list) / len(actual_vol_liquid_list)
 
+        # calculate mean absolute error
+        mean_abs_error = abs_error_liquid_total / test_size
+
         # calculate R2 score for test set
         r2_score = metrics.r2_score(actual_vol_liquid_list, predicted_vol_liquid_list)
 
@@ -179,6 +186,7 @@ def test(data_dir):
         print("TOTAL RESULTS:")
         print("Mean of real volume: ", avg_liquid_total)
         print("RMSE: ", rmse_liquid)
+        print("MAE: ", mean_abs_error)
         print("MAPE: ", mean_percentage_error * 100, "%")
         print("R2 score: ", r2_score)
         print("Max error: ", max_error)

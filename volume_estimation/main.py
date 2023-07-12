@@ -165,6 +165,7 @@ def main():
                 save_depth=False,
                 vessel_volume=args.vessel_volume,
                 no_GPU=args.no_GPU,
+                show_visualization=True,
             )
 
         elif args.mode == "test":

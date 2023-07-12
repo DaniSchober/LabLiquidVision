@@ -51,7 +51,7 @@ def predict_no_vol(
     UseGPU = True  # Use GPU or not
     if no_GPU == True:
         UseGPU = False
-    MaxSize = 3000
+    MaxSize = 1000
 
     # get depth maps from segmentation and depth model
     DepthList = ["EmptyVessel_Depth", "ContentDepth", "VesselOpening_Depth"]

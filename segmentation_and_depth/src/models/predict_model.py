@@ -39,8 +39,7 @@ Output:
 def predict(model_path, image_path):
     # input parameters
     UseGPU = False
-    MaxSize = 1000  # Max image sie (height or width)
-
+    MaxSize = 1000  
     # define masks and depth maps to predict
     DepthList = ["EmptyVessel_Depth", "ContentDepth", "VesselOpening_Depth"]
     MaskList = [
