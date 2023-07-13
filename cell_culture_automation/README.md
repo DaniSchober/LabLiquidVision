@@ -9,7 +9,8 @@ The proposed system includes a UR5e collaborative industrial robot with an Intel
 - [Hardware Setup](#hardwaresetup)
 - [Connection and Configuration](#connection)
 - [Process and Autonomous Workflow Description](#process)
-- [Vision-based process monitoring](#processmonitoring)
+- [Vision-based Process Monitoring](#processmonitoring)
+- [Autonomous Workflows](#workflows)
 - [Videos of the Modules](#videosmodules)
 - [Usage](#usage)
 
@@ -143,6 +144,10 @@ Throughout the implementation of the modules, careful consideration was given to
 ## <a id="processmonitoring"></a>  Deep learning-based process monitoring using the segmentation and depth estimation model
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf3ef8c3-5f38-4ae6-9ae6-ac36a6f2f1ba
+
+## <a id="workflows"></a>  Autonomous Workflows
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/94feda8f-667b-4c8b-9d64-9a755cea9c25
 
 ## <a id="videosmodules"></a> Videos of the modules
 
