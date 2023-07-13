@@ -18,6 +18,7 @@ This work explores how computer vision-based liquid detection and handling can b
 - [Background](#background)
 - [Overview of the Solution](#solution)
 - [Main Results](#results)
+- [Project Organization](#orga)
 - [License](#license)
 - [Credits](#credits)
 - [Contact](#contact)
@@ -71,7 +72,8 @@ One part of the workflow is a vision- and simulation-based autonomous pouring ap
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8316b6fb-8025-4420-ac19-7d6d97ab2d42
 
-## Project Organization
+## <a id="orga"></a> Project Organization
+
 ------------
 
     ├── README.md                 <- The top-level README for developers using this project.
