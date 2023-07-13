@@ -20,7 +20,7 @@ An overview of the hardware setup can be seen here:
 
 <img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/455447e8-535a-40fa-aa36-86aaea8002ff" width="900">
 
-(1) Automated incubator. (2) Microscope. (3) Trypsin unit. (4) Capper/Decapper. (5) Lid holders. (6) Flask storage. (7) Flask holder for pouring. (8) UR5e with 3D-printed gripper fingers. (9) Heating and Cooling of Liquids Unit.
+(1) Automated incubator. (2) Microscope. (3) Trypsin unit. (4) Capper/Decapper. (5) Lid holders. (6) Flask storage. (7) Flask holder for pouring. (8) UR5e with 3D-printed gripper fingers. (9) Heating and Cooling of Liquids units.
 
 The following external equipment is needed. The rest of the elements can be 3D printed using the files in the `CAD` folder.
 
@@ -155,6 +155,8 @@ https://github.com/DaniSchober/LabLiquidVision/assets/75242605/3c8aa1a7-f140-4d4
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/db8c39dd-f67e-4e6d-a76c-f8cda058b10c
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf03fc5d-229b-4272-8fcf-577293d30aec
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6d8a44fc-060b-4510-bd73-011f697f86c2
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/def5a9d2-dd8b-42ec-a7f5-9e586546134d
 
