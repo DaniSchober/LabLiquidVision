@@ -17,6 +17,7 @@ This work explores how computer vision-based liquid detection and handling can b
 - [Subprojects](#subprojects)
 - [Background](#background)
 - [Overview of the Solution](#solution)
+- [Main Results](#results)
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
@@ -48,8 +49,6 @@ conda activate labliquidvision
 
 ## Background
 
-[![Watch the video](https://img.youtube.com/vi/nTQUwghvy5Q/default.jpg)](https://youtu.be/nTQUwghvy5Q)
-
 Cell culture is one of the fundamental tools in life science research and biotechnology. Applications range from testing of drugs or toxins, development of gene and cell therapies, and investigation of the function of biomolecules, to the production of biologics or vaccine particles. The focus lies on the problem of maintaining adherent cell cultures in laboratories. This includes two main procedures: (1) Media change and (2) passaging (subculturing) of cells. For adherent cell cultures, it is necessary to remove the spent media and replace it with fresh media repeatedly. In order to achieve optimal cell proliferation, it is essential to provide cells with fresh media two to three times per week and to maintain suitable conditions such as appropriate temperature, humidity, light, and pH. When cells reach confluency, it is crucial to subculture or passage them. Otherwise, they will experience reduced mitotic index and eventually result in cell death. The resulting cell suspension is then divided or reseeded into fresh cultures. The interval between cell passaging varies based on the cell line and its growth rate. The exact execution of the steps can vary depending on the researcher. For further visualization of the manual process, a video of the passaging process can be found here:
 
 https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-a438-4b9f3dc0c1c3.mp4
@@ -62,6 +61,14 @@ The proposed solution consists of three main contributions, each taking a signif
 - **Adaptable robotic pouring using fluid simulation:** Instead of pipetting, the autonomous solution is based on robotic pouring. The robot arm movement to pour a desired amount of liquid from a container with varying starting volumes is based on the vision-based estimation of the liquid volume and the results of a simulation of the pouring movements with the particle-based simulator NVIDIA Flex. This pouring simulation can be adapted to different scenarios and objects also outside of chemical environments.
 
 <img src="https://user-images.githubusercontent.com/75242605/236624972-99bd9f4b-c346-44b6-8f89-11d8068a09f8.png" width="700">
+
+## <a id="results"></a> Main Results
+
+A timelapse of the autonomous cell passaging procedure can be seen here:
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/1824ced1-c17c-4bba-9f23-486510a6f958
+
+One part of the workflow is a vision- and simulation-based autonomous pouring approach. An exemplary execution can be seen here:
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8316b6fb-8025-4420-ac19-7d6d97ab2d42
 
