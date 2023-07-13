@@ -48,6 +48,8 @@ conda activate labliquidvision
 
 ## Background
 
+[![Watch the video](https://img.youtube.com/vi/nTQUwghvy5Q/default.jpg)](https://youtu.be/nTQUwghvy5Q)
+
 Cell culture is one of the fundamental tools in life science research and biotechnology. Applications range from testing of drugs or toxins, development of gene and cell therapies, and investigation of the function of biomolecules, to the production of biologics or vaccine particles. The focus lies on the problem of maintaining adherent cell cultures in laboratories. This includes two main procedures: (1) Media change and (2) passaging (subculturing) of cells. For adherent cell cultures, it is necessary to remove the spent media and replace it with fresh media repeatedly. In order to achieve optimal cell proliferation, it is essential to provide cells with fresh media two to three times per week and to maintain suitable conditions such as appropriate temperature, humidity, light, and pH. When cells reach confluency, it is crucial to subculture or passage them. Otherwise, they will experience reduced mitotic index and eventually result in cell death. The resulting cell suspension is then divided or reseeded into fresh cultures. The interval between cell passaging varies based on the cell line and its growth rate. The exact execution of the steps can vary depending on the researcher. For further visualization of the manual process, a video of the passaging process can be found here:
 
 https://user-images.githubusercontent.com/75242605/235789312-c42b6f9f-35db-4578-a438-4b9f3dc0c1c3.mp4
