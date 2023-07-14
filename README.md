@@ -70,7 +70,7 @@ https://github.com/DaniSchober/LabLiquidVision/assets/75242605/c8895650-afac-470
 
 One part of the workflow is a vision- and simulation-based autonomous pouring approach. An exemplary execution can be seen here:
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8c1c3472-e5a2-4538-aadf-71e503899316
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/121bd926-c54a-4329-bdc9-e0d2c23e07f4
 
 ## <a id="orga"></a> Project Organization
 
