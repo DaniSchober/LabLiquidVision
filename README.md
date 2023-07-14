@@ -66,7 +66,7 @@ The proposed solution for automating the described manual workflows consists of 
 
 A timelapse of the autonomous cell passaging procedure can be seen here. The incubation time after adding the dissociation reagent was skipped.
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/c8895650-afac-4709-aba2-f5073c912d92
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/9ddd05bf-145b-4379-b28e-133c81f5d1b9
 
 One part of the workflow is a vision- and simulation-based autonomous pouring approach. An exemplary execution can be seen here:
 
