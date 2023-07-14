@@ -66,11 +66,11 @@ The proposed solution consists of three main contributions, each taking a signif
 
 A timelapse of the autonomous cell passaging procedure can be seen here:
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/1824ced1-c17c-4bba-9f23-486510a6f958
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/c8895650-afac-4709-aba2-f5073c912d92
 
 One part of the workflow is a vision- and simulation-based autonomous pouring approach. An exemplary execution can be seen here:
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8316b6fb-8025-4420-ac19-7d6d97ab2d42
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8c1c3472-e5a2-4538-aadf-71e503899316
 
 ## <a id="orga"></a> Project Organization
 
