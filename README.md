@@ -64,7 +64,7 @@ The proposed solution for automating the described manual workflows consists of 
 
 ## <a id="results"></a> Main Results
 
-A timelapse of the autonomous cell passaging procedure can be seen here:
+A timelapse of the autonomous cell passaging procedure can be seen here. The incubation time after adding the dissociation reagent was skipped.
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/c8895650-afac-4709-aba2-f5073c912d92
 
