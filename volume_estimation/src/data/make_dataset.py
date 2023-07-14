@@ -28,9 +28,7 @@ def create_converted_dataset(
     """
     Load all folders in path and return a list of numpy arrays
     """
-    # path_input = "data/interim/"
-    # path_output = "data/processed/"
-    # model_path =  r"../segmentation_and_depth/models/55__03042023-2211.torch" # Trained model path
+
     # add parent folder to sys.path
     sys.path.insert(0, os.path.abspath(".."))
     # define masks and depth maps to load model
