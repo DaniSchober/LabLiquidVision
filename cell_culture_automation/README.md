@@ -143,6 +143,8 @@ Throughout the implementation of the modules, careful consideration was given to
 
 ## <a id="processmonitoring"></a>  Deep learning-based process monitoring using the segmentation and depth estimation model
 
+Before the workflows, the system runs a monitoring run to check if all the consumables are loaded correctly. The vision-based approach uses the segmentation and depth estimation model explained [here](https://github.com/DaniSchober/thesis/tree/main/segmentation_and_depth).
+
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/f8f00ed9-c70c-4642-8393-2c0ec90c2700
 
 ## Usage
