@@ -13,7 +13,6 @@ This work explores how computer vision-based liquid detection and handling can b
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
 - [Subprojects](#subprojects)
 - [Background](#background)
 - [Overview of the Solution](#solution)
