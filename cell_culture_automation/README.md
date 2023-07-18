@@ -143,12 +143,11 @@ Throughout the implementation of the modules, careful consideration was given to
 
 ## <a id="processmonitoring"></a>  Deep learning-based process monitoring using the segmentation and depth estimation model
 
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf3ef8c3-5f38-4ae6-9ae6-ac36a6f2f1ba
-
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/f8f00ed9-c70c-4642-8393-2c0ec90c2700
 
 ## Usage
 
-To start the system, make sure all devices are physically connected and the UR5e is set to remote control, and then simply run the following command:
+To start the system, make sure all devices are physically connected and the UR5e is set to remote control, and then run the following command:
 
 ```python
 python main.py
