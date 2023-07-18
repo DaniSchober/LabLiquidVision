@@ -24,7 +24,7 @@ This work explores how computer vision-based liquid detection and handling can b
 
 ## Installation
 
-Please refer to the specific folders of the project for installation details for the specific use.
+Please refer to the specific folders of the project for installation details for the specific usage.
 
 For a general setup using conda, do the following:
 
