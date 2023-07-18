@@ -13,6 +13,7 @@ The proposed system includes a UR5e collaborative industrial robot with an Intel
 - [Usage](#usage)
 - [Autonomous Workflows](#workflows)
 - [Videos of the Modules](#videosmodules)
+- [Project Organisation](#orga)
 
 ## <a id="hardwaresetup"></a> Hardware Setup
 
@@ -204,46 +205,20 @@ https://github.com/DaniSchober/LabLiquidVision/assets/75242605/d8d92095-d140-486
 ------------
 
     ├── LICENSE
-    ├── README.md          <- The top-level README for developers using this project.
+    ├── README.md              <- The top-level README for developers using this project.
     │
-    ├── CAD                <- Location for pictures used in prediction.
-    │   └── results        <- Contains subfolders for the results of the prediction of images in the example. 
+    ├── CAD                    <- Location of the STL and IPT files and drawings of the 3D printed parts.
     │
-    ├── logs               <- Stored training parameters.
+    ├── captured_images        <- Stored images captured during the process.
     │
-    ├── models             <- Location where trained models are saved. Contains final model "segmentation_depth_model.torch"
+    ├── main                   <- Main folder containing the functions for all modules and workflows.
+    │   ├── Cell_Flask_diff    <- Trajectories of the different simulated pouring movements with the cell culture flask.
+    │   ├── Media_Bottle_diff  <- Trajectories of the different simulated pouring movements with the media bottle.
+    │   ├── main.py            <- Main file for creating the GUI and starting the workflows.
+    │   ├── rotation_matrix.py <- Functions for converting the pouring movement to the robot base coordinate system.
+    │   └── utils.py           <- Functions to control robot and devices to execute the workflows.
     │
-    ├── notebooks          <- Notebooks for testing of segmentation on a subset of the self-generated dataset, plotting the loss, and visualizing the point clouds.
-    │    
-    ├── output             <- Results of model evaluation.
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment.
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to generate data and create the readers for the training and testing data
-    │   │   ├── load_data.py    
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions as well as evaluating it
-    │   │   ├── evaluate_model.py
-    │   │   ├── loss_functions.py
-    │   │   ├── model.py
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │    
-    │   ├── utils          <- contains utils for model evaluation
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results-oriented visualizations
-    │       └── visualize.py
-    │
-    ├── main.py            <- Main file to train and evaluate models and run inferences on images.
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
+    └── notebooks              <- Notebooks for testing the autonomous pouring, the simulation-to-reality transfers and the process monitoring.
 
 --------
 
