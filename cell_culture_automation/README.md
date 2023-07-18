@@ -200,7 +200,52 @@ https://github.com/DaniSchober/LabLiquidVision/assets/75242605/dd90355e-74b1-4ca
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/d8d92095-d140-4865-a37c-1243067234de
 
+## <a id="orga"></a> Project Organization
+------------
 
+    ├── LICENSE
+    ├── README.md          <- The top-level README for developers using this project.
+    │
+    ├── CAD                <- Location for pictures used in prediction.
+    │   └── results        <- Contains subfolders for the results of the prediction of images in the example. 
+    │
+    ├── logs               <- Stored training parameters.
+    │
+    ├── models             <- Location where trained models are saved. Contains final model "segmentation_depth_model.torch"
+    │
+    ├── notebooks          <- Notebooks for testing of segmentation on a subset of the self-generated dataset, plotting the loss, and visualizing the point clouds.
+    │    
+    ├── output             <- Results of model evaluation.
+    │
+    ├── requirements.txt   <- The requirements file for reproducing the analysis environment.
+    │
+    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
+    ├── src                <- Source code for use in this project.
+    │   ├── __init__.py    <- Makes src a Python module
+    │   │
+    │   ├── data           <- Scripts to generate data and create the readers for the training and testing data
+    │   │   ├── load_data.py    
+    │   │   └── make_dataset.py
+    │   │
+    │   ├── models         <- Scripts to train models and then use trained models to make
+    │   │   │                 predictions as well as evaluating it
+    │   │   ├── evaluate_model.py
+    │   │   ├── loss_functions.py
+    │   │   ├── model.py
+    │   │   ├── predict_model.py
+    │   │   └── train_model.py
+    │   │    
+    │   ├── utils          <- contains utils for model evaluation
+    │   │
+    │   └── visualization  <- Scripts to create exploratory and results-oriented visualizations
+    │       └── visualize.py
+    │
+    ├── main.py            <- Main file to train and evaluate models and run inferences on images.
+    │
+    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+
+
+--------
 
 
 
