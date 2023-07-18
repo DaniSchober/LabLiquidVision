@@ -181,7 +181,9 @@ To start the system, make sure all devices are physically connected and the UR5e
 python main.py
 ```
 
-This command will launch the graphical user interface (GUI). Before proceeding, make sure to connect the devices by selecting the "Connect Devices" button. Once connected, you can choose the desired cell culture process from the available options and select the flask number. The system will capture images from the camera and microscope, and store them for further analysis.
+This command will launch the following graphical user interface (GUI). Before proceeding, make sure to connect the devices by selecting the "Connect Devices" button. Once connected, you can choose the desired cell culture process from the available options and select the flask number. The system will capture images from the camera and microscope, and store them for further analysis.
+
+<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/a482ab19-30c4-443f-9a26-8a548b1e057e" width="800">
 
 ### Implementation Details
 
