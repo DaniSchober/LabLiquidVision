@@ -179,16 +179,3 @@ The results of the testing with the model WITH vessel volume input can be seen h
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
 
-
-## Data version control
-
-To upload new data:
-* dvc add data
-* git add data.dvc .gitignore
-* git commit -m "Description"
-* git tag -a "v1.0" -m "data v1.0"
-* dvc push
-
-To get the data:
-* git pull
-* dvc pull
