@@ -175,5 +175,30 @@ https://github.com/DaniSchober/LabLiquidVision/assets/75242605/d8d92095-d140-486
 
 ## Usage
 
+To start the system, make sure all devices are physically connected and the UR5e is set to remote control, and then simply run the following command:
+
+```python
+python main.py
+```
+
+This command will launch the graphical user interface (GUI). Before proceeding, make sure to connect the devices by selecting the "Connect Devices" button. Once connected, you can choose the desired cell culture process from the available options and select the flask number. The system will capture images from the camera and microscope, and store them for further analysis.
+
+### Implementation Details
+
+The `main.py` file serves as the central component of the Cell Culture Automation User Interface. It incorporates various modules and functionalities to facilitate the control and monitoring of the automated cell culture system. The following are the key implementation details of the `main.py` file:
+
+1. **Importing Required Modules**: The necessary modules are imported at the beginning of the file to enable the functionality of the User Interface. These include `tkinter` for creating the graphical user interface, `PIL` for image processing, `glob` for file operations, `os` for operating system-related tasks, and other custom modules specific to the system's components.
+
+2. **Device Connection**: The `connect_device()` function is responsible for establishing connections with the robotic arm, microscope, and decapper devices. It utilizes the respective modules for each device to establish the connections and displays a connection status message box to inform the user.
+
+3. **Analyze Cell Growth**: The `analyze_cell_growth()` function prompts the user to input the flask number in the incubator to initiate the cell growth analysis process. It calls various functions to manipulate the robotic arm, microscope, and decapper devices accordingly. The captured images are resized and displayed in separate image windows.
+
+4. **Change Media**: The `change_media()` function enables the user to change the media of a specific flask. Similar to the `analyze_cell_growth()` function, it prompts the user for the flask number, performs the required actions using the devices, captures and displays images, and executes the necessary steps for media change.
+
+5. **Passage**: The `passage()` function allows the user to perform the cell passage process. After inputting the flask number, the function carries out the required operations using the devices, captures images, executes the steps for flask decapping, cell splitting, and flask recapping, and places the passaged flask back into the incubator.
+
+6. **Graphical User Interface (GUI)**: The main window of the user interface is created using `tkinter`. The window includes buttons for connecting devices, analyzing cell growth, changing media, and performing passage. Additionally, separate frames are created to display captured images of cell growth analysis.
+
+
 
 
