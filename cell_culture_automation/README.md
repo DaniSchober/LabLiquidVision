@@ -10,10 +10,9 @@ The proposed system includes a UR5e collaborative industrial robot with an Intel
 - [Connection and Configuration](#connection)
 - [Process and Autonomous Workflow Description](#process)
 - [Vision-based Process Monitoring](#processmonitoring)
+- [Usage](#usage)
 - [Autonomous Workflows](#workflows)
 - [Videos of the Modules](#videosmodules)
-- [Usage](#usage)
-
 
 ## <a id="hardwaresetup"></a> Hardware Setup
 
@@ -145,33 +144,6 @@ Throughout the implementation of the modules, careful consideration was given to
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf3ef8c3-5f38-4ae6-9ae6-ac36a6f2f1ba
 
-## <a id="workflows"></a>  Autonomous Workflows
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/94feda8f-667b-4c8b-9d64-9a755cea9c25
-
-## <a id="videosmodules"></a> Videos of the modules
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8ba1a7e2-e1f4-48b2-a36e-5c0b5226792f
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/da994fc4-18d3-4022-9db4-272dc1d39821
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/3c8aa1a7-f140-4d4f-b89e-7994704447a6
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/db8c39dd-f67e-4e6d-a76c-f8cda058b10c
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf03fc5d-229b-4272-8fcf-577293d30aec
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6d8a44fc-060b-4510-bd73-011f697f86c2
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/def5a9d2-dd8b-42ec-a7f5-9e586546134d
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/62639b81-ccff-4570-8bc8-da9e96ec6865
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/dd90355e-74b1-4ca3-a029-94100849f5bc
-
-https://github.com/DaniSchober/LabLiquidVision/assets/75242605/d8d92095-d140-4865-a37c-1243067234de
-
-
 
 ## Usage
 
@@ -200,6 +172,36 @@ The `main.py` file serves as the central component of the Cell Culture Automatio
 5. **Passage**: The `passage()` function allows the user to perform the cell passage process. After inputting the flask number, the function carries out the required operations using the devices, captures images, executes the steps for flask decapping, cell splitting, and flask recapping, and places the passaged flask back into the incubator.
 
 6. **Graphical User Interface (GUI)**: The main window of the user interface is created using `tkinter`. The window includes buttons for connecting devices, analyzing cell growth, changing media, and performing passage. Additionally, separate frames are created to display captured images of cell growth analysis.
+
+
+## <a id="workflows"></a>  Autonomous Workflows
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/94feda8f-667b-4c8b-9d64-9a755cea9c25
+
+## <a id="videosmodules"></a> Videos of the modules
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8ba1a7e2-e1f4-48b2-a36e-5c0b5226792f
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/da994fc4-18d3-4022-9db4-272dc1d39821
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/3c8aa1a7-f140-4d4f-b89e-7994704447a6
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/db8c39dd-f67e-4e6d-a76c-f8cda058b10c
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/bf03fc5d-229b-4272-8fcf-577293d30aec
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/6d8a44fc-060b-4510-bd73-011f697f86c2
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/def5a9d2-dd8b-42ec-a7f5-9e586546134d
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/62639b81-ccff-4570-8bc8-da9e96ec6865
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/dd90355e-74b1-4ca3-a029-94100849f5bc
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/d8d92095-d140-4865-a37c-1243067234de
+
+
+
 
 
 
