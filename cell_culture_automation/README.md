@@ -180,6 +180,10 @@ The `main.py` file serves as the central component of the Cell Culture Automatio
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/94feda8f-667b-4c8b-9d64-9a755cea9c25
 
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/9fdb5cf5-982b-438e-8051-33adf6782a0c
+
+https://github.com/DaniSchober/LabLiquidVision/assets/75242605/9c23b7f1-2ced-446d-8c73-bdb25804dbca
+
 ## <a id="videosmodules"></a> Videos of the modules
 
 https://github.com/DaniSchober/LabLiquidVision/assets/75242605/8ba1a7e2-e1f4-48b2-a36e-5c0b5226792f
