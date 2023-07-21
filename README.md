@@ -59,7 +59,10 @@ The proposed solution for automating the described manual workflows consists of 
 - **Vision-based transparent object detection and liquid volume estimation:** A vision-based system is developed to detect transparent objects for process monitoring (e.g. how many flasks are present), and to estimate the volume of liquid in the different transparent containers. The first step to achieve this is a deep-learning approach based on the [TransProteus dataset](https://www.cs.toronto.edu/matterlab/TransProteus/). The result of this model is a segmentation and depth estimation of transparent vessels and the liquid inside of them. This model is used to generate a new dataset of images of laboratory containers with liquid content, including their segmentation and depth estimation and the object and liquid volumes. A new model trained on this dataset estimates the volume of liquid given in a transparent container. This estimation builds the base for autonomous robotic pouring from the given containers. 
 - **Adaptable robotic pouring using fluid simulation:** Instead of pipetting, the autonomous solution is based on robotic pouring. The robot arm movement to pour a desired amount of liquid from a container with varying starting volumes is based on the vision-based estimation of the liquid volume and the results of a simulation of the pouring movements with the particle-based simulator NVIDIA Flex. This pouring simulation can be adapted to different scenarios and objects also outside of chemical environments.
 
-<img src="https://user-images.githubusercontent.com/75242605/236624972-99bd9f4b-c346-44b6-8f89-11d8068a09f8.png" width="700">
+<img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/92d84c0d-a28c-4a5d-b8c5-414f32600eb0" width="700">
+
+![Overview](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/92d84c0d-a28c-4a5d-b8c5-414f32600eb0)
+
 
 ## <a id="results"></a> Main Results
 
