@@ -61,8 +61,7 @@ The proposed solution for automating the described manual workflows consists of 
 
 <img src="https://github.com/DaniSchober/LabLiquidVision/assets/75242605/92d84c0d-a28c-4a5d-b8c5-414f32600eb0" width="700">
 
-![Overview](https://github.com/DaniSchober/LabLiquidVision/assets/75242605/92d84c0d-a28c-4a5d-b8c5-414f32600eb0)
-
+All the equipment including the robot is placed on one table (grey box). The user selects the desired workflow in a human­-machine-interface, loads empty input flasks, and can see the recorded data from the microscope. Cell flasks can be requested from the system and then taken from the flask storage (output flasks). The camera records RGB images, which are used for transparent object and liquid detection. The liquid volume estimation in combination with the simulation results helps to control the robot in the liquid pouring steps.
 
 ## <a id="results"></a> Main Results
 
